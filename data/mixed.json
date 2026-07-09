@@ -1,0 +1,1602 @@
+[
+  {
+    "statement": "The Amazon River is the longest river in South America.",
+    "label": 1
+  },
+  {
+    "statement": "Mount Everest is the tallest mountain on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Australia is Canberra.",
+    "label": 1
+  },
+  {
+    "statement": "The Pacific Ocean is the largest ocean on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "Canada has more freshwater lakes than any other country.",
+    "label": 1
+  },
+  {
+    "statement": "The Sahara Desert is located in Africa.",
+    "label": 1
+  },
+  {
+    "statement": "Russia is the largest country in the world by area.",
+    "label": 1
+  },
+  {
+    "statement": "The Dead Sea borders Jordan and Israel.",
+    "label": 1
+  },
+  {
+    "statement": "The Nile River flows northward into the Mediterranean Sea.",
+    "label": 1
+  },
+  {
+    "statement": "Greenland is the world's largest island.",
+    "label": 1
+  },
+  {
+    "statement": "Vatican City is the smallest country in the world.",
+    "label": 1
+  },
+  {
+    "statement": "The Yangtze is the longest river in Asia.",
+    "label": 1
+  },
+  {
+    "statement": "Lake Superior is the largest of the Great Lakes.",
+    "label": 1
+  },
+  {
+    "statement": "Brazil is the largest country in South America.",
+    "label": 1
+  },
+  {
+    "statement": "The Gobi Desert spans Mongolia and northern China.",
+    "label": 1
+  },
+  {
+    "statement": "The Mississippi River flows into the Gulf of Mexico.",
+    "label": 1
+  },
+  {
+    "statement": "Tokyo is the capital city of Japan.",
+    "label": 1
+  },
+  {
+    "statement": "Antarctica is the coldest continent on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "The Andes run along the western coast of South America.",
+    "label": 1
+  },
+  {
+    "statement": "The Iberian Peninsula contains Spain and Portugal.",
+    "label": 1
+  },
+  {
+    "statement": "The Caspian Sea is the world's largest lake by area.",
+    "label": 1
+  },
+  {
+    "statement": "Chile is the longest country in the world from north to south.",
+    "label": 1
+  },
+  {
+    "statement": "New Zealand lies in the Southern Hemisphere.",
+    "label": 1
+  },
+  {
+    "statement": "The Rhine River flows through Germany and into the North Sea.",
+    "label": 1
+  },
+  {
+    "statement": "Egypt is located on the continent of Africa.",
+    "label": 1
+  },
+  {
+    "statement": "The Nile is the longest river in South America.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Australia is Sydney.",
+    "label": 0
+  },
+  {
+    "statement": "Mount Kilimanjaro is located in Kenya.",
+    "label": 0
+  },
+  {
+    "statement": "The Amazon River flows into the Pacific Ocean.",
+    "label": 0
+  },
+  {
+    "statement": "The Sahara Desert is located in the Middle East.",
+    "label": 0
+  },
+  {
+    "statement": "The Atlantic Ocean is the largest ocean on Earth.",
+    "label": 0
+  },
+  {
+    "statement": "Greenland is a territory of Norway.",
+    "label": 0
+  },
+  {
+    "statement": "Lake Victoria is the largest freshwater lake in the world.",
+    "label": 0
+  },
+  {
+    "statement": "The Andes run along the eastern coast of South America.",
+    "label": 0
+  },
+  {
+    "statement": "Canada is the largest country in the world by area.",
+    "label": 0
+  },
+  {
+    "statement": "The Yangtze River flows through India.",
+    "label": 0
+  },
+  {
+    "statement": "The Dead Sea is located entirely within Israel.",
+    "label": 0
+  },
+  {
+    "statement": "The Gobi Desert is located in sub-Saharan Africa.",
+    "label": 0
+  },
+  {
+    "statement": "The Mississippi River flows into the Atlantic Ocean.",
+    "label": 0
+  },
+  {
+    "statement": "Vatican City is located within the borders of France.",
+    "label": 0
+  },
+  {
+    "statement": "The Nile River flows southward into the Indian Ocean.",
+    "label": 0
+  },
+  {
+    "statement": "Tokyo is the capital city of South Korea.",
+    "label": 0
+  },
+  {
+    "statement": "Antarctica is the driest continent on Earth.",
+    "label": 0
+  },
+  {
+    "statement": "Brazil is the largest country in Central America.",
+    "label": 0
+  },
+  {
+    "statement": "The Rhine River flows through Spain into the Atlantic Ocean.",
+    "label": 0
+  },
+  {
+    "statement": "The Caspian Sea is located in South America.",
+    "label": 0
+  },
+  {
+    "statement": "Chile is the widest country from east to west.",
+    "label": 0
+  },
+  {
+    "statement": "New Zealand lies entirely in the Northern Hemisphere.",
+    "label": 0
+  },
+  {
+    "statement": "Egypt is located on the continent of Asia.",
+    "label": 0
+  },
+  {
+    "statement": "Lake Superior is the smallest of the Great Lakes.",
+    "label": 0
+  },
+  {
+    "statement": "Water boils at 100 degrees Celsius at sea level.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for gold is Au.",
+    "label": 1
+  },
+  {
+    "statement": "DNA carries genetic information in living organisms.",
+    "label": 1
+  },
+  {
+    "statement": "The speed of light in a vacuum is about 300,000 km/s.",
+    "label": 1
+  },
+  {
+    "statement": "Oxygen has atomic number 8 on the periodic table.",
+    "label": 1
+  },
+  {
+    "statement": "Humans have 46 chromosomes in each somatic cell.",
+    "label": 1
+  },
+  {
+    "statement": "The Earth orbits the Sun once approximately every 365 days.",
+    "label": 1
+  },
+  {
+    "statement": "Sound travels faster in water than in air.",
+    "label": 1
+  },
+  {
+    "statement": "Carbon dioxide has one carbon and two oxygen atoms.",
+    "label": 1
+  },
+  {
+    "statement": "The Moon causes Earth's ocean tides through gravity.",
+    "label": 1
+  },
+  {
+    "statement": "Electrons carry a negative electric charge.",
+    "label": 1
+  },
+  {
+    "statement": "Photosynthesis converts sunlight into chemical energy in plants.",
+    "label": 1
+  },
+  {
+    "statement": "The human body has 206 bones in adulthood.",
+    "label": 1
+  },
+  {
+    "statement": "Absolute zero is approximately minus 273 degrees Celsius.",
+    "label": 1
+  },
+  {
+    "statement": "The periodic table was organized by Dmitri Mendeleev.",
+    "label": 1
+  },
+  {
+    "statement": "Light travels faster in a vacuum than in glass.",
+    "label": 1
+  },
+  {
+    "statement": "Gravity on Mars is weaker than gravity on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "Diamonds are composed entirely of carbon atoms.",
+    "label": 1
+  },
+  {
+    "statement": "Neptune is the farthest planet from the Sun.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for iron is Fe.",
+    "label": 1
+  },
+  {
+    "statement": "DNA has a double helix structure.",
+    "label": 1
+  },
+  {
+    "statement": "Protons carry a positive electric charge.",
+    "label": 1
+  },
+  {
+    "statement": "The atomic number of hydrogen is 1.",
+    "label": 1
+  },
+  {
+    "statement": "Helium is lighter than air.",
+    "label": 1
+  },
+  {
+    "statement": "Water freezes at 0 degrees Celsius at sea level.",
+    "label": 1
+  },
+  {
+    "statement": "Water boils at 100 degrees Celsius at high altitude.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for gold is Go.",
+    "label": 0
+  },
+  {
+    "statement": "Sound travels faster in air than in water.",
+    "label": 0
+  },
+  {
+    "statement": "Humans have 48 chromosomes in each somatic cell.",
+    "label": 0
+  },
+  {
+    "statement": "Oxygen has atomic number 6 on the periodic table.",
+    "label": 0
+  },
+  {
+    "statement": "The Earth completes one orbit around the Moon each year.",
+    "label": 0
+  },
+  {
+    "statement": "Electrons carry a positive electric charge.",
+    "label": 0
+  },
+  {
+    "statement": "Carbon dioxide has two carbon atoms and one oxygen atom.",
+    "label": 0
+  },
+  {
+    "statement": "The Sun causes Earth's ocean tides through gravity.",
+    "label": 0
+  },
+  {
+    "statement": "The human body has 206 bones at birth.",
+    "label": 0
+  },
+  {
+    "statement": "Absolute zero is approximately minus 100 degrees Celsius.",
+    "label": 0
+  },
+  {
+    "statement": "The periodic table was organized by Isaac Newton.",
+    "label": 0
+  },
+  {
+    "statement": "Diamonds are composed entirely of silicon atoms.",
+    "label": 0
+  },
+  {
+    "statement": "Light travels faster in glass than in a vacuum.",
+    "label": 0
+  },
+  {
+    "statement": "Gravity on Mars is stronger than gravity on Earth.",
+    "label": 0
+  },
+  {
+    "statement": "Saturn is the farthest planet from the Sun.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for iron is Ir.",
+    "label": 0
+  },
+  {
+    "statement": "DNA has a single helix structure.",
+    "label": 0
+  },
+  {
+    "statement": "Protons carry a negative electric charge.",
+    "label": 0
+  },
+  {
+    "statement": "The atomic number of hydrogen is 2.",
+    "label": 0
+  },
+  {
+    "statement": "Helium is heavier than air.",
+    "label": 0
+  },
+  {
+    "statement": "Water freezes at minus 10 degrees Celsius at sea level.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for silver is Ag.",
+    "label": 1
+  },
+  {
+    "statement": "The nucleus of an atom contains protons and neutrons.",
+    "label": 1
+  },
+  {
+    "statement": "World War II ended in 1945.",
+    "label": 1
+  },
+  {
+    "statement": "The French Revolution began in 1789.",
+    "label": 1
+  },
+  {
+    "statement": "Christopher Columbus reached the Americas in 1492.",
+    "label": 1
+  },
+  {
+    "statement": "The Roman Empire fell in 476 AD.",
+    "label": 1
+  },
+  {
+    "statement": "The Berlin Wall fell in 1989.",
+    "label": 1
+  },
+  {
+    "statement": "Napoleon Bonaparte was born on the island of Corsica.",
+    "label": 1
+  },
+  {
+    "statement": "The United States declared independence in 1776.",
+    "label": 1
+  },
+  {
+    "statement": "The First World War began in 1914.",
+    "label": 1
+  },
+  {
+    "statement": "The printing press was invented by Johannes Gutenberg.",
+    "label": 1
+  },
+  {
+    "statement": "Julius Caesar was assassinated in 44 BC.",
+    "label": 1
+  },
+  {
+    "statement": "Mahatma Gandhi led a nonviolent independence movement in India.",
+    "label": 1
+  },
+  {
+    "statement": "The Apollo 11 Moon landing occurred in 1969.",
+    "label": 1
+  },
+  {
+    "statement": "The Black Death swept through Europe in the 14th century.",
+    "label": 1
+  },
+  {
+    "statement": "Alexander the Great was a student of Aristotle.",
+    "label": 1
+  },
+  {
+    "statement": "The Magna Carta was signed in 1215.",
+    "label": 1
+  },
+  {
+    "statement": "The Aztec Empire was conquered by Hern\u00e1n Cort\u00e9s.",
+    "label": 1
+  },
+  {
+    "statement": "The Cold War was between the USA and the Soviet Union.",
+    "label": 1
+  },
+  {
+    "statement": "The Ottoman Empire collapsed after World War I.",
+    "label": 1
+  },
+  {
+    "statement": "Cleopatra was the last active ruler of ancient Egypt.",
+    "label": 1
+  },
+  {
+    "statement": "The Great Wall was built primarily during the Ming Dynasty.",
+    "label": 1
+  },
+  {
+    "statement": "World War II ended in 1944.",
+    "label": 0
+  },
+  {
+    "statement": "The French Revolution began in 1799.",
+    "label": 0
+  },
+  {
+    "statement": "Christopher Columbus reached the Americas in 1502.",
+    "label": 0
+  },
+  {
+    "statement": "The Roman Empire fell in 1066 AD.",
+    "label": 0
+  },
+  {
+    "statement": "The Berlin Wall fell in 1991.",
+    "label": 0
+  },
+  {
+    "statement": "Napoleon Bonaparte was born on the island of Sardinia.",
+    "label": 0
+  },
+  {
+    "statement": "The United States declared independence in 1786.",
+    "label": 0
+  },
+  {
+    "statement": "The First World War began in 1918.",
+    "label": 0
+  },
+  {
+    "statement": "The printing press was invented by Leonardo da Vinci.",
+    "label": 0
+  },
+  {
+    "statement": "Julius Caesar was assassinated in 44 AD.",
+    "label": 0
+  },
+  {
+    "statement": "Mahatma Gandhi led the independence movement in South Africa.",
+    "label": 0
+  },
+  {
+    "statement": "The Apollo 11 Moon landing occurred in 1967.",
+    "label": 0
+  },
+  {
+    "statement": "The Black Death swept through Europe in the 16th century.",
+    "label": 0
+  },
+  {
+    "statement": "Alexander the Great was a student of Plato.",
+    "label": 0
+  },
+  {
+    "statement": "The Magna Carta was signed in 1066.",
+    "label": 0
+  },
+  {
+    "statement": "The Aztec Empire was conquered by Francisco Pizarro.",
+    "label": 0
+  },
+  {
+    "statement": "The Cold War was primarily between the USA and China.",
+    "label": 0
+  },
+  {
+    "statement": "The Ottoman Empire collapsed after World War II.",
+    "label": 0
+  },
+  {
+    "statement": "Cleopatra was the first ruler of ancient Egypt.",
+    "label": 0
+  },
+  {
+    "statement": "The Great Wall was built primarily during the Han Dynasty.",
+    "label": 0
+  },
+  {
+    "statement": "The Inca Empire was conquered by Francisco Pizarro.",
+    "label": 1
+  },
+  {
+    "statement": "The Inca Empire was conquered by Hern\u00e1n Cort\u00e9s.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 144 is 12.",
+    "label": 1
+  },
+  {
+    "statement": "Pi is approximately equal to 3.14159.",
+    "label": 1
+  },
+  {
+    "statement": "A triangle's interior angles sum to 180 degrees.",
+    "label": 1
+  },
+  {
+    "statement": "The square of 13 is 169.",
+    "label": 1
+  },
+  {
+    "statement": "A prime number has exactly two distinct positive divisors.",
+    "label": 1
+  },
+  {
+    "statement": "The number zero is neither positive nor negative.",
+    "label": 1
+  },
+  {
+    "statement": "There are 360 degrees in a full circle.",
+    "label": 1
+  },
+  {
+    "statement": "The factorial of 5 is 120.",
+    "label": 1
+  },
+  {
+    "statement": "A quadrilateral has exactly four sides.",
+    "label": 1
+  },
+  {
+    "statement": "The sum of the first ten positive integers is 55.",
+    "label": 1
+  },
+  {
+    "statement": "Multiplying any number by zero gives zero.",
+    "label": 1
+  },
+  {
+    "statement": "The number 1 is not classified as a prime number.",
+    "label": 1
+  },
+  {
+    "statement": "A right angle measures exactly 90 degrees.",
+    "label": 1
+  },
+  {
+    "statement": "The cube root of 27 is 3.",
+    "label": 1
+  },
+  {
+    "statement": "The square root of 2 is an irrational number.",
+    "label": 1
+  },
+  {
+    "statement": "A cube has exactly 6 faces.",
+    "label": 1
+  },
+  {
+    "statement": "A hexagon has six sides.",
+    "label": 1
+  },
+  {
+    "statement": "The binary representation of decimal 8 is 1000.",
+    "label": 1
+  },
+  {
+    "statement": "Two plus two equals four.",
+    "label": 1
+  },
+  {
+    "statement": "A pentagon has five sides.",
+    "label": 1
+  },
+  {
+    "statement": "An equilateral triangle has three equal sides.",
+    "label": 1
+  },
+  {
+    "statement": "The product of two negative numbers is positive.",
+    "label": 1
+  },
+  {
+    "statement": "The number 17 is a prime number.",
+    "label": 1
+  },
+  {
+    "statement": "One kilometer equals one thousand meters.",
+    "label": 1
+  },
+  {
+    "statement": "Thirty percent of 200 is 60.",
+    "label": 1
+  },
+  {
+    "statement": "The square root of 144 is 14.",
+    "label": 0
+  },
+  {
+    "statement": "Pi is approximately equal to 3.41159.",
+    "label": 0
+  },
+  {
+    "statement": "A triangle's interior angles sum to 360 degrees.",
+    "label": 0
+  },
+  {
+    "statement": "The square of 13 is 196.",
+    "label": 0
+  },
+  {
+    "statement": "A prime number has exactly three distinct positive divisors.",
+    "label": 0
+  },
+  {
+    "statement": "The number zero is classified as a positive number.",
+    "label": 0
+  },
+  {
+    "statement": "There are 180 degrees in a full circle.",
+    "label": 0
+  },
+  {
+    "statement": "The factorial of 5 is 60.",
+    "label": 0
+  },
+  {
+    "statement": "A quadrilateral has exactly five sides.",
+    "label": 0
+  },
+  {
+    "statement": "The sum of the first ten positive integers is 45.",
+    "label": 0
+  },
+  {
+    "statement": "Multiplying any number by zero gives one.",
+    "label": 0
+  },
+  {
+    "statement": "The number 1 is classified as a prime number.",
+    "label": 0
+  },
+  {
+    "statement": "A right angle measures exactly 45 degrees.",
+    "label": 0
+  },
+  {
+    "statement": "The cube root of 27 is 9.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 2 is a rational number.",
+    "label": 0
+  },
+  {
+    "statement": "A cube has exactly 8 faces.",
+    "label": 0
+  },
+  {
+    "statement": "A hexagon has eight sides.",
+    "label": 0
+  },
+  {
+    "statement": "The binary representation of decimal 8 is 1010.",
+    "label": 0
+  },
+  {
+    "statement": "Two plus three equals four.",
+    "label": 0
+  },
+  {
+    "statement": "A pentagon has six sides.",
+    "label": 0
+  },
+  {
+    "statement": "An equilateral triangle has three unequal sides.",
+    "label": 0
+  },
+  {
+    "statement": "The product of two negative numbers is negative.",
+    "label": 0
+  },
+  {
+    "statement": "The number 17 is not a prime number.",
+    "label": 0
+  },
+  {
+    "statement": "One kilometer equals one hundred meters.",
+    "label": 0
+  },
+  {
+    "statement": "Thirty percent of 200 is 80.",
+    "label": 0
+  },
+  {
+    "statement": "The speed of sound in air is about 343 meters per second.",
+    "label": 1
+  },
+  {
+    "statement": "The Great Barrier Reef is located off the coast of Australia.",
+    "label": 1
+  },
+  {
+    "statement": "The speed of sound in air is about 1000 meters per second.",
+    "label": 0
+  },
+  {
+    "statement": "The Great Barrier Reef is located off the coast of Brazil.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for sodium is So.",
+    "label": 0
+  },
+  {
+    "statement": "The Battle of Waterloo took place in 1820.",
+    "label": 0
+  },
+  {
+    "statement": "A dodecagon has ten sides.",
+    "label": 0
+  },
+  {
+    "statement": "The Eiffel Tower is located in Rome.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 81 is 7.",
+    "label": 0
+  },
+  {
+    "statement": "Paris is the capital of France",
+    "label": 1
+  },
+  {
+    "statement": "Paris is the capital of Italy",
+    "label": 0
+  },
+  {
+    "statement": "The Sahara Desert is in Africa",
+    "label": 1
+  },
+  {
+    "statement": "The Sahara Desert is in Asia",
+    "label": 0
+  },
+  {
+    "statement": "Australia is both a country and a continent",
+    "label": 1
+  },
+  {
+    "statement": "Australia is only a single city",
+    "label": 0
+  },
+  {
+    "statement": "The Nile flows through Egypt",
+    "label": 1
+  },
+  {
+    "statement": "The Nile flows through Canada",
+    "label": 0
+  },
+  {
+    "statement": "Mount Fuji is in Japan",
+    "label": 1
+  },
+  {
+    "statement": "Mount Fuji is in Mexico",
+    "label": 0
+  },
+  {
+    "statement": "Russia is the largest country by land area",
+    "label": 1
+  },
+  {
+    "statement": "Monaco is the largest country by land area",
+    "label": 0
+  },
+  {
+    "statement": "The Amazon rainforest is mostly in Brazil",
+    "label": 1
+  },
+  {
+    "statement": "The Amazon rainforest is mostly in France",
+    "label": 0
+  },
+  {
+    "statement": "Canada borders the United States",
+    "label": 1
+  },
+  {
+    "statement": "Canada borders Brazil",
+    "label": 0
+  },
+  {
+    "statement": "The Mediterranean Sea borders Italy",
+    "label": 1
+  },
+  {
+    "statement": "The Mediterranean Sea borders Japan",
+    "label": 0
+  },
+  {
+    "statement": "Iceland is an island",
+    "label": 1
+  },
+  {
+    "statement": "Iceland is a landlocked country",
+    "label": 0
+  },
+  {
+    "statement": "The Alps are a mountain range in Europe",
+    "label": 1
+  },
+  {
+    "statement": "The Alps are a mountain range in Australia",
+    "label": 0
+  },
+  {
+    "statement": "Tokyo is the capital of Japan",
+    "label": 1
+  },
+  {
+    "statement": "Tokyo is the capital of China",
+    "label": 0
+  },
+  {
+    "statement": "Greenland is the world's largest island",
+    "label": 1
+  },
+  {
+    "statement": "Greenland is the world's smallest island",
+    "label": 0
+  },
+  {
+    "statement": "The equator passes through Ecuador",
+    "label": 1
+  },
+  {
+    "statement": "The equator passes through Norway",
+    "label": 0
+  },
+  {
+    "statement": "London is located in England",
+    "label": 1
+  },
+  {
+    "statement": "London is located in Spain",
+    "label": 0
+  },
+  {
+    "statement": "The Pacific Ocean is the largest ocean",
+    "label": 1
+  },
+  {
+    "statement": "The Arctic Ocean is the largest ocean",
+    "label": 0
+  },
+  {
+    "statement": "Brazil is in South America",
+    "label": 1
+  },
+  {
+    "statement": "Brazil is in Europe",
+    "label": 0
+  },
+  {
+    "statement": "The Rhine River is in Europe",
+    "label": 1
+  },
+  {
+    "statement": "The Rhine River is in Africa",
+    "label": 0
+  },
+  {
+    "statement": "Egypt is in Africa",
+    "label": 1
+  },
+  {
+    "statement": "Egypt is in South America",
+    "label": 0
+  },
+  {
+    "statement": "The Himalayas contain Mount Everest",
+    "label": 1
+  },
+  {
+    "statement": "The Himalayas contain Mount Kilimanjaro",
+    "label": 0
+  },
+  {
+    "statement": "Water is made of hydrogen and oxygen",
+    "label": 1
+  },
+  {
+    "statement": "Water is made of carbon and helium",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for gold is Au",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for gold is Fe",
+    "label": 0
+  },
+  {
+    "statement": "Sound cannot travel through a vacuum",
+    "label": 1
+  },
+  {
+    "statement": "Sound travels easily through a vacuum",
+    "label": 0
+  },
+  {
+    "statement": "Humans breathe in oxygen",
+    "label": 1
+  },
+  {
+    "statement": "Humans breathe in helium to survive",
+    "label": 0
+  },
+  {
+    "statement": "The speed of light is faster than the speed of sound",
+    "label": 1
+  },
+  {
+    "statement": "The speed of sound is faster than the speed of light",
+    "label": 0
+  },
+  {
+    "statement": "Ice is frozen water",
+    "label": 1
+  },
+  {
+    "statement": "Ice is frozen oxygen",
+    "label": 0
+  },
+  {
+    "statement": "Plants produce oxygen during photosynthesis",
+    "label": 1
+  },
+  {
+    "statement": "Plants produce gold during photosynthesis",
+    "label": 0
+  },
+  {
+    "statement": "The human skeleton is made of bones",
+    "label": 1
+  },
+  {
+    "statement": "The human skeleton is made of muscle",
+    "label": 0
+  },
+  {
+    "statement": "Electricity can flow through copper",
+    "label": 1
+  },
+  {
+    "statement": "Electricity cannot flow through any metal",
+    "label": 0
+  },
+  {
+    "statement": "Water boils at 100 degrees Celsius at sea level",
+    "label": 1
+  },
+  {
+    "statement": "Water boils at 10 degrees Celsius at sea level",
+    "label": 0
+  },
+  {
+    "statement": "The Earth has a magnetic field",
+    "label": 1
+  },
+  {
+    "statement": "The Earth has no magnetic field",
+    "label": 0
+  },
+  {
+    "statement": "Oxygen is a gas at room temperature",
+    "label": 1
+  },
+  {
+    "statement": "Oxygen is a solid at room temperature",
+    "label": 0
+  },
+  {
+    "statement": "A magnet has two poles",
+    "label": 1
+  },
+  {
+    "statement": "A magnet has ten poles",
+    "label": 0
+  },
+  {
+    "statement": "Sound is a form of energy",
+    "label": 1
+  },
+  {
+    "statement": "Sound is a type of metal",
+    "label": 0
+  },
+  {
+    "statement": "The heart is part of the circulatory system",
+    "label": 1
+  },
+  {
+    "statement": "The heart is part of the digestive system",
+    "label": 0
+  },
+  {
+    "statement": "Carbon dioxide is a gas",
+    "label": 1
+  },
+  {
+    "statement": "Carbon dioxide is a solid metal",
+    "label": 0
+  },
+  {
+    "statement": "Bacteria are living organisms",
+    "label": 1
+  },
+  {
+    "statement": "Bacteria are non-living rocks",
+    "label": 0
+  },
+  {
+    "statement": "The kidneys filter blood",
+    "label": 1
+  },
+  {
+    "statement": "The kidneys pump air",
+    "label": 0
+  },
+  {
+    "statement": "Salt dissolves in water",
+    "label": 1
+  },
+  {
+    "statement": "Salt does not dissolve in water at all",
+    "label": 0
+  },
+  {
+    "statement": "The sun produces light and heat",
+    "label": 1
+  },
+  {
+    "statement": "The sun produces only darkness",
+    "label": 0
+  },
+  {
+    "statement": "Gravity pulls objects toward Earth",
+    "label": 1
+  },
+  {
+    "statement": "Gravity pushes objects away from Earth",
+    "label": 0
+  },
+  {
+    "statement": "Humans have DNA in their cells",
+    "label": 1
+  },
+  {
+    "statement": "Humans have no DNA in their cells",
+    "label": 0
+  },
+  {
+    "statement": "Iron can rust",
+    "label": 1
+  },
+  {
+    "statement": "Iron can never rust under any condition",
+    "label": 0
+  },
+  {
+    "statement": "The brain is part of the nervous system",
+    "label": 1
+  },
+  {
+    "statement": "The brain is part of the skeletal system",
+    "label": 0
+  },
+  {
+    "statement": "Light travels in straight lines",
+    "label": 1
+  },
+  {
+    "statement": "Light always travels in circles",
+    "label": 0
+  },
+  {
+    "statement": "World War I began in 1914",
+    "label": 1
+  },
+  {
+    "statement": "World War I began in 1800",
+    "label": 0
+  },
+  {
+    "statement": "The Great Pyramid of Giza is in Egypt",
+    "label": 1
+  },
+  {
+    "statement": "The Great Pyramid of Giza is in Japan",
+    "label": 0
+  },
+  {
+    "statement": "The United States declared independence in 1776",
+    "label": 1
+  },
+  {
+    "statement": "The United States declared independence in 1900",
+    "label": 0
+  },
+  {
+    "statement": "The Roman Empire existed in ancient times",
+    "label": 1
+  },
+  {
+    "statement": "The Roman Empire was founded in the year 2000",
+    "label": 0
+  },
+  {
+    "statement": "The printing press was invented before the internet",
+    "label": 1
+  },
+  {
+    "statement": "The internet was invented before the printing press",
+    "label": 0
+  },
+  {
+    "statement": "Ancient Egyptians built pyramids",
+    "label": 1
+  },
+  {
+    "statement": "Ancient Egyptians built skyscrapers of glass",
+    "label": 0
+  },
+  {
+    "statement": "The Berlin Wall fell in 1989",
+    "label": 1
+  },
+  {
+    "statement": "The Berlin Wall fell in 1500",
+    "label": 0
+  },
+  {
+    "statement": "Christopher Columbus sailed across the Atlantic",
+    "label": 1
+  },
+  {
+    "statement": "Christopher Columbus sailed across the Moon",
+    "label": 0
+  },
+  {
+    "statement": "The dinosaurs lived before humans",
+    "label": 1
+  },
+  {
+    "statement": "The dinosaurs lived after humans",
+    "label": 0
+  },
+  {
+    "statement": "The Titanic sank in 1912",
+    "label": 1
+  },
+  {
+    "statement": "The Titanic sank in 2012",
+    "label": 0
+  },
+  {
+    "statement": "The Cold War involved the United States and the Soviet Union",
+    "label": 1
+  },
+  {
+    "statement": "The Cold War involved the United States and ancient Rome",
+    "label": 0
+  },
+  {
+    "statement": "The Wright brothers built an early airplane",
+    "label": 1
+  },
+  {
+    "statement": "The Wright brothers built the first submarine",
+    "label": 0
+  },
+  {
+    "statement": "Julius Caesar was a Roman leader",
+    "label": 1
+  },
+  {
+    "statement": "Julius Caesar was a modern American president",
+    "label": 0
+  },
+  {
+    "statement": "The Middle Ages came before the modern era",
+    "label": 1
+  },
+  {
+    "statement": "The Middle Ages came after the modern era",
+    "label": 0
+  },
+  {
+    "statement": "The French Revolution took place in France",
+    "label": 1
+  },
+  {
+    "statement": "The French Revolution took place in Australia",
+    "label": 0
+  },
+  {
+    "statement": "Gunpowder was invented in ancient China",
+    "label": 1
+  },
+  {
+    "statement": "Gunpowder was invented in the 21st century",
+    "label": 0
+  },
+  {
+    "statement": "The Industrial Revolution changed manufacturing",
+    "label": 1
+  },
+  {
+    "statement": "The Industrial Revolution had no effect on manufacturing",
+    "label": 0
+  },
+  {
+    "statement": "Ancient Greece is known for its philosophers",
+    "label": 1
+  },
+  {
+    "statement": "Ancient Greece is known for inventing the smartphone",
+    "label": 0
+  },
+  {
+    "statement": "The American Civil War ended in 1865",
+    "label": 1
+  },
+  {
+    "statement": "The American Civil War ended in 1965",
+    "label": 0
+  },
+  {
+    "statement": "Humans landed on the Moon in 1969",
+    "label": 1
+  },
+  {
+    "statement": "Humans landed on the Sun in 1969",
+    "label": 0
+  },
+  {
+    "statement": "Two plus two equals four",
+    "label": 1
+  },
+  {
+    "statement": "Two plus two equals five",
+    "label": 0
+  },
+  {
+    "statement": "Ten is greater than five",
+    "label": 1
+  },
+  {
+    "statement": "Ten is less than five",
+    "label": 0
+  },
+  {
+    "statement": "A circle has no corners",
+    "label": 1
+  },
+  {
+    "statement": "A circle has four corners",
+    "label": 0
+  },
+  {
+    "statement": "Seven is an odd number",
+    "label": 1
+  },
+  {
+    "statement": "Seven is an even number",
+    "label": 0
+  },
+  {
+    "statement": "One hundred divided by four equals twenty-five",
+    "label": 1
+  },
+  {
+    "statement": "One hundred divided by four equals fifty",
+    "label": 0
+  },
+  {
+    "statement": "A right angle is ninety degrees",
+    "label": 1
+  },
+  {
+    "statement": "A right angle is forty degrees",
+    "label": 0
+  },
+  {
+    "statement": "Three times three equals nine",
+    "label": 1
+  },
+  {
+    "statement": "Three times three equals six",
+    "label": 0
+  },
+  {
+    "statement": "A dozen equals twelve",
+    "label": 1
+  },
+  {
+    "statement": "A dozen equals twenty",
+    "label": 0
+  },
+  {
+    "statement": "Zero is less than one",
+    "label": 1
+  },
+  {
+    "statement": "Zero is greater than one",
+    "label": 0
+  },
+  {
+    "statement": "A square has four equal sides",
+    "label": 1
+  },
+  {
+    "statement": "A square has three equal sides",
+    "label": 0
+  },
+  {
+    "statement": "Half of ten is five",
+    "label": 1
+  },
+  {
+    "statement": "Half of ten is three",
+    "label": 0
+  },
+  {
+    "statement": "The number twelve is divisible by three",
+    "label": 1
+  },
+  {
+    "statement": "The number twelve is not divisible by three",
+    "label": 0
+  },
+  {
+    "statement": "A pentagon has five sides",
+    "label": 1
+  },
+  {
+    "statement": "A pentagon has seven sides",
+    "label": 0
+  },
+  {
+    "statement": "Eight is greater than six",
+    "label": 1
+  },
+  {
+    "statement": "Eight is smaller than six",
+    "label": 0
+  },
+  {
+    "statement": "Twenty minus ten equals ten",
+    "label": 1
+  },
+  {
+    "statement": "Twenty minus ten equals five",
+    "label": 0
+  },
+  {
+    "statement": "One kilometer equals one thousand meters",
+    "label": 1
+  },
+  {
+    "statement": "One kilometer equals ten meters",
+    "label": 0
+  },
+  {
+    "statement": "A triangle's angles add up to 180 degrees",
+    "label": 1
+  },
+  {
+    "statement": "A triangle's angles add up to 360 degrees",
+    "label": 0
+  },
+  {
+    "statement": "Six is an even number",
+    "label": 1
+  },
+  {
+    "statement": "Six is an odd number",
+    "label": 0
+  },
+  {
+    "statement": "Nine is greater than three",
+    "label": 1
+  },
+  {
+    "statement": "Nine is less than three",
+    "label": 0
+  },
+  {
+    "statement": "Five multiplied by two equals ten",
+    "label": 1
+  },
+  {
+    "statement": "Five multiplied by two equals seven",
+    "label": 0
+  },
+  {
+    "statement": "Dogs are mammals",
+    "label": 1
+  },
+  {
+    "statement": "Dogs are insects",
+    "label": 0
+  },
+  {
+    "statement": "Fish live in water",
+    "label": 1
+  },
+  {
+    "statement": "Fish live only in fire",
+    "label": 0
+  },
+  {
+    "statement": "Birds have feathers",
+    "label": 1
+  },
+  {
+    "statement": "Birds have scales instead of feathers",
+    "label": 0
+  },
+  {
+    "statement": "Spiders have eight legs",
+    "label": 1
+  },
+  {
+    "statement": "Spiders have four legs",
+    "label": 0
+  },
+  {
+    "statement": "Trees produce oxygen",
+    "label": 1
+  },
+  {
+    "statement": "Trees produce plastic",
+    "label": 0
+  },
+  {
+    "statement": "Bees make honey",
+    "label": 1
+  },
+  {
+    "statement": "Bees make steel",
+    "label": 0
+  },
+  {
+    "statement": "A caterpillar can become a butterfly",
+    "label": 1
+  },
+  {
+    "statement": "A caterpillar can become a horse",
+    "label": 0
+  },
+  {
+    "statement": "Humans need water to survive",
+    "label": 1
+  },
+  {
+    "statement": "Humans need no water to survive",
+    "label": 0
+  },
+  {
+    "statement": "Cows eat grass",
+    "label": 1
+  },
+  {
+    "statement": "Cows eat rocks as their main food",
+    "label": 0
+  },
+  {
+    "statement": "The human eye detects light",
+    "label": 1
+  },
+  {
+    "statement": "The human eye detects sound",
+    "label": 0
+  },
+  {
+    "statement": "Snakes are reptiles",
+    "label": 1
+  },
+  {
+    "statement": "Snakes are amphibians",
+    "label": 0
+  },
+  {
+    "statement": "Whales are mammals",
+    "label": 1
+  },
+  {
+    "statement": "Whales are fish",
+    "label": 0
+  },
+  {
+    "statement": "Leaves are often green due to chlorophyll",
+    "label": 1
+  },
+  {
+    "statement": "Leaves are green due to iron",
+    "label": 0
+  },
+  {
+    "statement": "A human baby grows inside its mother",
+    "label": 1
+  },
+  {
+    "statement": "A human baby grows inside an egg laid outdoors",
+    "label": 0
+  },
+  {
+    "statement": "Ants live in colonies",
+    "label": 1
+  },
+  {
+    "statement": "Ants live completely alone their whole lives",
+    "label": 0
+  }
+]

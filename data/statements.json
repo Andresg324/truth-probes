@@ -1,0 +1,1202 @@
+[
+  {
+    "statement": "The capital of France is Paris.",
+    "label": 1
+  },
+  {
+    "statement": "The Amazon River flows through Brazil.",
+    "label": 1
+  },
+  {
+    "statement": "Mount Everest is the tallest mountain on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "Water freezes at 0 degrees Celsius.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for gold is Au.",
+    "label": 1
+  },
+  {
+    "statement": "World War II ended in 1945.",
+    "label": 1
+  },
+  {
+    "statement": "The square root of 144 is 12.",
+    "label": 1
+  },
+  {
+    "statement": "Humans have 206 bones in the adult body.",
+    "label": 1
+  },
+  {
+    "statement": "The speed of light is approximately 299,792 kilometers per second.",
+    "label": 1
+  },
+  {
+    "statement": "Africa is the second largest continent by area.",
+    "label": 1
+  },
+  {
+    "statement": "The Nile River is located in Africa.",
+    "label": 1
+  },
+  {
+    "statement": "Oxygen has the atomic number 8.",
+    "label": 1
+  },
+  {
+    "statement": "The Great Wall of China is in Asia.",
+    "label": 1
+  },
+  {
+    "statement": "Shakespeare was born in Stratford-upon-Avon.",
+    "label": 1
+  },
+  {
+    "statement": "The Pacific Ocean is the largest ocean on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "A triangle has three sides.",
+    "label": 1
+  },
+  {
+    "statement": "The human heart has four chambers.",
+    "label": 1
+  },
+  {
+    "statement": "The Earth orbits the Sun.",
+    "label": 1
+  },
+  {
+    "statement": "Carbon dioxide has the formula CO2.",
+    "label": 1
+  },
+  {
+    "statement": "The French Revolution began in 1789.",
+    "label": 1
+  },
+  {
+    "statement": "Australia is both a continent and a country.",
+    "label": 1
+  },
+  {
+    "statement": "7 multiplied by 8 equals 56.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for sodium is Na.",
+    "label": 1
+  },
+  {
+    "statement": "The Sahara is the largest hot desert in the world.",
+    "label": 1
+  },
+  {
+    "statement": "The Moon is Earth's only natural satellite.",
+    "label": 1
+  },
+  {
+    "statement": "Abraham Lincoln was the 16th president of the United States.",
+    "label": 1
+  },
+  {
+    "statement": "Sound travels faster in water than in air.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Japan is Tokyo.",
+    "label": 1
+  },
+  {
+    "statement": "Mammals are warm-blooded animals.",
+    "label": 1
+  },
+  {
+    "statement": "Pi is approximately equal to 3.14159.",
+    "label": 1
+  },
+  {
+    "statement": "The Berlin Wall fell in 1989.",
+    "label": 1
+  },
+  {
+    "statement": "Diamonds are made of carbon.",
+    "label": 1
+  },
+  {
+    "statement": "The Amazon rainforest produces about 20% of Earth's oxygen.",
+    "label": 1
+  },
+  {
+    "statement": "The smallest planet in our solar system is Mercury.",
+    "label": 1
+  },
+  {
+    "statement": "Italy is shaped like a boot.",
+    "label": 1
+  },
+  {
+    "statement": "The atomic number of hydrogen is 1.",
+    "label": 1
+  },
+  {
+    "statement": "Julius Caesar was assassinated in 44 BCE.",
+    "label": 1
+  },
+  {
+    "statement": "A right angle measures 90 degrees.",
+    "label": 1
+  },
+  {
+    "statement": "The Dead Sea is the lowest point on Earth's land surface.",
+    "label": 1
+  },
+  {
+    "statement": "DNA stands for deoxyribonucleic acid.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Canada is Ottawa.",
+    "label": 1
+  },
+  {
+    "statement": "Neptune is the farthest planet from the Sun.",
+    "label": 1
+  },
+  {
+    "statement": "The Titanic sank in 1912.",
+    "label": 1
+  },
+  {
+    "statement": "12 squared equals 144.",
+    "label": 1
+  },
+  {
+    "statement": "Photosynthesis occurs in the chloroplasts of plant cells.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Germany is Berlin.",
+    "label": 1
+  },
+  {
+    "statement": "The Great Barrier Reef is located in Australia.",
+    "label": 1
+  },
+  {
+    "statement": "Neil Armstrong was the first human to walk on the Moon.",
+    "label": 1
+  },
+  {
+    "statement": "Helium is the second element on the periodic table.",
+    "label": 1
+  },
+  {
+    "statement": "The Colosseum is located in Rome, Italy.",
+    "label": 1
+  },
+  {
+    "statement": "Russia is the largest country by land area.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Brazil is Bras\u00edlia.",
+    "label": 1
+  },
+  {
+    "statement": "Human blood is classified into four main types.",
+    "label": 1
+  },
+  {
+    "statement": "The boiling point of water at sea level is 100\u00b0C.",
+    "label": 1
+  },
+  {
+    "statement": "The Pythagorean theorem states a\u00b2 + b\u00b2 = c\u00b2.",
+    "label": 1
+  },
+  {
+    "statement": "Christopher Columbus reached the Americas in 1492.",
+    "label": 1
+  },
+  {
+    "statement": "The largest organ in the human body is the skin.",
+    "label": 1
+  },
+  {
+    "statement": "Venus is the hottest planet in the solar system.",
+    "label": 1
+  },
+  {
+    "statement": "The Eiffel Tower is located in Paris.",
+    "label": 1
+  },
+  {
+    "statement": "Gravity accelerates objects at 9.8 m/s\u00b2 on Earth's surface.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of China is Beijing.",
+    "label": 1
+  },
+  {
+    "statement": "The American Civil War ended in 1865.",
+    "label": 1
+  },
+  {
+    "statement": "A pentagon has five sides.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical formula for table salt is NaCl.",
+    "label": 1
+  },
+  {
+    "statement": "The Himalayas are the highest mountain range on Earth.",
+    "label": 1
+  },
+  {
+    "statement": "Isaac Newton formulated the law of universal gravitation.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Australia is Canberra.",
+    "label": 1
+  },
+  {
+    "statement": "The human brain contains approximately 86 billion neurons.",
+    "label": 1
+  },
+  {
+    "statement": "The square root of 81 is 9.",
+    "label": 1
+  },
+  {
+    "statement": "The Wright Brothers made their first powered flight in 1903.",
+    "label": 1
+  },
+  {
+    "statement": "Pluto was reclassified as a dwarf planet in 2006.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for iron is Fe.",
+    "label": 1
+  },
+  {
+    "statement": "The equator divides Earth into Northern and Southern hemispheres.",
+    "label": 1
+  },
+  {
+    "statement": "World War I began in 1914.",
+    "label": 1
+  },
+  {
+    "statement": "A cube has six faces.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Spain is Madrid.",
+    "label": 1
+  },
+  {
+    "statement": "Electrons carry a negative electric charge.",
+    "label": 1
+  },
+  {
+    "statement": "The Statue of Liberty was a gift from France to the United States.",
+    "label": 1
+  },
+  {
+    "statement": "Sharks are fish, not mammals.",
+    "label": 1
+  },
+  {
+    "statement": "The sum of angles in a triangle is 180 degrees.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Egypt is Cairo.",
+    "label": 1
+  },
+  {
+    "statement": "Albert Einstein developed the theory of general relativity.",
+    "label": 1
+  },
+  {
+    "statement": "The Mediterranean Sea borders southern Europe.",
+    "label": 1
+  },
+  {
+    "statement": "17 multiplied by 3 equals 51.",
+    "label": 1
+  },
+  {
+    "statement": "Mitosis is the process of cell division.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of India is New Delhi.",
+    "label": 1
+  },
+  {
+    "statement": "The first man-made satellite, Sputnik, was launched in 1957.",
+    "label": 1
+  },
+  {
+    "statement": "Insects have six legs.",
+    "label": 1
+  },
+  {
+    "statement": "The area of a circle is \u03c0r\u00b2.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Mexico is Mexico City.",
+    "label": 1
+  },
+  {
+    "statement": "Magellan's expedition was the first to circumnavigate the globe.",
+    "label": 1
+  },
+  {
+    "statement": "The element with symbol K is potassium.",
+    "label": 1
+  },
+  {
+    "statement": "The liver is the largest internal organ in the human body.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of South Africa includes Pretoria as executive capital.",
+    "label": 1
+  },
+  {
+    "statement": "Light from the Sun takes about 8 minutes to reach Earth.",
+    "label": 1
+  },
+  {
+    "statement": "A hexagon has six sides.",
+    "label": 1
+  },
+  {
+    "statement": "The Berlin Wall was built in 1961.",
+    "label": 1
+  },
+  {
+    "statement": "Protons carry a positive electric charge.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Argentina is Buenos Aires.",
+    "label": 1
+  },
+  {
+    "statement": "The largest continent by area is Asia.",
+    "label": 1
+  },
+  {
+    "statement": "25 divided by 5 equals 5.",
+    "label": 1
+  },
+  {
+    "statement": "Whales are mammals.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Russia is Moscow.",
+    "label": 1
+  },
+  {
+    "statement": "The first World War ended in 1918.",
+    "label": 1
+  },
+  {
+    "statement": "An octagon has eight sides.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical symbol for silver is Ag.",
+    "label": 1
+  },
+  {
+    "statement": "Lake Superior is the largest of the Great Lakes by surface area.",
+    "label": 1
+  },
+  {
+    "statement": "The human genome contains approximately 3 billion base pairs.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of South Korea is Seoul.",
+    "label": 1
+  },
+  {
+    "statement": "The Declaration of Independence was signed in 1776.",
+    "label": 1
+  },
+  {
+    "statement": "The volume of a cube with side 3 is 27.",
+    "label": 1
+  },
+  {
+    "statement": "Antibiotics are used to treat bacterial infections.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Italy is Rome.",
+    "label": 1
+  },
+  {
+    "statement": "The Sun is a star.",
+    "label": 1
+  },
+  {
+    "statement": "Alexander the Great was Macedonian.",
+    "label": 1
+  },
+  {
+    "statement": "The number of degrees in a full circle is 360.",
+    "label": 1
+  },
+  {
+    "statement": "The chemical formula for water is H2O.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Greece is Athens.",
+    "label": 1
+  },
+  {
+    "statement": "Electrons orbit the nucleus of an atom.",
+    "label": 1
+  },
+  {
+    "statement": "The Mississippi River flows into the Gulf of Mexico.",
+    "label": 1
+  },
+  {
+    "statement": "The Battle of Waterloo took place in 1815.",
+    "label": 1
+  },
+  {
+    "statement": "13 is a prime number.",
+    "label": 1
+  },
+  {
+    "statement": "The human body has two kidneys.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Turkey is Ankara.",
+    "label": 1
+  },
+  {
+    "statement": "Saturn has rings made primarily of ice and rock.",
+    "label": 1
+  },
+  {
+    "statement": "The Magna Carta was signed in 1215.",
+    "label": 1
+  },
+  {
+    "statement": "The square root of 64 is 8.",
+    "label": 1
+  },
+  {
+    "statement": "Vertebrates have a backbone.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of the Netherlands is Amsterdam.",
+    "label": 1
+  },
+  {
+    "statement": "The periodic table was developed by Dmitri Mendeleev.",
+    "label": 1
+  },
+  {
+    "statement": "The Andes mountain range is in South America.",
+    "label": 1
+  },
+  {
+    "statement": "World War II began in 1939.",
+    "label": 1
+  },
+  {
+    "statement": "A right triangle has one 90-degree angle.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Sweden is Stockholm.",
+    "label": 1
+  },
+  {
+    "statement": "Copper has the chemical symbol Cu.",
+    "label": 1
+  },
+  {
+    "statement": "The Sistine Chapel ceiling was painted by Michelangelo.",
+    "label": 1
+  },
+  {
+    "statement": "Jupiter is the largest planet in our solar system.",
+    "label": 1
+  },
+  {
+    "statement": "42 divided by 6 equals 7.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Norway is Oslo.",
+    "label": 1
+  },
+  {
+    "statement": "Photons are particles of light.",
+    "label": 1
+  },
+  {
+    "statement": "The French Revolution ended the French monarchy temporarily.",
+    "label": 1
+  },
+  {
+    "statement": "A square has four equal sides.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Portugal is Lisbon.",
+    "label": 1
+  },
+  {
+    "statement": "The human body has 32 adult teeth.",
+    "label": 1
+  },
+  {
+    "statement": "Machu Picchu is located in Peru.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of France is Berlin.",
+    "label": 0
+  },
+  {
+    "statement": "The Amazon River flows through China.",
+    "label": 0
+  },
+  {
+    "statement": "Mount Everest is located in Africa.",
+    "label": 0
+  },
+  {
+    "statement": "Water freezes at 100 degrees Celsius.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for gold is Go.",
+    "label": 0
+  },
+  {
+    "statement": "World War II ended in 1942.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 144 is 14.",
+    "label": 0
+  },
+  {
+    "statement": "Humans have 300 bones in the adult body.",
+    "label": 0
+  },
+  {
+    "statement": "The speed of light is approximately 3,000 kilometers per second.",
+    "label": 0
+  },
+  {
+    "statement": "South America is the largest continent by area.",
+    "label": 0
+  },
+  {
+    "statement": "The Nile River is located in Europe.",
+    "label": 0
+  },
+  {
+    "statement": "Oxygen has the atomic number 16.",
+    "label": 0
+  },
+  {
+    "statement": "The Great Wall of China is in Europe.",
+    "label": 0
+  },
+  {
+    "statement": "Shakespeare was born in London.",
+    "label": 0
+  },
+  {
+    "statement": "The Atlantic Ocean is the largest ocean on Earth.",
+    "label": 0
+  },
+  {
+    "statement": "A triangle has four sides.",
+    "label": 0
+  },
+  {
+    "statement": "The human heart has two chambers.",
+    "label": 0
+  },
+  {
+    "statement": "The Moon orbits the Sun directly.",
+    "label": 0
+  },
+  {
+    "statement": "Carbon dioxide has the formula CO3.",
+    "label": 0
+  },
+  {
+    "statement": "The French Revolution began in 1750.",
+    "label": 0
+  },
+  {
+    "statement": "New Zealand is both a continent and a country.",
+    "label": 0
+  },
+  {
+    "statement": "7 multiplied by 8 equals 54.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for sodium is So.",
+    "label": 0
+  },
+  {
+    "statement": "The Gobi is the largest hot desert in the world.",
+    "label": 0
+  },
+  {
+    "statement": "Mars is Earth's only natural satellite.",
+    "label": 0
+  },
+  {
+    "statement": "Abraham Lincoln was the 12th president of the United States.",
+    "label": 0
+  },
+  {
+    "statement": "Sound travels faster in air than in water.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Japan is Osaka.",
+    "label": 0
+  },
+  {
+    "statement": "Reptiles are warm-blooded animals.",
+    "label": 0
+  },
+  {
+    "statement": "Pi is approximately equal to 2.71828.",
+    "label": 0
+  },
+  {
+    "statement": "The Berlin Wall fell in 1979.",
+    "label": 0
+  },
+  {
+    "statement": "Diamonds are made of silicon.",
+    "label": 0
+  },
+  {
+    "statement": "The Amazon rainforest produces about 80% of Earth's oxygen.",
+    "label": 0
+  },
+  {
+    "statement": "The largest planet in our solar system is Saturn.",
+    "label": 0
+  },
+  {
+    "statement": "France is shaped like a boot.",
+    "label": 0
+  },
+  {
+    "statement": "The atomic number of hydrogen is 2.",
+    "label": 0
+  },
+  {
+    "statement": "Julius Caesar was assassinated in 100 BCE.",
+    "label": 0
+  },
+  {
+    "statement": "A right angle measures 45 degrees.",
+    "label": 0
+  },
+  {
+    "statement": "The Dead Sea is the highest point on Earth's land surface.",
+    "label": 0
+  },
+  {
+    "statement": "DNA stands for deoxyribose nitrogen acid.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Canada is Toronto.",
+    "label": 0
+  },
+  {
+    "statement": "Saturn is the farthest planet from the Sun.",
+    "label": 0
+  },
+  {
+    "statement": "The Titanic sank in 1898.",
+    "label": 0
+  },
+  {
+    "statement": "12 squared equals 124.",
+    "label": 0
+  },
+  {
+    "statement": "Photosynthesis occurs in the mitochondria of plant cells.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Germany is Munich.",
+    "label": 0
+  },
+  {
+    "statement": "The Great Barrier Reef is located in South Africa.",
+    "label": 0
+  },
+  {
+    "statement": "Buzz Aldrin was the first human to walk on the Moon.",
+    "label": 0
+  },
+  {
+    "statement": "Helium is the third element on the periodic table.",
+    "label": 0
+  },
+  {
+    "statement": "The Colosseum is located in Florence, Italy.",
+    "label": 0
+  },
+  {
+    "statement": "China is the largest country by land area.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Brazil is Rio de Janeiro.",
+    "label": 0
+  },
+  {
+    "statement": "Human blood is classified into eight main types.",
+    "label": 0
+  },
+  {
+    "statement": "The boiling point of water at sea level is 212\u00b0C.",
+    "label": 0
+  },
+  {
+    "statement": "The Pythagorean theorem states a\u00b2 + b\u00b2 = d\u00b2.",
+    "label": 0
+  },
+  {
+    "statement": "Christopher Columbus reached the Americas in 1776.",
+    "label": 0
+  },
+  {
+    "statement": "The largest organ in the human body is the liver.",
+    "label": 0
+  },
+  {
+    "statement": "Mars is the hottest planet in the solar system.",
+    "label": 0
+  },
+  {
+    "statement": "The Eiffel Tower is located in London.",
+    "label": 0
+  },
+  {
+    "statement": "Gravity accelerates objects at 1.6 m/s\u00b2 on Earth's surface.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of China is Shanghai.",
+    "label": 0
+  },
+  {
+    "statement": "The American Civil War ended in 1870.",
+    "label": 0
+  },
+  {
+    "statement": "A pentagon has six sides.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical formula for table salt is KCl.",
+    "label": 0
+  },
+  {
+    "statement": "The Alps are the highest mountain range on Earth.",
+    "label": 0
+  },
+  {
+    "statement": "Charles Darwin formulated the law of universal gravitation.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Australia is Sydney.",
+    "label": 0
+  },
+  {
+    "statement": "The human brain contains approximately 10 billion neurons.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 81 is 7.",
+    "label": 0
+  },
+  {
+    "statement": "The Wright Brothers made their first powered flight in 1899.",
+    "label": 0
+  },
+  {
+    "statement": "Pluto was reclassified as a dwarf planet in 1999.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for iron is Ir.",
+    "label": 0
+  },
+  {
+    "statement": "The equator divides Earth into Eastern and Western hemispheres.",
+    "label": 0
+  },
+  {
+    "statement": "World War I began in 1918.",
+    "label": 0
+  },
+  {
+    "statement": "A cube has eight faces.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Spain is Barcelona.",
+    "label": 0
+  },
+  {
+    "statement": "Electrons carry a positive electric charge.",
+    "label": 0
+  },
+  {
+    "statement": "The Statue of Liberty was a gift from England to the United States.",
+    "label": 0
+  },
+  {
+    "statement": "Dolphins are fish.",
+    "label": 0
+  },
+  {
+    "statement": "The sum of angles in a triangle is 360 degrees.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Egypt is Alexandria.",
+    "label": 0
+  },
+  {
+    "statement": "Isaac Newton developed the theory of general relativity.",
+    "label": 0
+  },
+  {
+    "statement": "The Mediterranean Sea borders northern Europe.",
+    "label": 0
+  },
+  {
+    "statement": "17 multiplied by 3 equals 48.",
+    "label": 0
+  },
+  {
+    "statement": "Meiosis is the process of ordinary cell replication.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of India is Mumbai.",
+    "label": 0
+  },
+  {
+    "statement": "The first man-made satellite, Sputnik, was launched in 1969.",
+    "label": 0
+  },
+  {
+    "statement": "Spiders have six legs.",
+    "label": 0
+  },
+  {
+    "statement": "The area of a circle is 2\u03c0r.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Mexico is Guadalajara.",
+    "label": 0
+  },
+  {
+    "statement": "Columbus's expedition was the first to circumnavigate the globe.",
+    "label": 0
+  },
+  {
+    "statement": "The element with symbol K is calcium.",
+    "label": 0
+  },
+  {
+    "statement": "The lungs are the largest internal organ in the human body.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of South Africa's executive branch is Cape Town.",
+    "label": 0
+  },
+  {
+    "statement": "Light from the Sun takes about 8 hours to reach Earth.",
+    "label": 0
+  },
+  {
+    "statement": "A hexagon has five sides.",
+    "label": 0
+  },
+  {
+    "statement": "The Berlin Wall was built in 1945.",
+    "label": 0
+  },
+  {
+    "statement": "Neutrons carry a positive electric charge.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Argentina is Santiago.",
+    "label": 0
+  },
+  {
+    "statement": "The largest continent by area is Europe.",
+    "label": 0
+  },
+  {
+    "statement": "25 divided by 5 equals 6.",
+    "label": 0
+  },
+  {
+    "statement": "Bats are birds.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Russia is St. Petersburg.",
+    "label": 0
+  },
+  {
+    "statement": "The first World War ended in 1920.",
+    "label": 0
+  },
+  {
+    "statement": "An octagon has six sides.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical symbol for silver is Si.",
+    "label": 0
+  },
+  {
+    "statement": "Lake Michigan is the largest of the Great Lakes by surface area.",
+    "label": 0
+  },
+  {
+    "statement": "The human genome contains approximately 30 million base pairs.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of South Korea is Busan.",
+    "label": 0
+  },
+  {
+    "statement": "The Declaration of Independence was signed in 1789.",
+    "label": 0
+  },
+  {
+    "statement": "The volume of a cube with side 3 is 9.",
+    "label": 0
+  },
+  {
+    "statement": "Antibiotics are used to treat viral infections.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Italy is Milan.",
+    "label": 0
+  },
+  {
+    "statement": "The Sun is a planet.",
+    "label": 0
+  },
+  {
+    "statement": "Alexander the Great was Roman.",
+    "label": 0
+  },
+  {
+    "statement": "The number of degrees in a full circle is 180.",
+    "label": 0
+  },
+  {
+    "statement": "The chemical formula for water is H3O.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Greece is Sparta.",
+    "label": 0
+  },
+  {
+    "statement": "Protons orbit the nucleus of an atom.",
+    "label": 0
+  },
+  {
+    "statement": "The Mississippi River flows into the Atlantic Ocean.",
+    "label": 0
+  },
+  {
+    "statement": "The Battle of Waterloo took place in 1820.",
+    "label": 0
+  },
+  {
+    "statement": "15 is a prime number.",
+    "label": 0
+  },
+  {
+    "statement": "The human body has three kidneys.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Turkey is Istanbul.",
+    "label": 0
+  },
+  {
+    "statement": "Saturn has rings made primarily of gas.",
+    "label": 0
+  },
+  {
+    "statement": "The Magna Carta was signed in 1066.",
+    "label": 0
+  },
+  {
+    "statement": "The square root of 64 is 6.",
+    "label": 0
+  },
+  {
+    "statement": "Invertebrates have a backbone.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of the Netherlands is Rotterdam.",
+    "label": 0
+  },
+  {
+    "statement": "The periodic table was developed by Marie Curie.",
+    "label": 0
+  },
+  {
+    "statement": "The Andes mountain range is in North America.",
+    "label": 0
+  },
+  {
+    "statement": "World War II began in 1941.",
+    "label": 0
+  },
+  {
+    "statement": "A right triangle has two 90-degree angles.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Sweden is Copenhagen.",
+    "label": 0
+  },
+  {
+    "statement": "Copper has the chemical symbol Co.",
+    "label": 0
+  },
+  {
+    "statement": "The Sistine Chapel ceiling was painted by Leonardo da Vinci.",
+    "label": 0
+  },
+  {
+    "statement": "Uranus is the largest planet in our solar system.",
+    "label": 0
+  },
+  {
+    "statement": "42 divided by 6 equals 8.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Norway is Bergen.",
+    "label": 0
+  },
+  {
+    "statement": "Photons are particles of sound.",
+    "label": 0
+  },
+  {
+    "statement": "The French Revolution ended the Spanish monarchy.",
+    "label": 0
+  },
+  {
+    "statement": "A square has five equal sides.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Portugal is Porto.",
+    "label": 0
+  },
+  {
+    "statement": "The human body has 28 adult teeth.",
+    "label": 0
+  },
+  {
+    "statement": "Machu Picchu is located in Bolivia.",
+    "label": 0
+  },
+  {
+    "statement": "The capital of Kenya is Nairobi.",
+    "label": 1
+  },
+  {
+    "statement": "Sodium has the atomic number 11.",
+    "label": 1
+  },
+  {
+    "statement": "The Sahara Desert is in northern Africa.",
+    "label": 1
+  },
+  {
+    "statement": "9 multiplied by 9 equals 81.",
+    "label": 1
+  },
+  {
+    "statement": "The human spine contains 33 vertebrae.",
+    "label": 1
+  },
+  {
+    "statement": "The capital of Kenya is Mombasa.",
+    "label": 0
+  },
+  {
+    "statement": "Sodium has the atomic number 19.",
+    "label": 0
+  },
+  {
+    "statement": "The Sahara Desert is in southern Africa.",
+    "label": 0
+  },
+  {
+    "statement": "9 multiplied by 9 equals 72.",
+    "label": 0
+  },
+  {
+    "statement": "The human spine contains 12 vertebrae.",
+    "label": 0
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "0": {
+    "correct": 0.6333333333333333,
+    "wrong": 0.36666666666666664,
+    "answer_rate": 1.0
+  },
+  "2": {
+    "correct": 0.65,
+    "wrong": 0.35,
+    "answer_rate": 1.0
+  },
+  "4": {
+    "correct": 0.6666666666666666,
+    "wrong": 0.3333333333333333,
+    "answer_rate": 1.0
+  },
+  "6": {
+    "correct": 0.65,
+    "wrong": 0.35,
+    "answer_rate": 1.0
+  },
+  "10": {
+    "correct": 0.65,
+    "wrong": 0.35,
+    "answer_rate": 1.0
+  }
+}

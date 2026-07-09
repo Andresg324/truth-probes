@@ -1,0 +1,2002 @@
+[
+  {
+    "statement": "The Amazon River flows through Brazil.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Mount Everest is located in the Himalayas.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Australia is both a country and a continent.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Sahara Desert is in Africa.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Nile River is the longest river in Africa.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Tokyo is the capital of Japan.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Canada has ten provinces and three territories.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Dead Sea borders Jordan and Israel.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Pacific Ocean is the largest ocean on Earth.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Russia is the largest country by land area.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Equator passes through Ecuador.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Vatican City is the smallest country in the world.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Alps mountain range is in Europe.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Iceland is an island nation in the North Atlantic.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Great Barrier Reef is located off Australia.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Brazil is the largest country in South America.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Rhine River flows through Germany.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Cairo is the capital of Egypt.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Andes mountains run along South America's west coast.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Lake Superior is the largest of the Great Lakes by area.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Norway has a very long coastline.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Yangtze is the longest river in China.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Antarctica is the coldest continent on Earth.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Strait of Gibraltar connects the Atlantic and Mediterranean.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "New Zealand consists of two main islands.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Gobi Desert is located in Asia.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Buenos Aires is the capital of Argentina.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Congo River is in central Africa.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Sweden and Norway share a land border.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Caspian Sea is the world's largest lake by area.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Mexico City is the capital of Mexico.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Mekong River flows through Southeast Asia.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Greece is located on the Balkan Peninsula.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Sahara is the largest hot desert in the world.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Peru is located in South America.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Danube River flows into the Black Sea.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Morocco is on the northwest coast of Africa.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The island of Borneo is divided among three countries.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "India shares a border with China.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Greenland is the world's largest island.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Amazon rainforest is the largest tropical rainforest on Earth.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Portugal borders Spain to the west.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Nairobi is the capital of Kenya.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Black Sea borders six countries.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Chile is the longest country from north to south.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Volga is the longest river in Europe.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Ethiopia is a landlocked country in East Africa.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Mediterranean Sea is surrounded by three continents.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "Oslo is the capital of Norway.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Tropic of Cancer passes through Mexico.",
+    "label": 1,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Amazon River flows through Peru only.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Mount Everest is located in the Hindu Kush range.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Australia is the smallest continent and a country.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Sahara Desert is in the Middle East.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Nile River is the longest river in the world.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Seoul is the capital of Japan.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Canada has twelve provinces and two territories.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Dead Sea borders Egypt and Libya.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Atlantic Ocean is the largest ocean on Earth.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "China is the largest country by land area.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Equator passes through Brazil only.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Monaco is the smallest country in the world.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Alps mountain range is in Asia.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Iceland is located in the South Pacific.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Great Barrier Reef is located off New Zealand.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Argentina is the largest country in South America.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Rhine River flows through France only.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Alexandria is the capital of Egypt.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Andes mountains run along South America's east coast.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Lake Michigan is the largest of the Great Lakes by area.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Portugal has a longer coastline than Norway.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Mekong is the longest river in China.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Africa is the coldest continent on Earth.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Strait of Hormuz connects the Atlantic and Mediterranean.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "New Zealand consists of three main islands.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Gobi Desert is located in South America.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Santiago is the capital of Argentina.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Niger River is in central Africa.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Sweden and Finland share a land border with Germany.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Aral Sea is the world's largest lake by area.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Lima is the capital of Mexico.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Yangtze River flows through Southeast Asia.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Italy is located on the Balkan Peninsula.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Kalahari is the largest hot desert in the world.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Colombia is located entirely in the Southern Hemisphere.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Danube River flows into the Caspian Sea.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Morocco is on the northeast coast of Africa.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The island of Borneo belongs entirely to Malaysia.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Pakistan shares a border with China.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Madagascar is the world's largest island.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Congo rainforest is the largest tropical rainforest on Earth.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "France borders Spain to the west.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Addis Ababa is the capital of Kenya.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Black Sea borders four countries.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Brazil is the longest country from north to south.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Danube is the longest river in Europe.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Ethiopia has a long Indian Ocean coastline.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Mediterranean Sea is surrounded by two continents.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Stockholm is the capital of Norway.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "The Tropic of Capricorn passes through Mexico.",
+    "label": 0,
+    "domain": "geography"
+  },
+  {
+    "statement": "Water is composed of hydrogen and oxygen atoms.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The speed of light in a vacuum is approximately 300,000 km/s.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "DNA carries genetic information in living organisms.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Mammals are warm-blooded vertebrates.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The human body has 206 bones in adulthood.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Photosynthesis converts sunlight into chemical energy in plants.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The Earth orbits the Sun once per year.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Protons carry a positive electric charge.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Sound cannot travel through a vacuum.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Carbon dioxide is released during cellular respiration.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The periodic table is organized by atomic number.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Neurons are the primary cells of the nervous system.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Jupiter is the largest planet in the solar system.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The atomic number of carbon is 6.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Gravity causes objects to accelerate at 9.8 m/s\u00b2 near Earth.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Mitochondria produce energy in eukaryotic cells.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The chemical symbol for gold is Au.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Light from the Sun takes about 8 minutes to reach Earth.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Electrons carry a negative electric charge.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Oxygen makes up about 21% of Earth's atmosphere.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The human genome contains approximately 3 billion base pairs.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Diamonds are made of carbon.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The boiling point of water at sea level is 100\u00b0C.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Neptune is the farthest planet from the Sun.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Antibiotics are ineffective against viruses.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The speed of sound in air is approximately 343 m/s.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Helium is the second most abundant element in the universe.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The atomic symbol for iron is Fe.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Red blood cells transport oxygen through the body.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The force of gravity weakens with distance squared.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Tectonic plates move due to convection in Earth's mantle.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Bats navigate using echolocation.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Hydrogen is the lightest element.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The human eye cannot see ultraviolet light.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Vaccines stimulate the immune system to produce antibodies.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Absolute zero is approximately \u2212273.15\u00b0C.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The Moon causes tides on Earth through gravitational pull.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Fungi are not classified as plants.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Pluto was reclassified as a dwarf planet in 2006.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Every action has an equal and opposite reaction.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The nucleus of an atom contains protons and neutrons.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Ozone in the stratosphere absorbs ultraviolet radiation.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Mercury is the closest planet to the Sun.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The human heart has four chambers.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Chlorophyll gives plants their green color.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Genes are segments of DNA that code for proteins.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The chemical formula for salt is NaCl.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Black holes have gravity so strong light cannot escape.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "The Milky Way is a spiral galaxy.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Electric current flows from high to low potential.",
+    "label": 1,
+    "domain": "science"
+  },
+  {
+    "statement": "Water is composed of nitrogen and oxygen atoms.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The speed of light in a vacuum is approximately 300,000 miles per hour.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "RNA carries genetic information in all living organisms.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Reptiles are warm-blooded vertebrates.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The human body has 206 bones at birth.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Photosynthesis converts chemical energy into sunlight in plants.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The Moon orbits the Sun once per year.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Neutrons carry a positive electric charge.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Sound travels faster in a vacuum than in air.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Oxygen is released during cellular respiration.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The periodic table is organized by atomic mass only.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Neurons are the primary cells of the digestive system.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Saturn is the largest planet in the solar system.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The atomic number of carbon is 12.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Gravity causes objects to accelerate at 9.8 m/s\u00b2 near the Moon.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Ribosomes produce energy in eukaryotic cells.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The chemical symbol for gold is Go.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Light from the Sun takes about 8 seconds to reach Earth.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Protons carry a negative electric charge.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Nitrogen makes up about 21% of Earth's atmosphere.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The human genome contains approximately 3 million base pairs.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Diamonds are made of silicon.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The boiling point of water at sea level is 212\u00b0F only.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Uranus is the farthest planet from the Sun.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Antibiotics are effective against both viruses and bacteria.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The speed of sound in air is approximately 343 km/h.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Hydrogen is the second most abundant element in the universe.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The atomic symbol for iron is Ir.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "White blood cells transport oxygen through the body.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The force of gravity strengthens with distance squared.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Tectonic plates move due to convection in Earth's outer core.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Dolphins navigate using echolocation.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Helium is the lightest element.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The human eye cannot see infrared light.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Vaccines destroy bacteria by introducing antibiotics.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Absolute zero is approximately 0\u00b0C.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The Sun causes tides on Earth through gravitational pull.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Algae are not classified as plants.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Pluto was reclassified as a dwarf planet in 2000.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Every action has a greater and opposite reaction.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The nucleus of an atom contains electrons and protons.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Ozone in the troposphere absorbs ultraviolet radiation.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Venus is the closest planet to the Sun.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The human heart has two chambers.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Carotene gives plants their green color.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Genes are segments of RNA that code for proteins.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The chemical formula for salt is KCl.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Black holes absorb all light and emit Hawking radiation as visible light.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "The Andromeda galaxy is a spiral galaxy.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "Electric current flows from low to high potential.",
+    "label": 0,
+    "domain": "science"
+  },
+  {
+    "statement": "World War II ended in 1945.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The French Revolution began in 1789.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Julius Caesar was assassinated on the Ides of March.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Berlin Wall fell in 1989.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Roman Empire was founded before the Common Era.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Christopher Columbus arrived in the Americas in 1492.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Magna Carta was signed in 1215.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The first atomic bomb was dropped on Hiroshima in 1945.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The American Civil War ended in 1865.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Cleopatra was the last active pharaoh of ancient Egypt.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Byzantine Empire fell in 1453.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Wright Brothers made their first powered flight in 1903.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Black Death killed millions in 14th-century Europe.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Napoleon was exiled to the island of Saint Helena.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Battle of Hastings took place in 1066.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Cold War was primarily between the USA and USSR.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Ancient Rome was traditionally founded in 753 BCE.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The printing press was invented by Johannes Gutenberg.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "World War I began in 1914.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Soviet Union dissolved in 1991.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Abraham Lincoln was the 16th president of the United States.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Titanic sank in 1912.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Renaissance originated in Italy.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Suez Canal opened in 1869.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Declaration of Independence was signed in 1776.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Genghis Khan founded the Mongol Empire.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Spanish Armada was defeated in 1588.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Ottoman Empire lasted for about 600 years.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Charles Darwin published On the Origin of Species in 1859.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Joan of Arc was burned at the stake in 1431.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Korean War ended with an armistice in 1953.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Ancient Egypt's pyramids at Giza are among the oldest wonders.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Mahatma Gandhi led India's independence movement nonviolently.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The First World War ended on November 11, 1918.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Moon landing by Apollo 11 occurred in 1969.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Roman Colosseum was completed in 80 CE.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Adolf Hitler became Chancellor of Germany in 1933.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Reformation was started by Martin Luther in 1517.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Alexander the Great was a Macedonian king.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The British Empire was once the largest empire by territory.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Hiroshima and Nagasaki were bombed in August 1945.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The League of Nations was a precursor to the United Nations.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Silk Road connected China to Europe via trade routes.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The United States entered World War II after Pearl Harbor.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Spartacus led a slave revolt against Rome.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Hundred Years' War was between England and France.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Aztec Empire was conquered by Spanish forces in 1521.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "Nelson Mandela was imprisoned for 27 years before his release.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Eiffel Tower was built for the 1889 World's Fair.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "The Crusades were a series of medieval religious wars.",
+    "label": 1,
+    "domain": "history"
+  },
+  {
+    "statement": "World War II ended in 1944.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The French Revolution began in 1799.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Julius Caesar was assassinated on the Ides of April.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Berlin Wall fell in 1979.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Roman Empire was founded in the 5th century CE.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Christopher Columbus arrived in the Americas in 1502.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Magna Carta was signed in 1315.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The first atomic bomb was dropped on Nagasaki in 1945.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The American Civil War ended in 1870.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Nefertiti was the last active pharaoh of ancient Egypt.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Byzantine Empire fell in 1353.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Wright Brothers made their first powered flight in 1899.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Black Death killed millions in 13th-century Europe.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Napoleon was exiled to the island of Elba only.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Battle of Hastings took place in 1166.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Cold War was primarily between the USA and China.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Ancient Rome was traditionally founded in 500 BCE.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The printing press was invented by Leonardo da Vinci.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "World War I began in 1916.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Soviet Union dissolved in 1989.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Abraham Lincoln was the 18th president of the United States.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Titanic sank in 1914.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Renaissance originated in France.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Suez Canal opened in 1889.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Declaration of Independence was signed in 1786.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Timur founded the Mongol Empire.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Spanish Armada was defeated in 1598.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Ottoman Empire lasted for about 200 years.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Charles Darwin published On the Origin of Species in 1869.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Joan of Arc was burned at the stake in 1421.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Korean War ended with a peace treaty in 1953.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Ancient Egypt's pyramids at Giza were built by the Romans.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Mahatma Gandhi led India's independence movement through armed revolt.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The First World War ended on November 11, 1919.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Moon landing by Apollo 12 was the first crewed Moon landing.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Roman Colosseum was completed in 150 CE.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Adolf Hitler became Chancellor of Germany in 1931.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Reformation was started by John Calvin in 1517.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Alexander the Great was a Greek city-state general.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Mongol Empire was once the largest empire by territory.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Hiroshima and Nagasaki were bombed in September 1945.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The United Nations was a precursor to the League of Nations.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Silk Road connected India to Africa via trade routes.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The United States entered World War II after the fall of France.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Hannibal led a slave revolt against Rome.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Hundred Years' War was between England and Spain.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Aztec Empire was conquered by Portuguese forces in 1521.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "Nelson Mandela was imprisoned for 17 years before his release.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Eiffel Tower was built for the 1900 World's Fair.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The Crusades were a series of medieval political wars only.",
+    "label": 0,
+    "domain": "history"
+  },
+  {
+    "statement": "The sum of angles in a triangle is 180 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Pi is an irrational number.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A prime number has exactly two distinct positive divisors.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Zero is an even number.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The square root of 144 is 12.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A right angle measures exactly 90 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The Pythagorean theorem states a\u00b2 + b\u00b2 = c\u00b2.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A quadrilateral has four sides.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Negative numbers are less than zero.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The factorial of 5 is 120.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Every integer is a rational number.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A circle's circumference equals 2\u03c0r.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The sum of the first 100 positive integers is 5050.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "An obtuse angle is greater than 90 but less than 180 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 1 is not considered a prime number.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A regular hexagon has six equal sides.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The square of any real number is non-negative.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Euler's number e is approximately 2.718.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The product of two negative numbers is positive.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A cube has 12 edges.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The decimal expansion of 1/3 is 0.333 repeating.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "There are infinitely many prime numbers.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The additive inverse of 7 is \u22127.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A rectangle is a special case of a parallelogram.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The area of a circle is \u03c0r\u00b2.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Two complementary angles sum to 90 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "64 is a perfect square.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 2 is the only even prime number.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Dividing by zero is undefined in standard arithmetic.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The Fibonacci sequence starts 0, 1, 1, 2, 3, 5.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "An equilateral triangle has three equal angles of 60 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The volume of a cube with side s is s\u00b3.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Rational numbers can be expressed as p/q where q \u2260 0.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The logarithm base 10 of 1000 is 3.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A pentagon has five sides.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The sum of interior angles of a quadrilateral is 360 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Matrix multiplication is not commutative in general.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The square root of 2 is irrational.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Any number raised to the power of 0 equals 1.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The mean of 2, 4, and 6 is 4.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The greatest common divisor of 12 and 18 is 6.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A prime number cannot be negative.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The hypotenuse is the longest side of a right triangle.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "Supplementary angles sum to 180 degrees.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 0 is neither positive nor negative.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "A sphere has no flat faces.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The least common multiple of 4 and 6 is 12.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "An isosceles triangle has at least two equal sides.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The slope of a horizontal line is zero.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The absolute value of \u22129 is 9.",
+    "label": 1,
+    "domain": "math"
+  },
+  {
+    "statement": "The sum of angles in a triangle is 360 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Pi is a rational number.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A prime number has exactly three distinct positive divisors.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Zero is an odd number.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The square root of 144 is 14.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A right angle measures exactly 180 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The Pythagorean theorem states a\u00b2 + b\u00b2 = 2c.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A quadrilateral has five sides.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Negative numbers are greater than zero.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The factorial of 5 is 60.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Every rational number is an integer.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A circle's circumference equals \u03c0r\u00b2.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The sum of the first 100 positive integers is 5000.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "An obtuse angle is less than 90 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 1 is considered a prime number.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A regular hexagon has eight equal sides.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The square of any real number can be negative.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Euler's number e is approximately 3.141.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The product of two negative numbers is negative.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A cube has 8 edges.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The decimal expansion of 1/4 is 0.333 repeating.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "There are exactly 1000 prime numbers.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The additive inverse of 7 is 1/7.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A square is a special case of a trapezoid.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The area of a circle is 2\u03c0r.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Two complementary angles sum to 180 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "64 is a perfect cube only, not a perfect square.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 2 is the only odd prime number.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Dividing by zero gives infinity in standard arithmetic.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The Fibonacci sequence starts 1, 2, 3, 4, 5, 6.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "An equilateral triangle has three equal angles of 90 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The volume of a cube with side s is s\u00b2.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Irrational numbers can be expressed as p/q where q \u2260 0.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The logarithm base 10 of 1000 is 10.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A pentagon has six sides.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The sum of interior angles of a quadrilateral is 180 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Matrix multiplication is always commutative.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The square root of 4 is irrational.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Any number raised to the power of 1 equals 0.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The mean of 2, 4, and 6 is 6.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The greatest common divisor of 12 and 18 is 3.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A prime number can be negative.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The hypotenuse is the shortest side of a right triangle.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "Supplementary angles sum to 90 degrees.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The number 0 is positive.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "A sphere has two flat faces.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The least common multiple of 4 and 6 is 24.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "An isosceles triangle has all three sides equal.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The slope of a vertical line is zero.",
+    "label": 0,
+    "domain": "math"
+  },
+  {
+    "statement": "The absolute value of \u22129 is \u22129.",
+    "label": 0,
+    "domain": "math"
+  }
+]
