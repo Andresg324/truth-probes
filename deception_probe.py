@@ -19,18 +19,38 @@ warnings.filterwarnings("ignore")
 
 
 #--------------- Setting up the model -------------------------
-device = "mps" if torch.backends.mps.is_available() else "cpu"
+MODELS = {
+    "0.5B": "Qwen/Qwen2.5-0.5B-Instruct",
+    "1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
+    "3B": "Qwen/Qwen2.5-3B-Instruct",
+    "7B": "Qwen/Qwen2.5-7B-Instruct",
+    "14B": "Qwen/Qwen2.5-14B-Instruct",
+    "gemma-2b": "google/gemma-2-2b-it",
+    "gemma-9b": "google/gemma-2-9b-it",
+    "llama-3b": "meta-llama/Llama-3.2-3B-Instruct",
+    "llama-8b": "meta-llama/Llama-3.1-8B-Instruct",
+}
+
+DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+DTYPE = torch.float16 if DEVICE == "cuda" else torch.float16
+
+device = DEVICE
 
 SIZE = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
 TAG = SIZE
-model_name = f"Qwen2.5-{SIZE}-Instruct"
+
+model_name = MODELS[SIZE]
+model = HookedTransformer.from_pretrained(model_name, device=DEVICE, dtype=DTYPE)
 
 RESULTS, FIGS = f"results/{TAG}", f"figures/{TAG}"
 
-os.makedirs(RESULTS, exist_ok=True); os.makedirs(FIGS, exist_ok=True)
+os.makedirs(RESULTS, exist_ok=True)
+os.makedirs(FIGS, exist_ok=True)
 
-model = HookedTransformer.from_pretrained(f"Qwen/{model_name}", device=device, dtype=torch.float16)
-model.cfg.default_prepend_bos = False
+
+
+
+
 print("Model Loaded")
 
 
@@ -66,12 +86,15 @@ print("Honest answers:", honest_ans)
 print("Deceptive answers:", deceptive_ans)
 
 #--------------------- Extract activations -----------------------------
+RESID_ONLY = lambda name: name.endswith("hook_resid_post")
+
 def get_answer_acts(prompt):
     tokens = model.to_tokens(prompt)
     with torch.no_grad():
-        _, cache = model.run_with_cache(tokens)
-    return np.array([cache["resid_post", L][0,-1,:].cpu().numpy() for L in range(model.cfg.n_layers)])
-
+        _, cache = model.run_with_cache(tokens, names_filter=RESID_ONLY)
+    return np.array([cache["resid_post", L][0,-1,:].cpu().numpy() 
+                     for L in range(model.cfg.n_layers)])
+    
 CACHE = f"{RESULTS}/acts_deception_balanced.npy"
 if os.path.exists(CACHE):
     acts = np.load(CACHE)
@@ -85,6 +108,9 @@ else:
 
 y_decep = np.array([e["deceptive"] for e in examples])
 print("Shape:", acts.shape)
+groups = np.arange(len(examples)) // 2
+np.savez(f"results/{TAG}/labels.npz", y_decep=np.asarray(y_decep), groups=np.asarray(groups))
+
 
 
 #----------------------- Grouped Split function --------------------
@@ -115,6 +141,12 @@ Xtr, Xte, ytr, yte, _, _ = gsplit(Xc, y_decep)
 ctrl = LogisticRegression(max_iter=1000).fit(Xtr, ytr).score(Xte,yte)
 print(f"\nLEAK CONTROL (answer word only): {ctrl:.3f} <- must be near 0.5")
 
+accs = []
+for s in range(10):
+    Xtr, Xte, ytr, yte, _, _ = gsplit(Xc, y_decep, seed = s)
+    accs.append(LogisticRegression(max_iter=1000).fit(Xtr, ytr).score(Xte, yte))
+print(f"leak control over 10 seeds: {np.mean(accs):.3f} +/- {np.std(accs):.3f}")
+
 #----------------------- Main Probe and Deception Direction -------------------------------
 X = acts[:, best_layer, :]
 Xtr, Xte, ytr, yte, tr_idx, te_idx = gsplit(X, y_decep)
@@ -124,7 +156,7 @@ print(f"Probe accuracy at {best_layer}:", probe.score(Xte, yte))
 
 probe_dir = probe.coef_[0]
 probe_dir = probe_dir / np.linalg.norm(probe_dir) #Normalized to a unit length
-probe_dir_t = torch.tensor(probe_dir, dtype=torch.float16, device=device)
+probe_dir_t = torch.tensor(probe_dir, dtype=DTYPE, device=device)
 
 def make_evasion_hook(alpha):
     def hook(value, hook):
@@ -138,7 +170,7 @@ def get_acts_with_evasion(prompt, alpha, layer=best_layer):
     hook_name = f"blocks.{layer}.hook_resid_post"
     with torch.no_grad():
         with model.hooks(fwd_hooks=[(hook_name, make_evasion_hook(alpha))]):
-            _, cache = model.run_with_cache(tokens)
+            _, cache = model.run_with_cache(tokens, names_filter = RESID_ONLY)
         return cache["resid_post", layer][0,-1,:].cpu().numpy()
     
 deceptive_idx = [i for i, e in enumerate(examples) if e["deceptive"] == 1]
@@ -178,7 +210,7 @@ def get_all_acts_with_evasion(prompt, alpha, steer_layer=best_layer):
     hook_name = f"blocks.{steer_layer}.hook_resid_post"
     with torch.no_grad():
         with model.hooks(fwd_hooks=[(hook_name, make_evasion_hook(alpha))]):
-            _, cache = model.run_with_cache(tokens)
+            _, cache = model.run_with_cache(tokens, names_filter=RESID_ONLY)
     return np.array([cache["resid_post", L][0,-1,:].cpu().numpy() for L in range(model.cfg.n_layers)])
 
 ALPHA = min_alpha
@@ -635,7 +667,7 @@ def steered_best(prompt, alpha, d_t):
         return value
     with torch.no_grad():
         with model.hooks(fwd_hooks=[(f"blocks.{best_layer}.hook_resid_post", h)]):
-            _, c = model.run_with_cache(model.to_tokens(prompt))
+            _, c = model.run_with_cache(model.to_tokens(prompt), names_filter=RESID_ONLY)
     return c["resid_post", best_layer][0,-1,:].cpu().numpy()
 
 detA = {a: [] for a in ALPHAS_X}; detB = {a: [] for a in ALPHAS_X}
@@ -644,7 +676,7 @@ for s in range(K):
     q = n_stmt // 2
     A, B, T = set(perm[:q-40]), set(perm[q-40:2 * q - 80]), set(perm[2 * q - 80:])
     pA, dA = fit_dir(stmt_to_ex(A)); pB, _ = fit_dir(stmt_to_ex(B))
-    dA_t = torch.tensor(dA, dtype=torch.float16, device=device)
+    dA_t = torch.tensor(dA, dtype=DTYPE, device=device)
     tdec = [i for i in range(len(examples)) if examples[i]["deceptive"] == 1 and (i // 2) in T]
     for a in ALPHAS_X:
         Xs = np.array([steered_best(examples[i]["prompt"], a, dA_t) for i in tdec])
@@ -666,7 +698,7 @@ for k in [1, 2, 3, 5, 10, 20]:
 # --------------------- Steering direction + helper (used by Fig 7 & Phase 2) -------------------
 
 best_dir = probe.coef_[0] / norm(probe.coef_[0])
-best_dir_t = torch.tensor(best_dir, dtype = torch.float16, device = device)
+best_dir_t = torch.tensor(best_dir, dtype = DTYPE, device = device)
 
 def hook_fixed(alpha):
     def h(value, hook):
@@ -678,7 +710,7 @@ def all_acts_steer_at(prompt, steer_layer, alpha):
     hn = f"blocks.{steer_layer}.hook_resid_post"
     with torch.no_grad():
         with model.hooks(fwd_hooks=[(hn, hook_fixed(alpha))]):
-            _, cache = model.run_with_cache(model.to_tokens(prompt))
+            _, cache = model.run_with_cache(model.to_tokens(prompt), names_filter=RESID_ONLY)
     return np.array([cache["resid_post", L][0, -1, :].cpu().numpy() for L in range(model.cfg.n_layers)])
 
 

@@ -1,0 +1,51 @@
+Loaded pretrained model Qwen/Qwen2.5-0.5B-Instruct into HookedTransformer
+Model Loaded
+Loaded cached activations (800, 24, 896)
+best_layer=22  min_alpha=2  E=11
+Saved figures/0.5B/fig8_persistent.png
+Persistent-steer coherence check:
+   'У\nУ\nУ\nУ\nстр.验证码\n规律\n规律\n conformity. С\n'
+   'В. lucky. С. lucky. С. lucky. С. lucky. С. lucky.'
+recovery, no ablation : 0.19
+recovery, MLP ablated : 0.0
+recovery, ATTN ablated: 0.0
+MLP-ablated: '<|endoftext|>:100000000000000000'
+MLP-ablated: '<|endoftext|>:100000000000000090'
+per-layer MLP ablation: {12: 0.1, 13: 0.0, 14: 0.0, 15: 0.0, 16: 0.0, 17: 0.14, 18: 0.0, 19: 0.0, 20: 1.0, 21: 0.05, 22: 0.12}
+Critical recomputing MLP: L13 (recovery 0.00)
+baseline detection (no steer, no ablate): (0.74, 0.66, 0.82)
+detection, ablate L13 MLP, NO steer : (0.8, 0.72, 0.87)
+recovery no ablation: 0.19 [0.12, 0.27]
+recovery MLP L13: 0.00 [0.00, 0.00]
+coherence under L13 ablation: 'Yes<|im_end|>'
+recovery, clean 13 MLP patched into steered run: 0.06 [0.02, 0.11]
+linear-last  clean acc: 0.750
+linear-mean  clean acc: 0.465
+linear-max   clean acc: 0.555
+mlp-last     clean acc: 0.750
+
+alpha=0
+  linear-last det: 0.77
+  linear-mean det: 0.58
+  linear-max  det: 0.74
+  mlp-last    det: 0.86
+
+alpha=2
+  linear-last det: 0.01
+  linear-mean det: 0.00
+  linear-max  det: 0.06
+  mlp-last    det: 0.13
+
+alpha=4
+  linear-last det: 0.00
+  linear-mean det: 0.00
+  linear-max  det: 0.00
+  mlp-last    det: 0.00
+Loaded cached Phase 4
+Phase 4 examples: 411 Counter({0: 286, 1: 125})
+Phase 4: 125 compliant lies / 400 statements (refusal 69%)
+Teacher-forced probe -> instructed lies: acc 0.696, AUC 0.884
+ ~0.7+ = deception direction transfers (real) | ~0.5 = the 1.0 was a system-prompt leak
+Phase 4b (free-form): 74 Counter({0: 63, 1: 11})
+frozen y/n probe -> free-form lies, last-token AUC: 0.918
+fresh mean-pool probe on free-form, held-out AUC: 0.968

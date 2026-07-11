@@ -1,0 +1,57 @@
+Loaded pretrained model Qwen/Qwen2.5-1.5B-Instruct into HookedTransformer
+Model Loaded
+Loaded cached activations (800, 28, 1536)
+best_layer=18  min_alpha=6  E=9
+Saved figures/1.5B/fig8_persistent.png
+Persistent-steer coherence check:
+   'importcommonimportlibTHISISHERE\nimportimportlibselfimportcimport\nimportimportnameimport'
+   'WhatIS,Please,gonowror,PL,IS,Here,|CCT,R,'
+recovery, no ablation : 0.45
+recovery, MLP ablated : 0.0
+recovery, ATTN ablated: 0.0
+MLP-ablated: 'I need to be asked a question is identified with should be replaced with should be replaced be a question'
+MLP-ablated: "I am asked to be to the, with world's, lake by the of area, is the"
+per-layer MLP ablation: {10: 0.52, 11: 0.23, 12: 0.29, 13: 0.31, 14: 0.43, 15: 0.24, 16: 0.26, 17: 0.07, 18: 0.27}
+Critical recomputing MLP: L17 (recovery 0.07)
+baseline detection (no steer, no ablate): (0.92, 0.86, 0.97)
+detection, ablate L17 MLP, NO steer : (0.21, 0.13975000000000004, 0.29)
+recovery no ablation: 0.45 [0.36, 0.55]
+recovery MLP L17: 0.07 [0.02, 0.12]
+coherence under L17 ablation: 'Yes.<|im_end|>'
+recovery, clean 17 MLP patched into steered run: 0.50 [0.41, 0.60]
+
+Specificity of MLP L17 (clean -> ablated), held-out:
+ deception: 0.93 -> 0.60
+ truth    : 0.90 -> 0.78
+ polarity : 1.00 -> 1.00
+linear-last  clean acc: 0.925
+linear-mean  clean acc: 0.680
+linear-max   clean acc: 0.895
+mlp-last     clean acc: 0.925
+
+alpha=0
+  linear-last det: 0.94
+  linear-mean det: 0.80
+  linear-max  det: 0.90
+  mlp-last    det: 0.94
+
+alpha=6
+  linear-last det: 0.01
+  linear-mean det: 0.00
+  linear-max  det: 0.21
+  mlp-last    det: 0.20
+
+alpha=12
+  linear-last det: 0.00
+  linear-mean det: 0.00
+  linear-max  det: 0.00
+  mlp-last    det: 0.00
+Loaded cached Phase 4
+Phase 4 examples: 411 Counter({0: 354, 1: 57})
+Phase 4: 57 compliant lies / 400 statements (refusal 86%)
+Teacher-forced probe -> instructed lies: acc 0.859, AUC 0.632
+ ~0.7+ = deception direction transfers (real) | ~0.5 = the 1.0 was a system-prompt leak
+Loaded cached phase 4b
+Phase 4b (free-form): 72 Counter({0: 66, 1: 6})
+frozen y/n probe -> free-form lies, last-token AUC: 0.356
+fresh mean-pool probe on free-form, held-out AUC: 1.0
