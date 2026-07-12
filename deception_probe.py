@@ -62,8 +62,11 @@ def build_example(statement, forced_answer):
     chat = model.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     return chat + forced_answer
 
-toks = model.to_str_tokens(build_example("The sky is blue", "Yes"))
-print("First:", toks[0], "| Last 3:", toks[-3:])
+try:
+    toks = model.to_str_tokens(build_example("The sky is blue", "Yes"))
+    print("First:", toks[0], "| Last 3:", toks[-3:])
+except Exception as e:
+    print("token preview skipped:", e)
 
 with open("data/mixed.json") as f:
     items = json.load(f)
