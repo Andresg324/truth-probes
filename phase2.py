@@ -243,6 +243,12 @@ base = boot_ci(np.array([layer_probes[best_layer].predict(acts[i, best_layer].re
 print("baseline detection (no steer, no ablate):", base)
 print(f"detection, ablate L{crit_L} MLP, NO steer :", detection_ablate_only('hook_mlp_out', [crit_L]))
 
+# -----no-steer ablation curve across the band + matched non-critical control
+noste = {L: detection_ablate_only('hook_mlp_out', [L])[0] for L in R}
+print("no-steer ablation, detection by ablated layer:", {L: round(v, 2) for L, v in noste.items()})
+ctrl_L = max(noste, key=noste.get)
+print(f"NON-critical control L{ctrl_L}: {noste[ctrl_L]:.2f} | critical L{crit_L}: {noste[crit_L]:.2f}")
+
 
 for name, comp in [("no ablation", None), (f"MLP L{crit_L}", "hook_mlp_out")]:
     m, lo, hi = boot_ci(recovery_preds(comp, [crit_L]))
@@ -416,25 +422,29 @@ def resp_acts(question, sys, n_new = 25):
     with torch.no_grad():
         full = model.generate(tok, max_new_tokens=n_new, do_sample=False, verbose=False)[0]
         _, c = model.run_with_cache(full.unsqueeze(0), names_filter=RESID_ONLY)
-    r = c["resid_post", best_layer][0, tok.shape[1]:, :]
+    R_all = c["resid_post", best_layer][0]
+    r = R_all[tok.shape[1]:,:]
+    prompt_last = R_all[tok.shape[1] - 1, :].cpu().numpy()
     text = model.to_string(full[tok.shape[1]:]).lower()
-    return r[-1].cpu().numpy(), r.mean(0).cpu().numpy(), text
+    return prompt_last, r[0].cpu().nump(), r[-1].cpu().numpy(), r.mean(0).cpu().numpy(), text
 
 P4B = f"{RESULTS}/phase4b.npz"
 if os.path.exists(P4B):
-    z = np.load(P4B); Xl4, Xm4, y4b, grp = z["l"], z["m"], z["y"], z["g"]; print("Loaded cached phase 4b")
+    z = np.load(P4B); Xp4, Xf4, Xl4, Xm4, y4b, grp = z["p"], z["f"], z["l"], z["m"], z["y"], z["g"]
+    print("Loaded cached phase 4b")
 else:
-    Xl4, Xm4, y4b, grp = [], [], [], []
+    Xp4, Xf4, Xl4, Xm4, y4b, grp = [], [], [], [], [], []
     for qi, d in enumerate(qa):
         ans = d["answer"]
-        hl, hm, ht = resp_acts(d["question"], HON)
-        ll, lm, lt = resp_acts(d["question"], LIE)
+        hp, hf, hl, hm, ht = resp_acts(d["question"], HON)
+        lp, lf, ll, lm, lt = resp_acts(d["question"], LIE)
         if ans in ht:
-            Xl4.append(hl); Xm4.append(hm); y4b.append(0); grp.append(qi) # Honest told truth
+            Xp4.append(hp); Xf4.append(hf); Xl4.append(hl); Xm4.append(hm); y4b.append(0); grp.append(qi)
         if ans not in lt:
-            Xl4.append(ll); Xm4.append(lm); y4b.append(1); grp.append(qi) # Lie avoided truth
-    Xl4, Xm4, y4b, grp = map(np.array, (Xl4, Xm4, y4b, grp))
-    np.savez(P4B, l=Xl4, m=Xm4, y=y4b, g=grp)
+            Xp4.append(lp); Xf4.append(lf); Xl4.append(ll); Xm4.append(lm); y4b.append(1); grp.append(qi)
+    Xp4, Xf4, Xl4, Xm4, y4b, grp = map(np.array, (Xp4, Xf4, Xl4, Xm4, y4b, grp))
+    np.savez(P4B, p=Xp4, f=Xf4, l=Xl4, m=Xm4, y=y4b, g=grp)
+
 
 print("Phase 4b (free-form):", len(y4b), Counter(y4b.tolist()))
       

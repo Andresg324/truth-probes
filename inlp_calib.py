@@ -1,4 +1,6 @@
 import numpy as np
+import json, os
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
 
@@ -27,7 +29,15 @@ def inlp_dim(X, y, g, seed, n_dirs=60):
 n_syn = 800; y_syn = np.arange(n_syn) % 2; g_syn = np.arange(n_syn) // 2
 
 COMMON = 512
-BEST = {"0.5B": 22, "1.5B": 18, "3B": 27, "gemma-2b": 15}
+
+TAGS = ["0.5B", "1.5B", "3B", "7B", "14B", "gemma-2b", "gemma-9b", "llama-3b", "llama-8b"]
+
+def best_layer(tag):
+    sw = json.load(open(f"results/{tag}/sweep_stats.json"))
+    return int(max(sw, key=lambda k: sw[k]["mean"]))
+
+BEST = {t: best_layer(t) for t in TAGS if os.path.exists(f"results/{t}/sweep_stats.json")}
+print("Best Layers:", BEST)
 
 #(1) Capacity Control
 for s, L in BEST.items():
@@ -53,12 +63,4 @@ for d in [896, 2048]:
     for k in [3, 8]:
         X = synth(d, k)
         print(f" d={d}, planted k={k}: recovered {np.mean([inlp_dim(X, y_syn, g_syn, i) for i in range(3)]):.1f}")
-
-
-
-from transformer_lens.loading_from_pretrained import OFFICIAL_MODEL_NAMES
-for m in ["Qwen/Qwen2.5-7B-Instruct", "Qwen/Qwen2.5-14B-Instruct",
-          "google/gemma-2-9b-it", "meta-llama/Llama-3.1-8B-Instruct",
-          "meta-llama/Llama-3.2-3B-Instruct"]:
-    print(m, m in OFFICIAL_MODEL_NAMES)
     
