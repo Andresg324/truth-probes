@@ -426,7 +426,7 @@ def resp_acts(question, sys, n_new = 25):
     r = R_all[tok.shape[1]:,:]
     prompt_last = R_all[tok.shape[1] - 1, :].cpu().numpy()
     text = model.to_string(full[tok.shape[1]:]).lower()
-    return prompt_last, r[0].cpu().nump(), r[-1].cpu().numpy(), r.mean(0).cpu().numpy(), text
+    return prompt_last, r[0].cpu().numpy(), r[-1].cpu().numpy(), r.mean(0).cpu().numpy(), text
 
 P4B = f"{RESULTS}/phase4b.npz"
 if os.path.exists(P4B):
