@@ -6,3 +6,8 @@ __pycache__/
 results/**/acts_*.npy
 results/scaling/*.npy
 results/**/*.npz
+results_gpu/
+results_gpu/
+results/
+*.npy
+*.npz
