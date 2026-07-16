@@ -1,19 +1,40 @@
-import json, numpy as np, statsmodels.api as sm
+import os, json, numpy as np, statsmodels.api as sm
+import sys
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import roc_auc_score
 
-TAG = "gemma-2b"
-rows = json.load(open(f"results/{TAG}/p4_rows.json"))
-X4 = np.load(f"results/{TAG}/p4_acts.npy")
+TAG = sys.argv[1] if len(sys.argv) > 1 else "gemma-2b"
+ROOT = f"results/{TAG}" if os.path.exists(f"results/{TAG}/p4_rows.json") else f"results_gpu/{TAG}"
+print("reading from:", ROOT)
+rows = json.load(open(f"{ROOT}/p4_rows.json"))
+X4 = np.load(f"{ROOT}/p4_acts.npy")
 
 # Rebuild frozen probe
 items = json.load(open("data/mixed.json"))
 yd = np.array([j for _ in items for j in (0, 1)]); grp = np.arange(len(yd))//2
-acts = np.load(f"results/{TAG}/acts_deception_balanced.npy")
+acts = np.load(f"{ROOT}/acts_deception_balanced.npy")
 tr, te = next(GroupShuffleSplit(1, test_size=0.25, random_state=0).split(acts, yd, grp))
 bl = int(np.argmax([LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr, L, :], yd[tr]).score(acts[te,L,:], yd[te]) for L in range(acts.shape[1])]))
 probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr,bl,:], yd[tr])
+
+nc = [i for i, r in enumerate(rows) if r["cond"]=="lie" and r["ans"] in ("yes", "no") and r["ans"]==r["truth"]]
+hon = [i for i, r in enumerate(rows) if r["cond"]=="honest" and r["ans"]==r["truth"]]
+if len(nc) >= 5:
+    s_nc, s_hon = probe.decision_function(X4[nc]), probe.decision_function(X4[hon])
+    y = np.r_[np.zeros(len(hon)), np.ones(len(nc))]
+    print(f"\nDE-CONFOUND (non-compliant lies = told to lie, told truth anyway; n={len(nc)}):")
+    print(f" probe AUC(honest vs. told-to-lie-but-truthful) = {roc_auc_score(y, np.r_[s_hon, s_nc]):.3f}")
+    print(" ~0.5 -> probe reads the ANSWER => (clean test)")
+    print(" high -> probe reads the INSTRUCTION => (it's a context leak, drop it from this model)")
+else:
+    print(f"\nDE-CONFOUND: only {len(nc)} non-compliant lies - too few to test")
+
+
+pc = roc_auc_score(yd[te], probe.decision_function(acts[te, bl, :]))
+print(f"POSITIVE CONTROL (held out teacher forced) AUC = {pc:.3f}")
+print(" transfer AUC at/above this = confound, not a result\n")
 
 keep = [i for i, r in enumerate(rows)
         if (r["cond"]=="honest" and r["ans"]==r["truth"]) or (r["cond"]=="lie" and r["ans"] in ("yes", "no") and r["ans"]!=r["truth"])]

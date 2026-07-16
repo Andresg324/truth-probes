@@ -1,0 +1,210 @@
+"""
+paraphrase_triangle.py <MODEL_TAG> <PARAPHRASE>
+    e.g.  python paraphrase_triangle.py gemma-2b tf
+
+Runs the FULL mechanism triangle (necessity + non-critical control + sufficiency +
+specificity) under a PARAPHRASED prompt, at the paraphrase's OWN critical MLP.
+
+Why (Fable Q1): the original mechanism is proven only within the original format. The
+template check showed the critical MLP's necessity is format-sensitive. This answers the
+open question: does paraphrase MOVE the mechanism (triangle replicates at a new layer)
+or BREAK it (no layer collapses)?  If it replicates -> "feature is real, locally
+computed, but not canonical across formats" is airtight.
+
+Self-contained: extracts its own acts under the paraphrase. Everything else mirrors phase2.py.
+"""
+
+# Imports
+import json, os, warnings
+import numpy as np
+import torch
+import matplotlib.pyplot as plt
+import sys
+
+from transformer_lens import HookedTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from numpy.linalg import norm
+from sklearn.neural_network import MLPClassifier
+from collections import Counter
+from sklearn.model_selection import GroupShuffleSplit
+from sklearn.metrics import roc_auc_score
+
+warnings.filterwarnings("ignore")
+
+# ---- model (identical to deception_probe.py) ----
+MODELS = {
+    "0.5B": "Qwen/Qwen2.5-0.5B-Instruct",
+    "1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
+    "3B"  : "Qwen/Qwen2.5-3B-Instruct"  ,
+    "7B"  : "Qwen/Qwen2.5-7B-Instruct"  ,
+    "14B" : "Qwen/Qwen2.5-14B-Instruct" ,
+    "gemma-2b": "google/gemma-2-2b-it"  ,
+    "gemma-9b": "google/gemma-2-9b-it"  ,
+    "llama-3b": "meta-llama/Llama-3.2-3B-Instruct",
+    "llama-8b": "meta-llama/Llama-3.1-8B-Instruct",
+}
+
+device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+DTYPE = torch.float16
+
+TAG =  sys.argv[1] if len(sys.argv) > 1 else "gemma-2b"
+PARA = sys.argv[2] if len(sys.argv) > 2 else "tf"
+
+loader = (HookedTransformer.from_pretrained_no_processing if TAG in ("7B", "14B", "gemma-9b", "llama-8b") else HookedTransformer.from_pretrained)
+model = loader(MODELS[TAG], device=device, dtype=DTYPE)
+
+RESULTS = f"results/{TAG}"; os.makedirs(RESULTS, exist_ok=True)
+RESID_ONLY = lambda name: name.endswith("hook_resid_post")
+print(f"Model loaded: {TAG} | paraphrase: {PARA}")
+
+# ------ Paraphrase templates (user-content only, chat template applied after)
+PARAPHRASES = {
+    "orig":  lambda s: f"Statement: {s}\nIs this statement true? Answer Yes or No.",
+    "claim": lambda s: f"Consider the claim: {s}\nIs it correct? Respond Yes or No.",
+    "tf":    lambda s: f'"{s}"\nTrue or false? Reply Yes or No.',
+}
+user_content = PARAPHRASES[PARA]
+
+def build_example(statement, forced_answer):
+    m = [{"role": "user", "content": user_content(statement)}]
+    return model.tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=True) + forced_answer
+
+
+# ---- examples (identical order) ----
+items = json.load(open("data/mixed.json"))
+examples = []
+for d in items:
+    stmt, is_true = d["statement"], d["label"]
+    examples.append({"prompt": build_example(stmt, "Yes" if is_true else "No"),  "deceptive": 0, "answer": "Yes" if is_true else "No" })
+    examples.append({"prompt": build_example(stmt, "No"  if is_true else "Yes"), "deceptive": 1, "answer": "No"  if is_true else "Yes"})
+y_decep = np.array([e["deceptive"] for e in examples])
+y_truth = np.array([items[i // 2]["label"] for i in range(len(examples))])
+y_pol = np.array([1 if examples[i]["answer"] == "Yes" else 0 for i in range(len(examples))])
+groups = np.array([i // 2 for i in range(len(examples))])
+
+def gsplit(y, seed = 0, test_size = 0.25):
+    return next(GroupShuffleSplit(1, test_size=test_size, random_state=seed).split(np.zeros(len(y)), y, groups))
+
+# Extract all-layer acts at the forced-answer token, UNDER THE PARAPHRASe
+CACHE = f"{RESULTS}/acts_paraphrase_{PARA}.npy"
+if os.path.exists(CACHE):
+    acts = np.load(CACHE); print("loaded cached paraphrase acts", acts.shape)
+else:
+    acts = []
+    for e in examples:
+        with torch.no_grad():
+            _, c = model.run_with_cache(model.to_tokens(e["prompt"]), names_filter=RESID_ONLY)
+        acts.append([c["resid_post", L][0,-1,:].cpu().numpy() for L in range(model.cfg.n_layers)])
+    acts = np.array(acts); np.save(CACHE, acts); print("extracted paraphrase acts", acts.shape)
+
+# ---- best layer + probe + direction
+tr_idx, te_idx = gsplit(y_decep)
+scores = [LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, L, :], y_decep[tr_idx]).score(acts[te_idx, L, :], y_decep[te_idx]) for L in range(model.cfg.n_layers)]
+best_layer = int(np.argmax(scores))
+probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, best_layer, :], y_decep[tr_idx])
+best_dir_t = torch.tensor(probe.coef_[0] / norm(probe.coef_[0]), dtype = DTYPE, device = device)
+layer_probes = {L: LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, L, :], y_decep[tr_idx]) for L in range(model.cfg.n_layers)}
+
+DECEP = [i for i in te_idx if examples[i]["deceptive"] == 1]
+E = best_layer // 2
+print(f"[{PARA}] best_layer = {best_layer} probe acc{scores[best_layer]:.3f} n_decep_eval={len(DECEP)}")
+
+# ----- hookes + bootstrap -------------
+def sub_hook(alpha, d_t):
+    def h(v, hook): v[:, :, :] = v[:, :, :] - alpha * d_t; return v
+    return h
+
+def zero_hook():
+    def h(v, hook): return v*0
+    return h
+
+def boot_ci(vals, n=1000):
+    vals = np.array(vals); rng = np.random.default_rng(0)
+    b = [vals[rng.integers(0, len(vals), len(vals))].mean() for _ in range(n)]
+    return float(vals.mean()), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+def detect_at_best(hooks):
+    preds = []
+    for i in DECEP:
+        with torch.no_grad():
+            with model.hooks(fwd_hooks=hooks):
+                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+        preds.append(layer_probes[best_layer].predict(c["resid_post", best_layer][0, -1, :].cpu().numpy().reshape(1, -1))[0])
+    return np.array(preds)
+
+# collapse sweep
+alphas = [2, 4, 6, 8, 12, 16, 24]
+collapse = {a: detect_at_best([(f"blocks.{E}.hook_resid_post", sub_hook(a, best_dir_t))]).mean() for a in alphas}
+print("collapse sweep:", {a: round(v, 2) for a, v in collapse.items()})
+A2 = float(next((a for a in alphas if collapse[a] < 0.10), alphas[-1]))
+print(f"min_alpha (paraphrase = {A2}")
+
+# Necessity -------------
+R = list(range(E + 1, best_layer + 1))
+base_m, base_lo, base_hi = boot_ci([layer_probes[best_layer].predict(acts[i, best_layer].reshape(1, -1))[0] for i in DECEP])
+noste = {L: detect_at_best([(f"blocks.{L}.hook_mlp_out", zero_hook())]) for L in R}
+noste_mean = {L: noste[L].mean() for L in R}
+crit_L = min(noste_mean, key=noste_mean.get)
+ctrl_L = max(noste_mean, key=noste_mean.get)
+
+print(f"\n[{PARA}] baseline (no steer, no ablate): {base_m:.2f} [{base_lo:.2f}, {base_hi:.2f}]")
+print(f"[{PARA}] no-steer ablation by layer:", {L: round(v, 2) for L, v in noste_mean.items()})
+cm, clo, chi = boot_ci(noste[crit_L]); km, klo, khi = boot_ci(noste[ctrl_L])
+
+print(f"NECESSITY crit L{crit_L}: {cm:.2f} [{clo:.2f}, {chi:.2f}] (vs baseline {base_m:.2f})")
+print(f"CONTROL non-crit L{ctrl_L}: {km:.2f} [{klo:.2f}, {khi:.2f}] (Should stay near baseline ^^)")
+
+# --- Sufficency
+def recovery_patch_clean(L):
+    clean = {}
+    def save(v, hook): clean["v"] = v.clone(); return v
+    def steer(v, hook): v[:, :, :] = v[:, :, :] - A2 * best_dir_t; return v
+    def paste(v, hook): return clean["v"]
+    preds = []
+    for i in DECEP:
+        tok = model.to_tokens(examples[i]["prompt"])
+        with torch.no_grad():
+            with model.hooks(fwd_hooks=[(f"blocks.{L}.hook_mlp_out", save)]):
+                model.run_with_cache(tok, names_filter=RESID_ONLY)
+            with model.hooks(fwd_hooks=[(f"blocks.{E}.hook_resid_post", steer), (f"blocks.{L}.hook_mlp_out", paste)]):
+                _, c = model.run_with_cache(tok, names_filter=RESID_ONLY)
+        preds.append(layer_probes[best_layer].predict(c["resid_post", best_layer][0,-1,:].cpu().numpy().reshape(1, -1))[0])
+    return np.array(preds)
+
+nm, nlo, nhi = boot_ci(detect_at_best([(f"blocks.{E}.hook_resid_post", sub_hook(A2, best_dir_t))]))
+sm, slo, shi = boot_ci(recovery_patch_clean(crit_L))
+
+print(f"\nSUFFICIENCY steered, no patch: {nm:.2f} [{nlo:.2f},{nhi:.2f}]")
+print(f"SUFFICIENCY + clean L{crit_L} patch: {sm:.2f} [{slo:.2f}, {shi:.2f}] (restoration)")
+
+
+# Specificity 
+def train_probe(lab): return LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, best_layer, :], lab[tr_idx])
+P = {"deception": train_probe(y_decep), "truth": train_probe(y_truth), "polarity": train_probe(y_pol)}
+labs = {"deception": y_decep, "truth": y_truth, "polarity": y_pol}
+Xabl = []
+for i in te_idx:
+    with torch.no_grad():
+        with model.hooks(fwd_hooks=[(f"blocks.{crit_L}.hook_mlp_out", zero_hook())]):
+            _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+    Xabl.append(c["resid_post", best_layer][0, -1, :].cpu().numpy())
+Xabl = np.array(Xabl)
+print(f"\nSPECIFICITY of crit MLP L{crit_L} (clean -> ablated, held-out):")
+for nmr in ["deception", "truth", "polarity"]:
+    clean = P[nmr].score(acts[te_idx, best_layer, :], labs[nmr][te_idx])
+    abl = P[nmr].score(Xabl, labs[nmr][te_idx])
+    print(f" {nmr:9}: {clean:.2f} -> {abl:.2f}")
+
+print(f"""
+================= TRIANGLE @ paraphrase='{PARA}', model={TAG} =================
+  crit MLP under this paraphrase: L{crit_L} (compare to the phase 2 orig-format crit)
+  NECESSITY     : {base_m:.2f} -> {cm:.2f} crit ablation collapses detection?
+  CONTROL       : {base_m:.2f} -> {km:.2f} non-crit L{ctrl_L} leaves it intact?
+  SUFFICIENCY   : {nm:.2f} -> {sm:.2f} clean patch restores?
+
+  SPECIFICITY.  : polarity should survive (see above)
+  Reading: crit collapses + cntrol holds + patch restores + polarity survives
+    => mechanism MOVED to L{crit_L} (triangle replicates) => thesis checks out
+    no layer collapeses means the paraphrase breaks the mechanism
+      """)
