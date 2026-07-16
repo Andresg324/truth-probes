@@ -38,7 +38,7 @@ TAG = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
 RESULTS = f"results/{TAG}"
 os.makedirs(RESULTS, exist_ok=True)
 
-model = HookedTransformer.from_pretrained(MODELS[TAG], device=DEVICE, dtype=DTYPE)
+model = HookedTransformer.from_pretrained_no_processing(MODELS[TAG], device=DEVICE, dtype=DTYPE)
 RESID = lambda n: n.endswith("hook_resid_post")
 print("model loaded:", TAG)
 
