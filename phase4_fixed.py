@@ -39,7 +39,7 @@ NOPROC = len(sys.argv) > 2 and sys.argv[2] == "noproc"
 RESULTS = f"results/{TAG}"
 os.makedirs(RESULTS, exist_ok=True)
 
-BIG = ("7B", "14B", "gemma-9b", "llama-8b")
+BIG = ()
 use_noproc = NOPROC or (TAG in BIG)
 
 loader = HookedTransformer.from_pretrained_no_processing if use_noproc else HookedTransformer.from_pretrained
