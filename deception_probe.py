@@ -47,13 +47,23 @@ RESULTS, FIGS = f"results/{TAG}", f"figures/{TAG}"
 os.makedirs(RESULTS, exist_ok=True)
 os.makedirs(FIGS, exist_ok=True)
 
-
-
-
-
 print("Model Loaded")
 
-
+# Nested layer section
+def nested_layer(acts3d, y, groups, seed=0, val_seeds=range(10), tol=0.02):
+    """3-way grouped split, choose the best layer on VAL, never on the reported TEST fold"""
+    trv, te = next(GroupShuffleSplit(1, test_size=0.20, random_state=seed).split(acts3d, y, groups))
+    layer_val = np.zeros(acts3d.shape[1])
+    for s in val_seeds:
+        tr_r, va_r = next(GroupShuffleSplit(1, test_size=0.25, random_state=s).split(acts3d[trv], y[trv], groups[trv]))
+        tr, va = trv[tr_r], trv[va_r]
+        for L in range(acts3d.shape[1]):
+            layer_val[L] += LogisticRegression(max_iter=2000, C=0.1).fit(acts3d[tr, L, :], y[tr]).score(acts3d[va, L, :], y[va])
+    layer_val /= len(val_seeds)
+    peak = layer_val.max()
+    bl = int(np.argmax(layer_val >= peak - tol))
+    tr_r, va_r = next(GroupShuffleSplit(1, test_size=0.25, random_state=seed).split(acts3d[trv], y[trv], groups[trv]))
+    return bl, trv[tr_r], trv[va_r], te
 
 #--------------- Building Examples -------------------------
 def build_example(statement, forced_answer):
@@ -123,16 +133,12 @@ def gsplit(X, y, seed=0, test_size=0.25):
     return X[tr], X[te], y[tr], y[te], tr, te
 
 #----------------------- Probe Layer Sweep and finding the best layer --------------------
-results = []
+best_layer, tr_idx, va_idx, te_idx = nested_layer(acts, y_decep, groups)
+trva = np.concatenate([tr_idx, va_idx])
+print(f"Best layer (chosen on val fold): {best_layer}")
 for L in range(model.cfg.n_layers):
-    X = acts[:, L, :]
-    Xtr, Xte, ytr, yte, _, _ = gsplit(X, y_decep)
-    probe_L = LogisticRegression(max_iter=2000, C=0.1).fit(Xtr, ytr)
-    results.append((L, probe_L.score(Xte,yte)))
-    print(f"Layer {L:2d}: test {results[-1][1]:.3f} (train {probe_L.score(Xtr,ytr):.3f})")
-
-best_layer, best_acc = max(results, key=lambda x: x[1])
-print(f"Best layer: {best_layer} {best_acc}")
+    va_acc = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, L, :], y_decep[tr_idx]).score(acts[va_idx, L, :], y_decep[va_idx])
+    print(f"Layer {L:2d}: val {va_acc:.3f}")
 
 #------------------------ Leak Control ---------------------------------------------------
 #Verification step
@@ -151,11 +157,9 @@ for s in range(10):
 print(f"leak control over 10 seeds: {np.mean(accs):.3f} +/- {np.std(accs):.3f}")
 
 #----------------------- Main Probe and Deception Direction -------------------------------
-X = acts[:, best_layer, :]
-Xtr, Xte, ytr, yte, tr_idx, te_idx = gsplit(X, y_decep)
-probe = LogisticRegression(max_iter=2000, C=0.1).fit(Xtr, ytr)
+probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, best_layer, :], y_decep[trva])
 deceptive_eval = [i for i in te_idx if examples[i]["deceptive"] == 1]
-print(f"Probe accuracy at {best_layer}:", probe.score(Xte, yte))
+print(f"Probe accuracy at {best_layer} (held-out TEST fold): {probe.score(acts[te_idx, best_layer, :], y_decep[te_idx]):.3f}")
 
 probe_dir = probe.coef_[0]
 probe_dir = probe_dir / np.linalg.norm(probe_dir) #Normalized to a unit length

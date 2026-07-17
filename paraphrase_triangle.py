@@ -5,7 +5,7 @@ paraphrase_triangle.py <MODEL_TAG> <PARAPHRASE>
 Runs the FULL mechanism triangle (necessity + non-critical control + sufficiency +
 specificity) under a PARAPHRASED prompt, at the paraphrase's OWN critical MLP.
 
-Why (Fable Q1): the original mechanism is proven only within the original format. The
+Why: the original mechanism is proven only within the original format. The
 template check showed the critical MLP's necessity is format-sensitive. This answers the
 open question: does paraphrase MOVE the mechanism (triangle replicates at a new layer)
 or BREAK it (no layer collapses)?  If it replicates -> "feature is real, locally

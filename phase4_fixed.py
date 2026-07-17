@@ -35,10 +35,16 @@ MODELS = {
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 DTYPE = torch.float16
 TAG = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
+NOPROC = len(sys.argv) > 2 and sys.argv[2] == "noproc"
 RESULTS = f"results/{TAG}"
 os.makedirs(RESULTS, exist_ok=True)
 
-model = HookedTransformer.from_pretrained_no_processing(MODELS[TAG], device=DEVICE, dtype=DTYPE)
+BIG = ("7B", "14B", "gemma-9b", "llama-8b")
+use_noproc = NOPROC or (TAG in BIG)
+
+loader = HookedTransformer.from_pretrained_no_processing if use_noproc else HookedTransformer.from_pretrained
+model = loader(MODELS[TAG], device=DEVICE, dtype=DTYPE)
+
 RESID = lambda n: n.endswith("hook_resid_post")
 print("model loaded:", TAG)
 
@@ -110,8 +116,9 @@ def parse(raw):
 def gen_and_acts(prompt, n_new=3):
     tok = model.to_tokens(prompt)
     with torch.no_grad():
-        _, c = model.run_with_cache(tok, names_filter = RESID)
         out = model.generate(tok, max_new_tokens=n_new, do_sample=False, verbose=False)
+        full = out[:, :tok.shape[1] + 1]
+        _, c = model.run_with_cache(full, names_filter = RESID)
     a = c["resid_post", best_layer][0, -1, :].cpu().numpy()
     txt = model.to_string(out[0][tok.shape[1]:])
     return a, parse(txt), txt
