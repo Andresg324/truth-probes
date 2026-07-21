@@ -3,12 +3,10 @@ import numpy as np
 import torch
 import warnings
 import matplotlib.pyplot as plt
-import torch.nn.functional as F
 import sys
 
 from transformer_lens import HookedTransformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from collections import Counter
 from sklearn.feature_extraction.text import CountVectorizer
 from numpy.linalg import norm

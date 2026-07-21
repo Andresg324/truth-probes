@@ -4060,8 +4060,8 @@
   "cond": "lie",
   "stmt_true": 0,
   "truth": "no",
-  "ans": "no",
-  "text": "No. "
+  "ans": "yes",
+  "text": "Yes. "
  },
  {
   "i": 254,

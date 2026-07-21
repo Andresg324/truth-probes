@@ -6,10 +6,7 @@ import sys
 
 from transformer_lens import HookedTransformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from numpy.linalg import norm
-from sklearn.neural_network import MLPClassifier
-from collections import Counter
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import roc_auc_score
 
@@ -45,6 +42,8 @@ os.makedirs(FIGS, exist_ok=True)
 
 RESID_ONLY = lambda name: name.endswith("hook_resid_post")
 
+LEGACY = "--legacy" in sys.argv
+
 print("Model Loaded")
 
 # Nested layer section
@@ -72,6 +71,22 @@ def build_example(statement, forced_answer):
 def answer_prompt(statement):
     messages = [{"role": "user", "content": f'Statement: {statement}\nIs this statement true? Reply with exactly one word: "Yes" or "No".'}]
     return model.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+# ------ Additional Functions -----------
+def det_after_ablate(ablate_L, read_L, idxs):
+    # Detection at read_L after zero-ablating the MLP at ablate-L (no steering)
+    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
+    preds = []
+    for i in idxs:
+        with torch.no_grad():
+            with model.hooks(fwd_hooks=hooks):
+                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+        preds.append(layer_probes[read_L].predict(c["resid_post", read_L][0, -1, :].cpu().numpy().reshape(1, -1))[0])
+    return np.array(preds)
+
+def det_clean(read_L, idxs):
+    return np.array([layer_probes[read_L].predict(acts[i, read_L].reshape(1, -1))[0] for i in idxs])
+
 
 # ---- examples (identical order) ----
 with open("data/mixed.json") as f:
@@ -119,9 +134,7 @@ print(f"best_layer={best_layer}  min_alpha={min_alpha}  E={E}")
 
 
 
-# ========================================================
-#                       PHASE 2 ANALYSIS
-# ========================================================
+#----------------- PHASE 2 ANALYSIS -----------------
 # 2A & 2B - Persistent vs single-layer steering
 
 def make_sub_hook(alpha, d_t):
@@ -144,20 +157,21 @@ def detbylayer_multi(steer_layers, alpha, d_t):
     steered = np.array(steered)
     return [layer_probes[L].predict(steered[:, L, :]).mean() for L in range(model.cfg.n_layers)]
 
-det_single_early = detbylayer_multi([E], A2, best_dir_t)
-det_single_late = detbylayer_multi([best_layer], A2, best_dir_t)
-det_persistent = detbylayer_multi(list(range(0, best_layer + 1)), A2, best_dir_t)
+if LEGACY:
+    det_single_early = detbylayer_multi([E], A2, best_dir_t)
+    det_single_late = detbylayer_multi([best_layer], A2, best_dir_t)
+    det_persistent = detbylayer_multi(list(range(0, best_layer + 1)), A2, best_dir_t)
 
-fig, ax = plt.subplots(figsize=(10, 5))
-xs = range(model.cfg.n_layers)
-ax.plot(xs, det_single_early, "-o", label=f"single early (L{E})")
-ax.plot(xs, det_single_late,  "-s", label=f"single late (L{best_layer})")
-ax.plot(xs, det_persistent,   "-^", label=f"persistent (0..{best_layer})")
-ax.axhline(0.5, ls="--", color="gray"); ax.set_xlabel("Measured layer"); ax.set_ylabel("detection")
-ax.set_title("Fig 8. Does broad steering defeat recomputation?")
-ax.legend(); ax.grid(alpha=0.2)
-plt.tight_layout(); plt.savefig(f"{FIGS}/fig8_persistent.png", dpi=150); plt.close()
-print(f"Saved {FIGS}/fig8_persistent.png")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    xs = range(model.cfg.n_layers)
+    ax.plot(xs, det_single_early, "-o", label=f"single early (L{E})")
+    ax.plot(xs, det_single_late,  "-s", label=f"single late (L{best_layer})")
+    ax.plot(xs, det_persistent,   "-^", label=f"persistent (0..{best_layer})")
+    ax.axhline(0.5, ls="--", color="gray"); ax.set_xlabel("Measured layer"); ax.set_ylabel("detection")
+    ax.set_title("Fig 8. Does broad steering defeat recomputation?")
+    ax.legend(); ax.grid(alpha=0.2)
+    plt.tight_layout(); plt.savefig(f"{FIGS}/fig8_persistent.png", dpi=150); plt.close()
+    print(f"Saved {FIGS}/fig8_persistent.png")
 
 def gen_under_multi(statement, steer_layers, alpha, d_t, n_new=20):
     hooks = [(f"blocks.{L}.hook_resid_post", make_sub_hook(alpha, d_t)) for L in steer_layers]
@@ -167,9 +181,10 @@ def gen_under_multi(statement, steer_layers, alpha, d_t, n_new=20):
             out = model.generate(tok, max_new_tokens=n_new, do_sample=False, verbose=False)
     return model.to_string(out[0][tok.shape[1]:])
 
-print("Persistent-steer coherence check:")
-for s in [items[0]["statement"], items[20]["statement"]]:
-    print("  ", repr(gen_under_multi(s, list(range(0, best_layer + 1)), A2, best_dir_t)))
+if LEGACY:
+    print("Persistent-steer coherence check:")
+    for s in [items[0]["statement"], items[20]["statement"]]:
+        print("  ", repr(gen_under_multi(s, list(range(0, best_layer + 1)), A2, best_dir_t)))
 
 
 # ===== PHASE 2c: component attribution (run AFTER 2b) =====
@@ -192,9 +207,10 @@ def recovery_with_ablation(comp, R_layers):
 
 R = list(range(E + 1, best_layer + 1)) # Recovery band
 
-print("recovery, no ablation :", det_single_early[best_layer]) # From 2B
-print("recovery, MLP ablated :", recovery_with_ablation("hook_mlp_out", R))
-print("recovery, ATTN ablated:", recovery_with_ablation("hook_attn_out", R))
+if LEGACY:
+    print("recovery, no ablation :", det_single_early[best_layer]) # From 2B
+    print("recovery, MLP ablated :", recovery_with_ablation("hook_mlp_out", R))
+    print("recovery, ATTN ablated:", recovery_with_ablation("hook_attn_out", R))
 
 
 def gen_under_ablation(statement, comp, R_layers, n_new=20):
@@ -206,18 +222,20 @@ def gen_under_ablation(statement, comp, R_layers, n_new=20):
             out = model.generate(tok, max_new_tokens=n_new, do_sample=False, verbose=False)
     return model.to_string(out[0][tok.shape[1]:])
 
-for s in [items[0]["statement"], items[20]["statement"]]:
-    print("MLP-ablated:", repr(gen_under_ablation(s, "hook_mlp_out", R)))
-
-
-# print(f"\nPer-layer MLP ablation (recover at {best_layer}):")
-# for L in R:
-#     print(f" ablate MLP L{L:2d}: {recovery_with_ablation('hook_mlp_out', [L]):.2f}")
+if LEGACY:
+    for s in [items[0]["statement"], items[20]["statement"]]:
+        print("MLP-ablated:", repr(gen_under_ablation(s, "hook_mlp_out", R)))
 
 def boot_ci(vals, n=1000):
     vals = np.array(vals); rng = np.random.default_rng(0)
     b = [vals[rng.integers(0, len(vals), len(vals))].mean() for _ in range(n)]
     return float(vals.mean()), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+def acc_ci(pr, X, y, n=1000):
+    correct = (pr.predict(X) == y).astype(float)
+    rng = np.random.default_rng(0)
+    b = [correct[grouped_ix(rng)].mean() for _ in range(n)]
+    return correct.mean(), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
 
 def recovery_preds(comp, R_layers):
     hooks = [(f"blocks.{E}.hook_resid_post", make_sub_hook(A2, best_dir_t))]
@@ -230,50 +248,157 @@ def recovery_preds(comp, R_layers):
         preds.append(layer_probes[best_layer].predict(c["resid_post", best_layer][0, -1, :].cpu().numpy().reshape(1,-1))[0])
     return np.array(preds)
 
-# find the recomputing MLP dynamically (works for any model size)
-
-per_layer = {L: recovery_with_ablation("hook_mlp_out", [L]) for L in R}
-crit_L = min(per_layer, key=per_layer.get)
-print("per-layer MLP ablation:", {L: round(v, 2) for L, v in per_layer.items()})
-print(f"Critical recomputing MLP: L{crit_L} (recovery {per_layer[crit_L]:.2f})")
-
-
-
-
-def detection_ablate_only(comp, R_layers):
-    hooks = [(f"blocks.{L}.{comp}", make_zero_hook()) for L in R_layers]
-    preds = []
-    for i in DECEP:
+def score_after_ablate(ablate_L, read_L, idxs):
+    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
+    s = []
+    for i in idxs:
         with torch.no_grad():
             with model.hooks(fwd_hooks=hooks):
                 _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
-        preds.append(layer_probes[best_layer].predict(c["resid_post", best_layer][0,-1,:].cpu().numpy().reshape(1,-1))[0])
-    return boot_ci(np.array(preds))
+        s.append(layer_probes[read_L].decision_function(c["resid_post", read_L][0, -1, :].cpu().numpy().reshape(1, -1))[0])
+    return float(np.mean(s))
 
-base = boot_ci(np.array([layer_probes[best_layer].predict(acts[i, best_layer].reshape(1,-1))[0] for i in DECEP]))
-print("baseline detection (no steer, no ablate):", base)
-print(f"detection, ablate L{crit_L} MLP, NO steer :", detection_ablate_only('hook_mlp_out', [crit_L]))
+# def scores_after_ablate_all(ablate_L, idxs):
+#     hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
+#     S = np.zeros((len(idxs), model.cfg.n_layers))
+#     for r, i in enumerate(idxs):
+#         with torch.no_grad():
+#             with model.hooks(fwd_hooks=hooks):
+#                 _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+#         for L in range(model.cfg.n_layers):
+#             S[r, L] = layer_probes[L].decision_function(c["resid_post", L][0, -1, :].cpu().numpy().reshape(1, -1))[0]
+#     return S
 
-# -----no-steer ablation curve across the band + matched non-critical control
-noste = {L: detection_ablate_only('hook_mlp_out', [L])[0] for L in R}
-print("no-steer ablation, detection by ablated layer:", {L: round(v, 2) for L, v in noste.items()})
-ctrl_L = max(noste, key=noste.get)
-print(f"NON-critical control L{ctrl_L}: {noste[ctrl_L]:.2f} | critical L{crit_L}: {noste[crit_L]:.2f}")
+def ablate_pass(ablate_L, idxs, read_Ls):
+    # One ablated forward per item - all layers and activations
+    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
+    S = np.zeros((len(idxs), model.cfg.n_layers))
+    Xs = {L: [] for L in read_Ls}
+    for r, i in enumerate(idxs):
+        with torch.no_grad():
+            with model.hooks(fwd_hooks=hooks):
+                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+        for L in range(model.cfg.n_layers):
+            v = c["resid_post", L][0, -1, :].cpu().numpy()
+            S[r,L] = layer_probes[L].decision_function(v.reshape(1, -1))[0]
+            if L in read_Ls: Xs[L].append(v)
+    return S, {L: np.array(v) for L, v in Xs.items()}
 
 
-for name, comp in [("no ablation", None), (f"MLP L{crit_L}", "hook_mlp_out")]:
-    m, lo, hi = boot_ci(recovery_preds(comp, [crit_L]))
-    print(f"recovery {name}: {m:.2f} [{lo:.2f}, {hi:.2f}]")
+def score_clean(read_L, idxs):
+    return float(np.mean([layer_probes[read_L].decision_function(acts[i, read_L].reshape(1, -1))[0] for i in idxs]))
 
-print(f"coherence under L{crit_L} ablation:",
-      repr(gen_under_ablation(items[0]["statement"], "hook_mlp_out", [crit_L])))
+# find the recomputing MLP dynamically (works for any model size)
+
+sel_dec = [i for i in tr_idx if examples[i]["deceptive"] == 1][:120]
+det_base = {L: det_clean(L, sel_dec).mean() for L in R}
+cand = [L for L in R if det_base[L] > 0.70]
+if not cand: cand = [max(det_base, key=det_base.get)]
+local_drop = {L: score_clean(L, sel_dec) - score_after_ablate(L, L, sel_dec) for L in cand}
+crit_L = max(local_drop, key=local_drop.get)
+
+
+
+y_truth = np.array([items[i // 2]["label"] for i in range(len(examples))])
+y_pol = np.array([1 if examples[i]["answer"] == "Yes" else 0 for i in range(len(examples))])
+labs = {"deception": y_decep, "truth": y_truth, "polarity": y_pol}
+
+# S_by_ablate = {L: scores_after_ablate_all(L, te_idx) for L in R}
+S_by_ablate, X_by_ablate = {}, {}
+for L in R:
+    S_by_ablate[L], X_by_ablate[L] = ablate_pass(L, te_idx, {L, best_layer})
+S_abl = S_by_ablate[crit_L]
+S_clean = np.array([[layer_probes[L].decision_function(acts[i, L].reshape(1, -1))[0] for L in range(model.cfg.n_layers)] for i in te_idx])
+
+yd = y_decep[te_idx]
+ydv, ytv = y_decep[te_idx], y_truth[te_idx]
+ypv = y_pol[te_idx]
+
+te_groups = groups[te_idx]
+uniq_g = np.unique(te_groups)
+g_rows = {g: np.where(te_groups == g)[0] for g in uniq_g}
+
+def grouped_ix(rng):
+    # Resample Statements and take twins of each
+    gs = rng.choice(uniq_g, len(uniq_g), replace=True)
+    return np.concatenate([g_rows[g] for g in gs])
+
+print(f"\nNecessity vs readout distance (ablate L{crit_L}) - ACC and AUC:")
+for L in range(crit_L, best_layer + 1):
+    ca = ((S_clean[:, L]>0).astype(int) == yd).mean()
+    aa = ((S_abl[:, L] >0).astype(int) == yd).mean()
+    cauc = roc_auc_score(yd, S_clean[:, L])
+    aauc = roc_auc_score(yd, S_abl[:, L])
+    print(f" read L{L:2d} (crit + {L - crit_L}): acc {ca:.2f} -> {aa:.2f} | AUC {cauc:.2f} -> {aauc:.2f}")
+
+np.savez(f"{RESULTS}/distance_curve.npz", s_clean = S_clean, s_abl = S_abl, y=yd, crit = crit_L, best = best_layer)
+
+def auc_ci_from_scores(y, s, n=1000):
+    rng = np.random.default_rng(0); b = []
+    for _ in range(n):
+        ix = grouped_ix(rng)
+        if len(np.unique(y[ix])) < 2: continue
+        b.append(roc_auc_score(y[ix], s[ix]))
+    return float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+print(f"\nPer-Layer MLP ablation curve - AUC (clean -> ablated), local and deployed readout:")
+curve = {}
+
+for L in R:
+    S_L = S_by_ablate[L]
+    loc_c, loc_a = roc_auc_score(yd, S_clean[:, L]), roc_auc_score(yd, S_L[:, L])
+    dep_c, dep_a = roc_auc_score(yd, S_clean[:, best_layer]), roc_auc_score(yd, S_L[:, best_layer])
+    llo, lhi = auc_ci_from_scores(yd, S_L[:, L])
+    dlo, dhi = auc_ci_from_scores(yd, S_L[:, best_layer])
+    curve[L] = (loc_c, loc_a, dep_c, dep_a)
+    star = " <- crit (selected)" if L == crit_L else (" [= best_layer]" if L == best_layer else "")
+    print(f" ablate L{L:2d}: local {loc_c:.2f} -> {loc_a:.2f} [{llo:.2f}, {lhi:.2f}] |"
+          f" deployed {dep_c:.2f} -> {dep_a:.2f} [{dlo:.2f}, {dhi:.2f}] {star}")
+
+np.savez(f"{RESULTS}/ablation_curve.npz",
+         layers=np.array(R), curve=np.array([curve[L] for L in R]),
+         crit=crit_L, best = best_layer, y=yd)
+
+# Necessity on hold out test at both the local readout
+def spec_at(L_read, Xa, n=1000):
+    P = {nm: LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, L_read, :], lab[tr_idx]) for nm, lab in [("deception", y_decep), ("truth", y_truth), ("polarity", y_pol)]}
+    Xc = acts[te_idx, L_read, :]
+    s = {nm: (P[nm].decision_function(Xc), P[nm].decision_function(Xa)) for nm in P}
+    Y = {"deception": ydv, "truth": ytv, "polarity": ypv}
+    auc = {nm: (roc_auc_score(Y[nm], s[nm][0]), roc_auc_score(Y[nm], s[nm][1])) for nm in P}
+    point = (auc["truth"][0] - auc["truth"][1]) - (auc["deception"][0] - auc["deception"][1])
+    rng = np.random.default_rng(0); ds=[]
+    for _ in range(n):
+        ix = grouped_ix(rng)
+        if len(np.unique(ydv[ix])) < 2 or len(np.unique(ytv[ix])) < 2: continue
+        ds.append((roc_auc_score(ytv[ix], s["truth"][0][ix]) - roc_auc_score(ytv[ix], s["truth"][1][ix])) - (roc_auc_score(ydv[ix], s["deception"][0][ix]) - roc_auc_score(ydv[ix], s["deception"][1][ix])))
+    return auc, point, float(np.percentile(ds, 2.5)), float(np.percentile(ds, 97.5))
+
+print(f"\nSpecificity curve - every layer in R, local readout (AUC clean -> ablated):")
+for L in R:
+    auc, pt, lo, hi = spec_at(L, X_by_ablate[L][L])
+    tag = " <- crit" if L == crit_L else (" [=best]" if L == best_layer else "")
+    print(f" ablate L{L:2d}: dec {auc['deception'][0]:.2f} -> {auc['deception'][1]:.2f} | "
+          f" tru {auc['truth'][0]:.2f} -> {auc['truth'][1]:.2f} | "
+          f"pol {auc['polarity'][0]:.2f} -> {auc['polarity'][1]:.2f} | "
+          f"asym {pt:+.3f} [{lo:+.3f}, {hi:+.3f}] {tag}")
+
+print(f"crit MLP L{crit_L} (no_steer necessity, chosen on train-fold items)")
+
+if LEGACY:
+    for name, comp in [("no ablation", None), (f"MLP L{crit_L}", "hook_mlp_out")]:
+        m, lo, hi = boot_ci(recovery_preds(comp, [crit_L]))
+        print(f"recovery {name}: {m:.2f} [{lo:.2f}, {hi:.2f}]")
+
+    print(f"coherence under L{crit_L} ablation:",
+        repr(gen_under_ablation(items[0]["statement"], "hook_mlp_out", [crit_L])))
 
 def recovery_patch_clean_mlp(L):
     clean = {}
     def save(v, hook): clean["v"] = v.clone(); return v
     def steer(v, hook): v[:, :, :] = v[:, :, :] - A2 * best_dir_t; return v
     def paste(v, hook): return clean["v"]
-    preds = []
+    s = []
     for i in DECEP:
         tok = model.to_tokens(examples[i]["prompt"])
         with torch.no_grad():
@@ -281,87 +406,97 @@ def recovery_patch_clean_mlp(L):
                 model.run_with_cache(tok, names_filter=RESID_ONLY)
             with model.hooks(fwd_hooks=[(f"blocks.{E}.hook_resid_post", steer), (f"blocks.{L}.hook_mlp_out", paste)]):
                 _, c = model.run_with_cache(tok, names_filter=RESID_ONLY)
-        preds.append(layer_probes[best_layer].predict(c["resid_post", best_layer][0,-1,:].cpu().numpy().reshape(1,-1))[0])
-    return np.array(preds)
+        s.append(layer_probes[best_layer].decision_function(c["resid_post", best_layer][0,-1,:].cpu().numpy().reshape(1,-1))[0])
+    return np.array(s)
 
-m, lo, hi = boot_ci(recovery_patch_clean_mlp(crit_L))
+patched_scores = recovery_patch_clean_mlp(crit_L)
+m, lo, hi = boot_ci((patched_scores > 0).astype(int))
 print(f"recovery, clean {crit_L} MLP patched into steered run: {m:.2f} [{lo:.2f}, {hi:.2f}]")
 
-y_truth = np.array([items[i // 2]["label"] for i in range(len(examples))])
-y_pol = np.array([1 if examples[i]["answer"] == "Yes" else 0 for i in range(len(examples))])
 
-def train_probe(lab):
-    return LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, best_layer, :], lab[tr_idx])
+h_steer = (f"blocks.{E}.hook_resid_post", make_sub_hook(A2, best_dir_t))
+h_zero = (f"blocks.{crit_L}.hook_mlp_out", make_zero_hook())
 
-P = {"deception": train_probe(y_decep), "truth": train_probe(y_truth), "polarity": train_probe(y_pol)}
-labs = {"deception": y_decep, "truth": y_truth, "polarity": y_pol}
+def scores_cond(hooks):
+    s = []
+    for i in DECEP:
+        with torch.no_grad():
+            with model.hooks(fwd_hooks=hooks):
+                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+        s.append(layer_probes[best_layer].decision_function(c["resid_post", best_layer][0, -1, :].cpu().numpy().reshape(1, -1))[0])
+    return np.array(s)
 
-def acts_ablated(idxs, L):
-    hooks = [(f"blocks.{L}.hook_mlp_out", make_zero_hook())]
+s_clean_i = np.array([layer_probes[best_layer].decision_function(acts[i, best_layer].reshape(1, -1))[0] for i in DECEP])
+s_steer_i = scores_cond([h_steer])
+s_steerabl_i = scores_cond([h_steer, h_zero])
+eps = 0.25 * np.std(s_clean_i)
+
+d_abl = np.abs(s_steerabl_i - s_steer_i)
+print(f"ablation effect on steered run: mean |delta| {d_abl.mean():.3f} | "
+      f"frac items |delta| > {eps:.2f}: {(d_abl > eps).mean():.2f}")
+
+s_patch_i = patched_scores
+
+def med_frac(num, den, eps, n=1000):
+    m = np.abs(den) > eps
+    r = num[m] / den[m]
+    rng = np.random.default_rng(0)
+    b = [np.median(r[rng.integers(0, len(r), len(r))]) for _ in range(n)]
+    return float(np.median(r)), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5)), int(m.sum())
+
+A, Alo, Ahi, nA = med_frac(s_patch_i - s_steerabl_i, s_steer_i - s_steerabl_i, eps)
+B, Blo, Bhi, nB = med_frac(s_patch_i - s_steer_i, s_clean_i - s_steer_i, eps)
+
+print(f"Restoration A (conduit): {A:+.2f} [{Alo:+.2f}, {Ahi:+.2f}] n={nA}/{len(DECEP)}")
+print(f"Restoration B (undo steering): {B:+.2f} [{Blo:+.2f}, {Bhi:+.2f}] n={nB}/{len(DECEP)}")
+
+def acts_ablated_at(idxs, ablate_L, read_L):
+    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
     out = []
     for i in idxs:
         with torch.no_grad():
             with model.hooks(fwd_hooks=hooks):
                 _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
-        out.append(c["resid_post", best_layer][0, -1, :].cpu().numpy())
+        out.append(c["resid_post", read_L][0, -1, :].cpu().numpy())
     return np.array(out)
 
-Xabl = acts_ablated(te_idx, crit_L)
-print(f"\nSpecificity of MLP L{crit_L} (clean -> ablated), held-out:")
+Ploc = {nm: LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, crit_L, :], lab[tr_idx]) for nm, lab in [("deception", y_decep), ("truth", y_truth), ("polarity", y_pol)]}
+Xabl_loc = X_by_ablate[crit_L][crit_L]
+Xabl_dep = X_by_ablate[crit_L][best_layer]
+
+dc_m, dc_lo, dc_hi = acc_ci(layer_probes[best_layer], acts[te_idx, best_layer, :], labs["deception"][te_idx])
+da_m, da_lo, da_hi = acc_ci(layer_probes[best_layer], Xabl_dep, labs["deception"][te_idx])
+print(f"\nDEPLOYED necessity as ACC (read L{best_layer})"
+      f" {dc_m:.2f} [{dc_lo:.2f}, {dc_hi:.2f}] -> {da_m:.2f} [{da_lo:.2f}, {da_hi:.2f}]")
+
+print(f"\nSpecificity at LOCAL readout L{crit_L} (clean -> ablated), held-out:")
 for nm in ["deception", "truth", "polarity"]:
-    clean = P[nm].score(acts[te_idx, best_layer, :], labs[nm][te_idx])
-    abl = P[nm].score(Xabl, labs[nm][te_idx])
-    print(f" {nm:9}: {clean:.2f} -> {abl:.2f}")
+    cm, clo, chi = acc_ci(Ploc[nm], acts[te_idx, crit_L, :], labs[nm][te_idx])
+    am, alo, ahi = acc_ci(Ploc[nm], Xabl_loc, labs[nm][te_idx])
+    print(f" {nm:9}: {cm:.2f} [{clo:.2f}, {chi:.2f}] -> {am:.2f} [{alo:.2f}, {ahi:.2f}]")
+
+Xc_loc = acts[te_idx, crit_L, :]
+d_dec = ((Ploc["deception"].predict(Xc_loc)  == labs["deception"][te_idx]).astype(float) - (Ploc["deception"].predict(Xabl_loc) == labs["deception"][te_idx]).astype(float))
+d_tru = ((Ploc["truth"].predict(Xc_loc)  == labs["truth"][te_idx]).astype(float) - (Ploc["truth"].predict(Xabl_loc) == labs["truth"][te_idx]).astype(float))
+
+diff = d_tru - d_dec
+rng = np.random.default_rng(0)
+b = [diff[grouped_ix(rng)].mean() for _ in range(1000)]
+
+print(f" paired (truth drop - deception drop) at L{crit_L}: {diff.mean():+.3f} "
+      f"[{np.percentile(b, 2.5):+.3f}, {np.percentile(b, 97.5):+.3f}] (asymmetry is real only if CI excludes 0)")
 
 
+def auc_pair(pr, Xc, Xa, y, n=1000):
+    sc, sa = pr.decision_function(Xc), pr.decision_function(Xa)
+    rng = np.random.default_rng(0); b = []
+    for _ in range(n):
+        ix = grouped_ix(rng)
+        if len(np.unique(y[ix])) < 2: continue
+        b.append(roc_auc_score(y[ix], sa[ix]))
+    return roc_auc_score(y, sc), roc_auc_score(y, sa), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
 
-
-# ===== PHASE 3: probe-architecture robustness =====
-
-def pooled_acts(prompt, fwd_hooks=None):
-    with torch.no_grad():
-        with model.hooks(fwd_hooks=fwd_hooks or []):
-            _, c = model.run_with_cache(model.to_tokens(prompt), names_filter=RESID_ONLY)
-    L = best_layer
-    r = c["resid_post", L][0]
-    return (r[-1].cpu().numpy(), r.mean(0).cpu().numpy(), r.max(0).values.cpu().numpy())
-
-# 1) clean pooled features (cache these — new extraction, ~5-10 min)
-POOL = f"{RESULTS}/pooled_bestlayer.npz"
-if os.path.exists(POOL):
-    z = np.load(POOL); Xlast, Xmean, Xmax = z["last"], z["mean"], z["max"]
-else:
-    feats = [pooled_acts(e["prompt"]) for e in examples]
-    Xlast = np.array([f[0] for f in feats]); Xmean = np.array([f[1] for f in feats]); Xmax = np.array([f[2] for f in feats])
-    np.savez(POOL, last=Xlast, mean=Xmean, max=Xmax)
-
-# 2) train each architecture, report clean accuracy
-def clean_acc(X):
-    Xtr, Xte, ytr, yte, _, _ = gsplit(X, y_decep)
-    return LogisticRegression(max_iter=2000, C=0.1).fit(Xtr, ytr).score(Xte, yte)
-probes = {
-    "linear-last": LogisticRegression(max_iter=2000, C=0.1).fit(Xlast, y_decep),
-    "linear-mean": LogisticRegression(max_iter=2000, C=0.1).fit(Xmean, y_decep),
-    "linear-max":  LogisticRegression(max_iter=2000, C=0.1).fit(Xmax,  y_decep),
-    "mlp-last":    MLPClassifier(hidden_layer_sizes=(64,), max_iter=500).fit(Xlast, y_decep),
-}
-
-for name, X in [("linear-last", Xlast),("linear-mean",Xmean),("linear-max", Xmax),("mlp-last",Xlast)]:
-    print(f"{name:12s} clean acc: {clean_acc(X):.3f}")
-
-# 3) robustness: SAME residual attack, measure each probe's detection on steered deceptive items
-best_dir_t = best_dir_t
-def steer_hook(a):
-    def h(v, hook):
-        v[:, :, :] = v[:,:,:] - a * best_dir_t
-        return v
-    return [(f"blocks.{best_layer}.hook_resid_post", h)]
-
-for a in [0, min_alpha, 2 * min_alpha]:
-    feats = [pooled_acts(examples[i]["prompt"], steer_hook(a)) for i in DECEP]
-    Xl = np.array([f[0] for f in feats]); Xm = np.array([f[1] for f in feats]); Xx = np.array([f[2] for f in feats])
-    print(f"\nalpha={a}")
-    print(f"  linear-last det: {probes['linear-last'].predict(Xl).mean():.2f}")
-    print(f"  linear-mean det: {probes['linear-mean'].predict(Xm).mean():.2f}")
-    print(f"  linear-max  det: {probes['linear-max'].predict(Xx).mean():.2f}")
-    print(f"  mlp-last    det: {probes['mlp-last'].predict(Xl).mean():.2f}")
+print(f"\nSpecificity at LOCAL readout L{crit_L} - AUC (clean -> ablated):")
+for nm in ["deception", "truth", "polarity"]:
+    ac, aa, lo, hi = auc_pair(Ploc[nm], acts[te_idx, crit_L, :], Xabl_loc, labs[nm][te_idx])
+    print(f" {nm:9}: AUC {ac:.2f} -> {aa:.2f} [{lo:.2f}, {hi:.2f}]")

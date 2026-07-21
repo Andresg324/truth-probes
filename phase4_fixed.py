@@ -5,14 +5,10 @@ Phase 4 fixed - realistic deception tests properly instrumented - fixes bug and 
 import json, os, warnings
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
 import sys
 
 from transformer_lens import HookedTransformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from numpy.linalg import norm
-from sklearn.neural_network import MLPClassifier
 from collections import Counter
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import roc_auc_score

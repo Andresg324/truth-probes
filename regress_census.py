@@ -1,9 +1,9 @@
 import json, os, warnings
 import numpy as np
+import statsmodels.api as sm
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
-from sklearn.metrics import roc_auc_score
 
 warnings.filterwarnings("ignore")
 
@@ -27,11 +27,10 @@ def root(tag):
 items = json.load(open("data/mixed.json"))
 yd = np.array([j for _ in items for j in (0,1)]); grp = np.arange(len(yd)) // 2
 
-def safe(y, x):
-    return roc_auc_score(y, x) if len(set(y.tolist())) == 2 else float("nan")
-
-hdr = f"{'model':9s} {'pos_ctrl':>8s} {'decep':>7s} {'truth':>7s} {'polar':>7s} {'deconf':>7s} {'n':>5s} verdict"
+hdr = f"{'model':9s} {'instr(leak)':>13s} {'decep(XOR)':>13s} {'n':>5s} lie-dist"
 print(hdr); print("-" * len(hdr))
+star = lambda p: "***" if p< 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else " "
+
 for tag in TAGS:
     R = root(tag)
     if not os.path.exists(f"{R}/p4_rows.json"):
@@ -40,29 +39,27 @@ for tag in TAGS:
     tr, te = next(GroupShuffleSplit(1, test_size=0.25, random_state=0).split(acts, yd, grp))
     bl = int(np.argmax([LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr, L, :], yd[tr]).score(acts[te,L,:], yd[te]) for L in range(acts.shape[1])]))
     probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr, bl, :], yd[tr])
-    pc = roc_auc_score(yd[te], probe.decision_function(acts[te, bl, :]))
 
     # intsructed transfer set, compliant 
     rows = json.load(open(f"{R}/p4_rows.json")); X4 = np.load(f"{R}/p4_acts.npy")
-    keep = [i for i, r in enumerate(rows)
-            if (r["cond"] == "honest" and r["ans"] == r["truth"])
-            or (r["cond"] == "lie" and r["ans"] in ("yes", "no") and r["ans"] != r["truth"])]
-    s = probe.decision_function(X4[keep])
-    decep = np.array([1 if rows[i]["cond"] == "lie" else 0 for i in keep])
-    truth = np.array([rows[i]["stmt_true"] for i in keep])
-    polar = np.array([1 if rows[i]["ans"] == "yes" else 0 for i in keep])
-    a_d, a_t, a_p = safe(decep, s), safe(truth, s), safe(polar, s)
+    mask = [i for i, r in enumerate(rows) if r["ans"] in ("yes", "no")]
+    s = probe.decision_function(X4[mask])
+    s = (s - s.mean()) / (s.std() + 1e-9)
+    instr = np.array([1.0 if rows[i]["cond"] == "lie" else 0.0 for i in mask])
+    truth = np.array([float(rows[i]["stmt_true"]) for i in mask])
+    polar = np.array([1.0 if rows[i]["ans"] == "yes" else 0.0 for i in mask])
+    inter = truth * polar
+    lie = [rows[i]["ans"] for i in mask if rows[i]["cond"] == "lie"]
+    ny, nn = sum(a == "yes" for a in lie), sum(a == "no" for a in lie)
 
-    # De - confound
-    nc = [i for i, r in enumerate(rows) if r["cond"] == "lie" and r["ans"] in ("yes", "no") and r["ans"] == r["truth"]]
-    hon = [i for i, r in enumerate(rows) if r["cond"] == "honest" and r["ans"] == r["truth"]]
-    if len(nc) >= 5 and len(hon) >= 5:
-        yc = np.r_[np.zeros(len(hon)), np.ones(len(nc))]
-        dc = roc_auc_score(yc, np.r_[probe.decision_function(X4[hon]), probe.decision_function(X4[nc])])
-    else:
-        dc = float("nan")
-    
-    leak = (not np.isnan(dc)) and abs(dc - 0.5) > 0.15
-    verdict = "LEAK (drop)" if leak else ("clean" if not np.isnan(dc) else "n/a (few nc)")
-    
-    print(f"{tag:9s} {pc:8.3f} {a_d:7.3f} {a_t:7.3f} {a_p:7.3f} {dc:7.3f} {len(keep):5d} {verdict}")
+    Xc = sm.add_constant(np.column_stack([instr, truth, polar, inter]))
+    cond = np.linalg.cond(Xc)
+    if min(ny, nn) < 20 or min(ny, nn) / max(ny + nn, 1) < 0.20 or cond > 30:
+        print(f"{tag:9s} {'-':12s} {'-':>12s} {len(mask):>5d} {ny}y/{nn}n DEGENERATE (cond={cond:.0f})")
+        continue
+    m = sm.OLS(s, Xc).fit()
+    ci, pi = m.params[1], m.pvalues[1]
+    cx, px = m.params[4], m.pvalues[4]
+    if abs(ci) > 5 or abs(cx) > 5:
+        print(f"{tag:9s} {'-':>12s} {'-':>12s} {len(mask):>5d} {ny}y/{nn}n QUASI-SEPARATION"); continue
+    print(f"{tag:9s} {ci:>9.2f}{star(pi):<4s} {cx:>9.2f}{star(px):<4s} {len(mask):>5d} {ny}y/{nn}n cond={cond:.0f}")

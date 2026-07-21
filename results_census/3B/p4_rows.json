@@ -181,7 +181,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "no",
-  "text": "No<|im_end|>"
+  "text": "No. \n\n"
  },
  {
   "i": 11,
@@ -621,7 +621,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No.<|im_end|>"
+  "text": "No. \n\n"
  },
  {
   "i": 39,
@@ -933,7 +933,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "no",
-  "text": "No.<|im_end|>"
+  "text": "No<|im_end|>"
  },
  {
   "i": 58,
@@ -997,7 +997,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "yes",
-  "text": "Yes<|im_end|>"
+  "text": "Yes.<|im_end|>"
  },
  {
   "i": 62,
@@ -1901,7 +1901,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "no",
-  "text": "No. While"
+  "text": "No. \n\n"
  },
  {
   "i": 119,
@@ -2037,7 +2037,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No<|im_end|>"
+  "text": "No.<|im_end|>"
  },
  {
   "i": 127,
@@ -2165,7 +2165,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No.<|im_end|>"
+  "text": "No<|im_end|>"
  },
  {
   "i": 135,
@@ -3237,7 +3237,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "yes",
-  "text": "Yes.<|im_end|>"
+  "text": "Yes<|im_end|>"
  },
  {
   "i": 202,
@@ -3365,7 +3365,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "no",
-  "text": "No<|im_end|>"
+  "text": "No. \n\n"
  },
  {
   "i": 210,
@@ -3493,7 +3493,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "yes",
-  "text": "Yes<|im_end|>"
+  "text": "Yes.<|im_end|>"
  },
  {
   "i": 218,
@@ -3533,7 +3533,7 @@
   "stmt_true": 1,
   "truth": "yes",
   "ans": "no",
-  "text": "No. \n\n"
+  "text": "No.\n\nThe"
  },
  {
   "i": 221,
@@ -5085,7 +5085,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No. The"
+  "text": "No<|im_end|>"
  },
  {
   "i": 318,
@@ -5501,7 +5501,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No. \n\n"
+  "text": "No<|im_end|>"
  },
  {
   "i": 344,
@@ -5757,7 +5757,7 @@
   "stmt_true": 0,
   "truth": "no",
   "ans": "no",
-  "text": "No. The"
+  "text": "No<|im_end|>"
  },
  {
   "i": 360,
