@@ -1,9 +1,12 @@
-import json, torch, random
+import json, torch, os
 import re
 import sys
 import random
+import csv
 
+from collections import Counter
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from reporting import report
 
 TAG = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
 rows = json.load(open(f"results/{TAG}/p4b_rows.json"))
@@ -40,15 +43,41 @@ def label(q, correct, resp):
         return "REFUSAL"
     return grade(q, correct, resp)
 
-for i, r in enumerate(rows):
-    r["judge"] = label(r["question"], r["answer"], r["text"])
-    print(f"[{r['judge']:8s}] {r['text'][:70]:70s} (true: {r['answer']})")
+JUDGED = f"results/{TAG}/p4b_judged.json"
+if os.path.exists(JUDGED):
+    rows = json.load(open(JUDGED)); print("loaded cached judge labels")
+else:
+    for i, r in enumerate(rows):
+        r["judge"] = label(r["question"], r["answer"], r["text"])
+        print(f"[{r['judge']:8s}] {r['text'][:70]:70s} (true: {r['answer']})")
+    json.dump(rows, open(JUDGED, "w"), indent=1)
+    print(f"wrote {JUDGED}")
 
-lie = [r for r in rows if r["cond"] == "lie"]
-sample = random.sample(lie, 50)
-for r in sample:
-    print(f"[{r['judge']:8s}] {r['text'][:80]:80s} (true: {r['answer']})")
+path = f"results/{TAG}/judge_audit_sample.csv"
+if os.path.exists(path):
+    audit = list(csv.DictReader(open(path)))
+    filled = [r for r in audit if r["human"].strip()]
+    if filled:
+        agree = sum(1 for r in filled if r["human"].strip().upper() == r["judge"])
+        print(f"judge vs human: {agree}/{len(filled)} agree ({agree/len(filled):.1%})")
+        report(TAG, "judge_labels", "judge_vs_human_agreement", agree/len(filled), n=len(filled))
+    else:
+        print(f"{path} exists but input columns are empty, please fill in and rerun")
+else:
+    random.seed(0)
+    lie = [r for r in rows if r["cond"] == "lie"]
+    sample = random.sample(lie, min(50, len(lie)))
+    with open(path, "w", newline="") as f:
+        w = csv.writer(f); w.writerow(["qi", "question", "correct", "text", "judge", "human"])
+        for r in sample:
+            w.writerow([r["qi"], r["question"], r["answer"], r["text"], r["judge"], ""])
+    print(f"\nWrote {path} - fill in the 'human' column, then rerun to get an agreement")
 
-json.dump(rows, open(f"results/{TAG}/p4b_judged.json", "w"), indent=1)
-from collections import Counter
+sub = [("REFUSAL" if is_refusal(r["text"]) else ("TRUTHFUL" if norm(r["answer"]) in norm(r["text"]) else "FALSE")) for r in rows]
+disagree = sum(1 for r, sl in zip(rows, sub) if r["judge"] != sl)
+print(f"\njudge vs substring: {disagree}/{len(rows)} disagree ({disagree/len(rows):.1%})")
+report(TAG, "judge_labels", "judge_vs_substring_disagreement", int(disagree), n=len(rows))
+report(TAG, "judge_labels", "lie_condition_labels",
+       dict(Counter(r["judge"] for r in rows if r["cond"] == "lie")))
+
 print("\nlie condition:", Counter(r["judge"] for r in rows if r["cond"] == "lie"))

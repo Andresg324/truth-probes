@@ -1,9 +1,12 @@
 import json, os, warnings
 import numpy as np
 import torch
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import sys
 
+from reporting import report, manifest
 from transformer_lens import HookedTransformer
 from sklearn.linear_model import LogisticRegression
 from numpy.linalg import norm
@@ -26,10 +29,10 @@ MODELS = {
 }
 
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
-DTYPE = torch.float16 if DEVICE == "cuda" else torch.float16
+DTYPE = torch.float16
 
 device = DEVICE
-
+SEC = "Phase2"
 SIZE = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
 TAG = SIZE
 model_name = MODELS[SIZE]
@@ -45,10 +48,11 @@ RESID_ONLY = lambda name: name.endswith("hook_resid_post")
 LEGACY = "--legacy" in sys.argv
 
 print("Model Loaded")
+manifest(TAG, model = model_name, device=DEVICE, dtype=str(DTYPE), seed=0, script = "phase2") # Tracks which model is loaded
 
 # Nested layer section
 def nested_layer(acts3d, y, groups, seed=0, val_seeds=range(10), tol=0.02):
-    """3-way grouped split, choose the best layer on VAL, never on the reported TEST fold"""
+    # 3-way grouped split, choose the best layer on VAL, never on the reported TEST fold
     trv, te = next(GroupShuffleSplit(1, test_size=0.20, random_state=seed).split(acts3d, y, groups))
     layer_val = np.zeros(acts3d.shape[1])
     for s in val_seeds:
@@ -73,17 +77,6 @@ def answer_prompt(statement):
     return model.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 # ------ Additional Functions -----------
-def det_after_ablate(ablate_L, read_L, idxs):
-    # Detection at read_L after zero-ablating the MLP at ablate-L (no steering)
-    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
-    preds = []
-    for i in idxs:
-        with torch.no_grad():
-            with model.hooks(fwd_hooks=hooks):
-                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
-        preds.append(layer_probes[read_L].predict(c["resid_post", read_L][0, -1, :].cpu().numpy().reshape(1, -1))[0])
-    return np.array(preds)
-
 def det_clean(read_L, idxs):
     return np.array([layer_probes[read_L].predict(acts[i, read_L].reshape(1, -1))[0] for i in idxs])
 
@@ -99,13 +92,9 @@ for d in items:
     examples.append({"prompt": build_example(stmt, honest_ans), "deceptive": 0, "answer": honest_ans})
     examples.append({"prompt": build_example(stmt, lying_ans),  "deceptive": 1, "answer": lying_ans})
 y_decep = np.array([e["deceptive"] for e in examples])
-deceptive_idx = [i for i, e in enumerate(examples) if e["deceptive"] == 1]
 
 #----------------------- Grouped Split function --------------------
 groups = np.array([i // 2 for i in range(len(examples))])
-def gsplit(X, y, seed=0, test_size=0.25):
-    tr, te = next(GroupShuffleSplit(n_splits=1, test_size=test_size, random_state=seed).split(X, y, groups))
-    return X[tr], X[te], y[tr], y[te], tr, te
 
 # ---- load cached activations ----
 acts = np.load(f"{RESULTS}/acts_deception_balanced.npy")
@@ -131,7 +120,11 @@ A2 = float(min_alpha)
 DECEP = deceptive_eval
 E = best_layer // 2            # genuinely-early injection point
 print(f"best_layer={best_layer}  min_alpha={min_alpha}  E={E}")
-
+# -- Saves values from above analyses -
+report(TAG, f"{SEC}/setup", "best_layer", int(best_layer))
+report(TAG, f"{SEC}/setup", "min_alpha",  float(min_alpha))
+report(TAG, f"{SEC}/setup", "E",          int(E))
+report(TAG, f"{SEC}/setup", "n_test",     int(len(te_idx)), n=int(len(DECEP)))
 
 
 #----------------- PHASE 2 ANALYSIS -----------------
@@ -142,9 +135,6 @@ def make_sub_hook(alpha, d_t):
         value[:, :, :] = value[:, :, :] - alpha * d_t
         return value
     return h
-
-DECEP = deceptive_eval
-A2 = float(min_alpha)
 
 def detbylayer_multi(steer_layers, alpha, d_t):
     hooks = [(f"blocks.{L}.hook_resid_post", make_sub_hook(alpha, d_t)) for L in steer_layers]
@@ -258,17 +248,6 @@ def score_after_ablate(ablate_L, read_L, idxs):
         s.append(layer_probes[read_L].decision_function(c["resid_post", read_L][0, -1, :].cpu().numpy().reshape(1, -1))[0])
     return float(np.mean(s))
 
-# def scores_after_ablate_all(ablate_L, idxs):
-#     hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
-#     S = np.zeros((len(idxs), model.cfg.n_layers))
-#     for r, i in enumerate(idxs):
-#         with torch.no_grad():
-#             with model.hooks(fwd_hooks=hooks):
-#                 _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
-#         for L in range(model.cfg.n_layers):
-#             S[r, L] = layer_probes[L].decision_function(c["resid_post", L][0, -1, :].cpu().numpy().reshape(1, -1))[0]
-#     return S
-
 def ablate_pass(ablate_L, idxs, read_Ls):
     # One ablated forward per item - all layers and activations
     hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
@@ -284,7 +263,6 @@ def ablate_pass(ablate_L, idxs, read_Ls):
             if L in read_Ls: Xs[L].append(v)
     return S, {L: np.array(v) for L, v in Xs.items()}
 
-
 def score_clean(read_L, idxs):
     return float(np.mean([layer_probes[read_L].decision_function(acts[i, read_L].reshape(1, -1))[0] for i in idxs]))
 
@@ -296,21 +274,18 @@ cand = [L for L in R if det_base[L] > 0.70]
 if not cand: cand = [max(det_base, key=det_base.get)]
 local_drop = {L: score_clean(L, sel_dec) - score_after_ablate(L, L, sel_dec) for L in cand}
 crit_L = max(local_drop, key=local_drop.get)
-
-
+report(TAG, f"{SEC}/setup", "crit_L", int(crit_L)) # Savings Critical Layer
 
 y_truth = np.array([items[i // 2]["label"] for i in range(len(examples))])
 y_pol = np.array([1 if examples[i]["answer"] == "Yes" else 0 for i in range(len(examples))])
 labs = {"deception": y_decep, "truth": y_truth, "polarity": y_pol}
 
-# S_by_ablate = {L: scores_after_ablate_all(L, te_idx) for L in R}
 S_by_ablate, X_by_ablate = {}, {}
 for L in R:
     S_by_ablate[L], X_by_ablate[L] = ablate_pass(L, te_idx, {L, best_layer})
 S_abl = S_by_ablate[crit_L]
 S_clean = np.array([[layer_probes[L].decision_function(acts[i, L].reshape(1, -1))[0] for L in range(model.cfg.n_layers)] for i in te_idx])
 
-yd = y_decep[te_idx]
 ydv, ytv = y_decep[te_idx], y_truth[te_idx]
 ypv = y_pol[te_idx]
 
@@ -325,13 +300,17 @@ def grouped_ix(rng):
 
 print(f"\nNecessity vs readout distance (ablate L{crit_L}) - ACC and AUC:")
 for L in range(crit_L, best_layer + 1):
-    ca = ((S_clean[:, L]>0).astype(int) == yd).mean()
-    aa = ((S_abl[:, L] >0).astype(int) == yd).mean()
-    cauc = roc_auc_score(yd, S_clean[:, L])
-    aauc = roc_auc_score(yd, S_abl[:, L])
+    ca = ((S_clean[:, L]>0).astype(int) == ydv).mean()
+    aa = ((S_abl[:, L] >0).astype(int) == ydv).mean()
+    cauc = roc_auc_score(ydv, S_clean[:, L])
+    aauc = roc_auc_score(ydv, S_abl[:, L])
     print(f" read L{L:2d} (crit + {L - crit_L}): acc {ca:.2f} -> {aa:.2f} | AUC {cauc:.2f} -> {aauc:.2f}")
+    # Record values
+    report(TAG, f"{SEC}/distance_curve", f"L{L}",
+           {"acc_clean": ca, "acc_abl": aa, "auc_clean": cauc, "auc_abl": aauc})
 
-np.savez(f"{RESULTS}/distance_curve.npz", s_clean = S_clean, s_abl = S_abl, y=yd, crit = crit_L, best = best_layer)
+np.savez(f"{RESULTS}/distance_curve.npz", s_clean = S_clean, s_abl = S_abl, y=ydv, crit = crit_L, best = best_layer)
+
 
 def auc_ci_from_scores(y, s, n=1000):
     rng = np.random.default_rng(0); b = []
@@ -346,18 +325,21 @@ curve = {}
 
 for L in R:
     S_L = S_by_ablate[L]
-    loc_c, loc_a = roc_auc_score(yd, S_clean[:, L]), roc_auc_score(yd, S_L[:, L])
-    dep_c, dep_a = roc_auc_score(yd, S_clean[:, best_layer]), roc_auc_score(yd, S_L[:, best_layer])
-    llo, lhi = auc_ci_from_scores(yd, S_L[:, L])
-    dlo, dhi = auc_ci_from_scores(yd, S_L[:, best_layer])
+    loc_c, loc_a = roc_auc_score(ydv, S_clean[:, L]), roc_auc_score(ydv, S_L[:, L])
+    dep_c, dep_a = roc_auc_score(ydv, S_clean[:, best_layer]), roc_auc_score(ydv, S_L[:, best_layer])
+    llo, lhi = auc_ci_from_scores(ydv, S_L[:, L])
+    dlo, dhi = auc_ci_from_scores(ydv, S_L[:, best_layer])
     curve[L] = (loc_c, loc_a, dep_c, dep_a)
     star = " <- crit (selected)" if L == crit_L else (" [= best_layer]" if L == best_layer else "")
     print(f" ablate L{L:2d}: local {loc_c:.2f} -> {loc_a:.2f} [{llo:.2f}, {lhi:.2f}] |"
           f" deployed {dep_c:.2f} -> {dep_a:.2f} [{dlo:.2f}, {dhi:.2f}] {star}")
+    report(TAG, f"{SEC}/ablation_curve", f"L{L}",
+           {"local_clean": loc_c, "local_abl": loc_a, "deployed_clean": dep_c, "deployed_abl": dep_a},
+           ci={"local": [llo, lhi], "deployed": [dlo, dhi]})
 
 np.savez(f"{RESULTS}/ablation_curve.npz",
          layers=np.array(R), curve=np.array([curve[L] for L in R]),
-         crit=crit_L, best = best_layer, y=yd)
+         crit=crit_L, best = best_layer, y=ydv)
 
 # Necessity on hold out test at both the local readout
 def spec_at(L_read, Xa, n=1000):
@@ -374,17 +356,30 @@ def spec_at(L_read, Xa, n=1000):
         ds.append((roc_auc_score(ytv[ix], s["truth"][0][ix]) - roc_auc_score(ytv[ix], s["truth"][1][ix])) - (roc_auc_score(ydv[ix], s["deception"][0][ix]) - roc_auc_score(ydv[ix], s["deception"][1][ix])))
     return auc, point, float(np.percentile(ds, 2.5)), float(np.percentile(ds, 97.5))
 
+#Specificity Loop
 print(f"\nSpecificity curve - every layer in R, local readout (AUC clean -> ablated):")
+spec = {}
 for L in R:
     auc, pt, lo, hi = spec_at(L, X_by_ablate[L][L])
+    spec[L] = {"dec": list(auc["deception"]), "tru": list(auc["truth"]), "pol": list(auc["polarity"]), "asym": pt, "ci": [lo, hi]}
+    report(TAG, f"{SEC}/specificity_curve", f"L{L}", spec[L], ci=[lo,hi])
     tag = " <- crit" if L == crit_L else (" [=best]" if L == best_layer else "")
     print(f" ablate L{L:2d}: dec {auc['deception'][0]:.2f} -> {auc['deception'][1]:.2f} | "
           f" tru {auc['truth'][0]:.2f} -> {auc['truth'][1]:.2f} | "
-          f"pol {auc['polarity'][0]:.2f} -> {auc['polarity'][1]:.2f} | "
-          f"asym {pt:+.3f} [{lo:+.3f}, {hi:+.3f}] {tag}")
+          f" pol {auc['polarity'][0]:.2f} -> {auc['polarity'][1]:.2f} | "
+          f" asym {pt:+.3f} [{lo:+.3f}, {hi:+.3f}] {tag}")
+
+np.savez(f"{RESULTS}/specificity_curve.npz",
+         layers=np.array(R),
+         dec=np.array([spec[L]["dec"] for L in R]),
+         tru=np.array([spec[L]["tru"] for L in R]),
+         pol=np.array([spec[L]["pol"] for L in R]),
+         asym=np.array([spec[L]["asym"] for L in R]),
+         asym_ci=np.array([spec[L]["ci"] for L in R]),
+         crit=crit_L, best=best_layer)
+
 
 print(f"crit MLP L{crit_L} (no_steer necessity, chosen on train-fold items)")
-
 if LEGACY:
     for name, comp in [("no ablation", None), (f"MLP L{crit_L}", "hook_mlp_out")]:
         m, lo, hi = boot_ci(recovery_preds(comp, [crit_L]))
@@ -437,6 +432,13 @@ print(f"ablation effect on steered run: mean |delta| {d_abl.mean():.3f} | "
 
 s_patch_i = patched_scores
 
+# Save the steered ablation diagnosis
+report(TAG, f"{SEC}/sufficiency", "ablation_effect_steered",
+       {"mean_abs_delta": float(d_abl.mean()), "frac_above_eps": float((d_abl > eps).mean()), "eps": float(eps)})
+report(TAG, f"{SEC}/sufficiency", "cond_means",
+       {"clean": float(s_clean_i.mean()), "steered": float(s_steer_i.mean()),
+        "steered_ablated": float(s_steerabl_i.mean()), "patched": float(s_patch_i.mean())})
+
 def med_frac(num, den, eps, n=1000):
     m = np.abs(den) > eps
     r = num[m] / den[m]
@@ -450,15 +452,9 @@ B, Blo, Bhi, nB = med_frac(s_patch_i - s_steer_i, s_clean_i - s_steer_i, eps)
 print(f"Restoration A (conduit): {A:+.2f} [{Alo:+.2f}, {Ahi:+.2f}] n={nA}/{len(DECEP)}")
 print(f"Restoration B (undo steering): {B:+.2f} [{Blo:+.2f}, {Bhi:+.2f}] n={nB}/{len(DECEP)}")
 
-def acts_ablated_at(idxs, ablate_L, read_L):
-    hooks = [(f"blocks.{ablate_L}.hook_mlp_out", make_zero_hook())]
-    out = []
-    for i in idxs:
-        with torch.no_grad():
-            with model.hooks(fwd_hooks=hooks):
-                _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
-        out.append(c["resid_post", read_L][0, -1, :].cpu().numpy())
-    return np.array(out)
+# Saving the restoration
+report(TAG, f"{SEC}/sufficiency", "restoration_A_conduit", A, ci = [Alo, Ahi], n=nA)
+report(TAG, f"{SEC}/sufficiency", "restoration_B_undo_steering", B, ci = [Blo, Bhi], n=nB)
 
 Ploc = {nm: LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, crit_L, :], lab[tr_idx]) for nm, lab in [("deception", y_decep), ("truth", y_truth), ("polarity", y_pol)]}
 Xabl_loc = X_by_ablate[crit_L][crit_L]
@@ -469,11 +465,17 @@ da_m, da_lo, da_hi = acc_ci(layer_probes[best_layer], Xabl_dep, labs["deception"
 print(f"\nDEPLOYED necessity as ACC (read L{best_layer})"
       f" {dc_m:.2f} [{dc_lo:.2f}, {dc_hi:.2f}] -> {da_m:.2f} [{da_lo:.2f}, {da_hi:.2f}]")
 
+# Saving deployed necessity:
+report(TAG, f"{SEC}/necessity", "deployed_acc",
+       {"clean": dc_m, "abl": da_m}, ci={"clean": [dc_lo, dc_hi], "abl": [da_lo, da_hi]})
+
 print(f"\nSpecificity at LOCAL readout L{crit_L} (clean -> ablated), held-out:")
 for nm in ["deception", "truth", "polarity"]:
     cm, clo, chi = acc_ci(Ploc[nm], acts[te_idx, crit_L, :], labs[nm][te_idx])
     am, alo, ahi = acc_ci(Ploc[nm], Xabl_loc, labs[nm][te_idx])
     print(f" {nm:9}: {cm:.2f} [{clo:.2f}, {chi:.2f}] -> {am:.2f} [{alo:.2f}, {ahi:.2f}]")
+    # Saving the crit-specificity accuracy
+    report(TAG, f"{SEC}/specificity_crit_acc", nm, {"clean": cm, "abl": am}, ci={"clean": [clo, chi], "abl": [alo, ahi]})
 
 Xc_loc = acts[te_idx, crit_L, :]
 d_dec = ((Ploc["deception"].predict(Xc_loc)  == labs["deception"][te_idx]).astype(float) - (Ploc["deception"].predict(Xabl_loc) == labs["deception"][te_idx]).astype(float))
@@ -485,7 +487,8 @@ b = [diff[grouped_ix(rng)].mean() for _ in range(1000)]
 
 print(f" paired (truth drop - deception drop) at L{crit_L}: {diff.mean():+.3f} "
       f"[{np.percentile(b, 2.5):+.3f}, {np.percentile(b, 97.5):+.3f}] (asymmetry is real only if CI excludes 0)")
-
+#Savings the asymmetry in paired accuracy
+report(TAG, f"{SEC}/specificity_crit_acc", "paired_asym", float(diff.mean()), ci=[float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))])
 
 def auc_pair(pr, Xc, Xa, y, n=1000):
     sc, sa = pr.decision_function(Xc), pr.decision_function(Xa)
@@ -500,3 +503,5 @@ print(f"\nSpecificity at LOCAL readout L{crit_L} - AUC (clean -> ablated):")
 for nm in ["deception", "truth", "polarity"]:
     ac, aa, lo, hi = auc_pair(Ploc[nm], acts[te_idx, crit_L, :], Xabl_loc, labs[nm][te_idx])
     print(f" {nm:9}: AUC {ac:.2f} -> {aa:.2f} [{lo:.2f}, {hi:.2f}]")
+    # saving the crit-specificity data
+    report(TAG, f"{SEC}/specificity_crit_auc", nm, {"clean": ac, "abl": aa}, ci=[lo, hi])

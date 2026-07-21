@@ -6,8 +6,10 @@ import sys
 
 from transformer_lens import HookedTransformer
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
 from numpy.linalg import norm
 from sklearn.model_selection import GroupShuffleSplit
+from reporting import report, manifest
 
 warnings.filterwarnings("ignore")
 
@@ -30,12 +32,15 @@ DTYPE = torch.float16
 TAG =  sys.argv[1] if len(sys.argv) > 1 else "gemma-2b"
 PARA = sys.argv[2] if len(sys.argv) > 2 else "tf"
 
+SEC = f"paraphrase_{PARA}"
+
 loader = (HookedTransformer.from_pretrained_no_processing if TAG in ("7B", "14B", "gemma-9b", "llama-8b") else HookedTransformer.from_pretrained)
 model = loader(MODELS[TAG], device=device, dtype=DTYPE)
 
 RESULTS = f"results/{TAG}"; os.makedirs(RESULTS, exist_ok=True)
 RESID_ONLY = lambda name: name.endswith("hook_resid_post")
 print(f"Model loaded: {TAG} | paraphrase: {PARA}")
+manifest(TAG, model=MODELS[TAG], device=device, dtype=str(DTYPE), seed=0, script="paraphrase_triangle", para = PARA)
 
 # ------ Paraphrase templates (user-content only, chat template applied after)
 PARAPHRASES = {
@@ -64,11 +69,7 @@ def nested_layer(acts3d, y, groups, seed=0, val_seeds=range(10), tol=0.02):
     tr_r, va_r = next(GroupShuffleSplit(1, test_size=0.25, random_state=seed).split(acts3d[trv], y[trv], groups[trv]))
     return bl, trv[tr_r], trv[va_r], te
 
-def acc_ci(pr, X, y, n=1000):
-    correct = (pr.predict(X) == y).astype(float)
-    rng = np.random.default_rng(0)
-    b = [correct[rng.integers(0, len(correct), len(correct))].mean() for _ in range(n)]
-    return correct.mean(), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
 
 # ---- examples (identical order) ----
 items = json.load(open("data/mixed.json"))
@@ -85,7 +86,7 @@ groups = np.array([i // 2 for i in range(len(examples))])
 def gsplit(y, seed = 0, test_size = 0.25):
     return next(GroupShuffleSplit(1, test_size=test_size, random_state=seed).split(np.zeros(len(y)), y, groups))
 
-# Extract all-layer acts at the forced-answer token, UNDER THE PARAPHRASe
+# Extract all-layer acts at the forced-answer token, UNDER THE PARAPHRASE
 CACHE = f"{RESULTS}/acts_paraphrase_{PARA}.npy"
 if os.path.exists(CACHE):
     acts = np.load(CACHE); print("loaded cached paraphrase acts", acts.shape)
@@ -99,6 +100,15 @@ else:
 
 # ---- best layer + probe + direction
 best_layer, tr_idx, va_idx, te_idx = nested_layer(acts, y_decep, groups)
+te_groups = groups[te_idx]
+uniq_g = np.unique(te_groups)
+g_rows = {g: np.where(te_groups == g)[0] for g in uniq_g}
+report(TAG, SEC, "best_layer", int(best_layer))
+
+def grouped_ix(rng):
+    gs = rng.choice(uniq_g, len(uniq_g), replace=True)
+    return np.concatenate([g_rows[g] for g in gs])
+
 trva = np.concatenate([tr_idx, va_idx])
 probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, best_layer, :], y_decep[trva])
 best_dir_t = torch.tensor(probe.coef_[0] / norm(probe.coef_[0]), dtype=DTYPE, device=device)
@@ -109,8 +119,9 @@ DECEP = [i for i in te_idx if examples[i]["deceptive"] == 1]
 E = best_layer // 2
 acc_te = probe.score(acts[te_idx, best_layer, :], y_decep[te_idx])
 print(f"[{PARA}] best_layer = {best_layer} probe acc{acc_te:.3f} n_decep_eval={len(DECEP)}")
+report(TAG, SEC, "probe_acc", float(acc_te), n=int(len(te_idx)))
 
-# ----- hookes + bootstrap -------------
+# ----- hooks + bootstrap -------------
 def sub_hook(alpha, d_t):
     def h(v, hook): v[:, :, :] = v[:, :, :] - alpha * d_t; return v
     return h
@@ -159,12 +170,31 @@ def score_after_ablate(ablate_L, read_L, idxs):
 def score_clean(read_L, idxs):
     return float(np.mean([layer_probes[read_L].decision_function(acts[i, read_L].reshape(1, -1))[0] for i in idxs]))
 
+def auc_pair(pr, Xc, Xa, y, n=1000):
+    sc, sa = pr.decision_function(Xc), pr.decision_function(Xa)
+    rng = np.random.default_rng(0); b = []
+    for _ in range(n):
+        ix = grouped_ix(rng)
+        if len(np.unique(y[ix])) < 2: continue
+        b.append(roc_auc_score(y[ix], sa[ix]))
+    return roc_auc_score(y, sc), roc_auc_score(y, sa), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+def acc_ci(pr, X, y, n=1000):
+    correct = (pr.predict(X) == y).astype(float)
+    rng = np.random.default_rng(0)
+    b = [correct[grouped_ix(rng)].mean() for _ in range(n)]
+    return correct.mean(), float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+
 # collapse sweep
 alphas = [2, 4, 6, 8, 12, 16, 24]
 collapse = {a: detect_at_best([(f"blocks.{E}.hook_resid_post", sub_hook(a, best_dir_t))]).mean() for a in alphas}
 print("collapse sweep:", {a: round(v, 2) for a, v in collapse.items()})
+report(TAG, SEC, "collapse_sweep", {str(a): float(v) for a, v in collapse.items()})
+
 A2 = float(next((a for a in alphas if collapse[a] < 0.10), alphas[-1]))
 print(f"min_alpha (paraphrase = {A2}")
+report(TAG, SEC, "min_alpha", float(A2))
 
 # Necessity -------------
 R = list(range(E + 1, best_layer + 1))
@@ -174,6 +204,7 @@ cand = [L for L in R if det_base[L] > 0.70]
 if not cand: cand = [max(det_base, key=det_base.get)]
 local_drop = {L: score_clean(L, sel_dec) - score_after_ablate(L, L, sel_dec) for L in cand}
 crit_L = max(local_drop, key=local_drop.get)
+report(TAG, SEC, "crit_L", int(crit_L))
 
 bl_loc = boot_ci(det_clean(crit_L, DECEP)); nec_loc = boot_ci(det_after_ablate(crit_L, crit_L, DECEP))
 bl_dep = boot_ci(det_clean(best_layer, DECEP)); nec_dep = boot_ci(det_after_ablate(crit_L, best_layer, DECEP))
@@ -189,8 +220,9 @@ for j, cL in enumerate(ctrl_Ls):
     if j == 0: km, ctrl_L = m, cL
 base_m, cm = bl_dep[0], nec_dep[0]
 if km is None: km = cm
+report(TAG, SEC, "control", {"layer": int(ctrl_L), "detection_recall": float(km)})
 
-# --- Sufficency
+# --- Sufficiency
 def recovery_patch_clean(L):
     clean = {}
     def save(v, hook): clean["v"] = v.clone(); return v
@@ -212,7 +244,7 @@ sm, slo, shi = boot_ci(recovery_patch_clean(crit_L))
 
 print(f"\nSUFFICIENCY steered, no patch: {nm:.2f} [{nlo:.2f},{nhi:.2f}]")
 print(f"SUFFICIENCY + clean L{crit_L} patch: {sm:.2f} [{slo:.2f}, {shi:.2f}] (restoration)")
-
+report(TAG, SEC, "sufficiency", {"steered": nm, "patched": sm})
 
 # Specificity 
 
@@ -229,10 +261,26 @@ for i in te_idx:
 Xabl_loc = np.array(Xabl_loc)
 Xabl_dep = np.array(Xabl_dep)
 
+dep_ac, dep_aa, dep_lo, dep_hi = auc_pair(layer_probes[best_layer], acts[te_idx, best_layer, :], Xabl_dep, labs["deception"][te_idx])
+print(f" Deployed AUC (read L{best_layer}): {dep_ac:.2f} -> {dep_aa:.2f} [{dep_lo:.2f}, {dep_hi:.2f}]")
+report(TAG, SEC, "necessity_deployed_auc", {"clean": dep_ac, "abl": dep_aa},
+       ci = [dep_lo, dep_hi])
+
+print(f"\nSpecificity at LOCAL readout L{crit_L} - AUC (clean -> ablated):")
+spec_auc = {}
+for nmr in ["deception", "truth", "polarity"]:
+    c_mean, clo, chi = acc_ci(Ploc[nmr], acts[te_idx, crit_L, :], labs[nmr][te_idx])
+    a_mean, alo, ahi = acc_ci(Ploc[nmr], Xabl_loc, labs[nmr][te_idx])
+    spec_auc[nmr] = {"clean": c_mean, "abl": a_mean, "ci": [lo, hi]}
+    print(f" {nmr:9}: {c_mean:.2f} [{clo:.2f}, {chi:.2f}] -> {a_mean:.2f} [{alo:.2f}, {ahi:.2f}]")
+report(TAG, SEC, "specificity_local_auc", spec_auc)
+
 dc_m, dc_lo, dc_hi = acc_ci(layer_probes[best_layer], acts[te_idx, best_layer, :], labs["deception"][te_idx])
 da_m, da_lo, da_hi = acc_ci(layer_probes[best_layer], Xabl_dep, labs["deception"][te_idx])
 print(f" Deployed (balanced acc, read L{best_layer}): "
       f" {dc_m:.2f} [{dc_lo:.2f}, {dc_hi:.2f}] -> {da_m:.2f} [{da_lo:.2f}, {da_hi:.2f}]")
+report(TAG, SEC, "necessity_deployed_acc", {"clean": dc_m, "abl": da_m},
+       ci = {"clean": [dc_lo, dc_hi], "abl": [da_lo, da_hi]})
 
 print(f"\nSpecificity at LOCAL readout L{crit_L} (clean -> ablated), held-out:")
 for nmr in ["deception", "truth", "polarity"]:
@@ -241,15 +289,17 @@ for nmr in ["deception", "truth", "polarity"]:
     print(f" {nmr:9}: {c_mean:.2f} [{clo:.2f}, {chi:.2f}] -> {a_mean:.2f} [{alo:.2f}, {ahi:.2f}]")
 
 
+
 print(f"""
 ================= TRIANGLE @ paraphrase='{PARA}', model={TAG} =================
   crit MLP under this paraphrase: L{crit_L} (compare to the phase 2 orig-format crit)
-  NECESSITY     : {dc_m:.2f} -> {da_m:.2f} crit ablation collapses detection?
-  CONTROL       : {base_m:.2f} -> {km:.2f} non-crit L{ctrl_L} leaves it intact?
-  SUFFICIENCY   : {nm:.2f} -> {sm:.2f} clean patch restores?
+  NECESSITY (acc): {dc_m:.2f} -> {da_m:.2f}
+  NECESSITY (AUC): {dep_ac:.2f} -> {dep_aa:.2f} (Cite this one)
+  CONTROL        : {base_m:.2f} -> {km:.2f} non-crit L{ctrl_L}
+  SUFFICIENCY    : {nm:.2f} -> {sm:.2f} clean patch restores?
 
   SPECIFICITY.  : polarity should survive (see above)
-  Reading: crit collapses + cntrol holds + patch restores + polarity survives
+  Reading: crit collapses + control holds + patch restores + polarity survives
     => mechanism MOVED to L{crit_L} (triangle replicates) => thesis checks out
-    no layer collapeses means the paraphrase breaks the mechanism
+    no layer collapses means the paraphrase breaks the mechanism
       """)
