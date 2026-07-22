@@ -20,7 +20,7 @@ hdr = f"{'model':9s} {'pos_ctrl':>8s} {'decep':>7s} {'truth':>7s} {'polar':>7s} 
 print(hdr); print("-" * len(hdr))
 for tag in TAGS:
     R = f"results/{tag}"
-    if not os.path.exists(f"{R}/p4_rows.json"):
+    if not (os.path.exists(f"{R}/p4_rows.json") and os.path.exists(f"{R}/split.npz")):
         print(f"{tag:9s} (no transfer data)"); continue
     acts = np.load(f"{R}/acts_deception_balanced.npy")
     z = np.load(f"{R}/split.npz")

@@ -35,7 +35,7 @@ MODELS = {
 
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 DTYPE = torch.float16
-
+SEC = "probe"
 device = DEVICE
 
 SIZE = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
@@ -84,6 +84,7 @@ except Exception as e:
 
 with open("data/mixed.json") as f:
     items = json.load(f)
+    if os.environ.get("SMOKE"): items = items[:20]
 
 print(f"Loaded {len(items)} statements:", Counter(d['label'] for d in items))
 
@@ -139,7 +140,7 @@ trva = np.concatenate([tr_idx, va_idx])
 np.savez(f"{RESULTS}/split.npz", best_layer=best_layer, tr_idx=tr_idx, va_idx=va_idx, te_idx=te_idx, y_decep=y_decep, groups=groups)
 print(f"Best layer (chosen on val fold): {best_layer}")
 
-if "--probe-on;y" in sys.argv:
+if "--probe-only" in sys.argv:
     print("probe-on;y: acts + split.npz written, stopping analysis"); sys.exit(0)
 
 # Best layer and value sweep
@@ -148,8 +149,8 @@ for L in range(model.cfg.n_layers):
     va_acc = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr_idx, L, :], y_decep[tr_idx]).score(acts[va_idx, L, :], y_decep[va_idx])
     val_sweep[L] = float(va_acc)
     print(f"Layer {L:2d}: val {va_acc:.3f}")
-report(TAG, "probe/setup", "best_layer", int(best_layer))
-report(TAG, "probe/setup", "val_sweep", val_sweep)
+report(TAG, f"{SEC}/setup", "best_layer", int(best_layer))
+report(TAG, f"{SEC}/setup", "val_sweep", val_sweep)
 
 #------------------------ Leak Control ---------------------------------------------------
 #Verification step
@@ -168,15 +169,15 @@ for s in range(10):
 print(f"leak control over 10 seeds: {np.mean(accs):.3f} +/- {np.std(accs):.3f}")
 
 # Save 10 second seed analysis
-report(TAG, "leak_control", "single_split", float(ctrl))
-report(TAG, "leak_control", "ten_seed", {"mean": float(np.mean(accs)), "std": float(np.std(accs))}, n=10)
+report(TAG, f"{SEC}/leak_control", "single_split", float(ctrl))
+report(TAG, f"{SEC}/leak_control", "ten_seed", {"mean": float(np.mean(accs)), "std": float(np.std(accs))}, n=10)
 
 #----------------------- Main Probe and Deception Direction -------------------------------
 probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, best_layer, :], y_decep[trva])
 deceptive_eval = [i for i in te_idx if examples[i]["deceptive"] == 1]
 acc_te = probe.score(acts[te_idx, best_layer, :], y_decep[te_idx])
 print(f"Probe accuracy at {best_layer} (held-out TEST fold): {acc_te:.3f}")
-report(TAG, "probe", "heldout_test_acc", float(acc_te), n=int(len(te_idx)))
+report(TAG, f"{SEC}/probe", "heldout_test_acc", float(acc_te), n=int(len(te_idx)))
 
 probe_dir = probe.coef_[0]
 probe_dir = probe_dir / np.linalg.norm(probe_dir) #Normalized to a unit length
@@ -223,9 +224,9 @@ resid_norm = float(np.linalg.norm(acts[:, best_layer, :], axis=1).mean())
 print(f"alpha relative units (min_alpha/||resid||): {min_alpha / resid_norm:.4f}")
 
 # Recording alphas
-report(TAG, "steering", "min_alpha", float(min_alpha))
-report(TAG, "steering", "resid_norm", float(resid_norm))
-report(TAG, "steering", "min_alpha_relative", float(min_alpha / resid_norm))
+report(TAG, f"{SEC}/steering", "min_alpha", float(min_alpha))
+report(TAG, f"{SEC}/steering", "resid_norm", float(resid_norm))
+report(TAG, f"{SEC}/steering", "min_alpha_relative", float(min_alpha / resid_norm))
 
 #--------------------- Per Layer Probes ------------------------------------------------
 layer_probes = {}
@@ -260,7 +261,7 @@ for L in range(model.cfg.n_layers):
     preds = layer_probes[L].predict(steered_all[:, L,:])
     det_by_layer[L] = float(preds.mean())
     print(f"layer {L:2d}: {preds.mean():.2%}")
-report(TAG, "steering", "detection_by_layer_at_best", det_by_layer)
+report(TAG, f"{SEC}/steering", "detection_by_layer_at_best", det_by_layer)
 
 
 #------------------------- Behavioral effect of steering ---------------------------
@@ -321,7 +322,7 @@ for a, r in behavior.items():
     print(f"{a:>5} | {r['correct']:.0%} | {r['wrong']:.0%} | {r['answer_rate']:.0%}")
 
 # Recording behavior sweep
-report(TAG, "behavior", "alpha_sweep", behavior)
+report(TAG, f"{SEC}/behavior", "alpha_sweep", behavior)
 
 # ------- Statistical Rigor ---------------------------
 # ------- Multi-seed probe accuracy -------------------
@@ -338,7 +339,7 @@ def probe_accuracy_multiseed(X, y, n_seeds=10, C=0.1):
 mean_acc, std_acc = probe_accuracy_multiseed(acts[:, best_layer, :], y_decep)
 print(f"Probe at layer {best_layer}: {mean_acc:.3f} +/- {std_acc:.3f} (10 seeds)")
 
-report(TAG, "probe", "ten_seed_acc", {"mean": float(mean_acc), "std": float(std_acc)}, n=10)
+report(TAG, f"{SEC}/probe", "ten_seed_acc", {"mean": float(mean_acc), "std": float(std_acc)}, n=10)
 
 # --------- Multi-seed layer sweep ----------------------
 # Error bars for a paper
@@ -411,7 +412,7 @@ for a in ALPHAS:
     print(f"{a:5d} | {still/n:.0%} | {flipped/n:.0%} | {incoh/n:.0%}")
 print("High 'still correct' -> probe fooled but behavior intact (decoupled)")
 # Record flip-test results
-report(TAG, "behavior", "flip_test", flip_rows, n=len(baseline))
+report(TAG, f"{SEC}/behavior", "flip_test", flip_rows, n=len(baseline))
 
 def detection_with_ci(alpha, n_boot=1000):
     steered = np.array([get_acts_with_evasion(examples[i]["prompt"], alpha) for i in deceptive_eval])
@@ -427,7 +428,7 @@ for a in collapse_alphas:
     m,lo,hi = collapse_ci[a]
     print(f"alpha {a:2d}: {m:.2%} [{lo:.2%}, {hi:.2%}]")
 #Record collapse curve
-report(TAG, "steering", "collapse_curve",
+report(TAG, f"{SEC}/steering", "collapse_curve",
        {str(a): {"mean": collapse_ci[a][0], "lo": collapse_ci[a][1], "hi": collapse_ci[a][2]} for a in collapse_alphas})
 
 # ------------------ Fine Alpha Sweep --------------------------
@@ -498,14 +499,14 @@ print("  ~0.70 = signal is real & source-independent | ~0.50 = probe read AI art
 
 # Layer-wise generalization curve - does AI --> human transfer peak where the probe peaks?
 print("\nAI --> human transfer by layer:")
-report(TAG, "transfer", "ai_to_human_at_best", float(cross_acc), n=int(len(y_human)))
+report(TAG, f"{SEC}/transfer", "ai_to_human_at_best", float(cross_acc), n=int(len(y_human)))
 
 tr_by_layer = {}
 for L in range(model.cfg.n_layers):
     p = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, L, :], y_decep[trva])
     tr_by_layer[L] = float(p.score(human_acts[:, L, :], y_human))
     print(f" layer {L:2d}: {tr_by_layer[L]:.3f}")
-report(TAG, "transfer", "ai_to_human_by_layer", tr_by_layer)
+report(TAG, f"{SEC}/transfer", "ai_to_human_by_layer", tr_by_layer)
 
 
 # --------------------- Coherence / Correctness Test 1 - output -------------------
@@ -544,7 +545,7 @@ for a in alpha_fine:
     ppls = [lm_ppl(it["statement"], a) for it in items[:30]]
     ppl_med[f"{a:.2f}"] = float(np.median(ppls))
     print(f"alpha {a:.2f}: median LM perplexity {ppl_med[f'{a:.2f}']:.2f}")
-report(TAG, "fluency", "ppl_median_by_alpha", ppl_med)
+report(TAG, f"{SEC}/fluency", "ppl_median_by_alpha", ppl_med)
 
 # ------------- Collection bias check --------------
 rows = [(get_answer_under_steering(it["statement"], 0.0),
@@ -554,8 +555,8 @@ for name, lab in [("TRUE", "yes"), ("FALSE", "no")]:
     sub = [a == t for a, t in rows if t == lab]
     print(f"{name} statements: model correct {np.mean(sub):.0%} (n={len(sub)})")
 
-report(TAG, "behavior", "answer_distribution", dict(Counter(a for a, _ in rows)))
-report(TAG, "behavior", "accuracy_by_truth",
+report(TAG, f"{SEC}/behavior", "answer_distribution", dict(Counter(a for a, _ in rows)))
+report(TAG, f"{SEC}/behavior", "accuracy_by_truth",
        {name: float(np.mean([a == t for a, t in rows if t == lab])) for name, lab in [("TRUE", "yes"), ("FALSE", "no")]})
 
 
@@ -693,8 +694,8 @@ print(f"cos disjoint   : {np.mean(cos_dis):.3f} +/- {np.std(cos_dis):.3f}")
 print(f"cos noise-floor: {np.mean(cos_floor):.3f} +/- {np.std(cos_floor):.3f} (same data, resampled)")
 print("disjoint << floor -> real probe-specific structure | ~equal -> mostly estimation noise")
 
-report(TAG, "phase1", "cos_disjoint", {"mean": float(np.mean(cos_dis)), "std": float(np.std(cos_dis))}, n=50)
-report(TAG, "phase1", "cos_noise_floor", {"mean": float(np.mean(cos_floor)), "std": float(np.std(cos_floor))}, n=50)
+report(TAG, f"{SEC}/phase1", "cos_disjoint", {"mean": float(np.mean(cos_dis)), "std": float(np.std(cos_dis))}, n=50)
+report(TAG, f"{SEC}/phase1", "cos_noise_floor", {"mean": float(np.mean(cos_floor)), "std": float(np.std(cos_floor))}, n=50)
 
 # (B) detection transfer with seed variance (steering; ~10 min)
 ALPHAS_X, K = [0,1,2,4,6], 10
@@ -722,7 +723,7 @@ for s in range(K):
 print("\nalpha | detA (mean +/- sd) | detB (mean +/- sd)")
 for a in ALPHAS_X:
     print(f"{a:5d} | {np.mean(detA[a]):.2f} +/- {np.std(detA[a]):.2f} | {np.mean(detB[a]):.2f} +/- {np.std(detB[a]):.2f}")
-report(TAG, "phase1", "cross_train_detection",
+report(TAG, f"{SEC}/phase1", "cross_train_detection",
        {str(a): {"detA_mean": float(np.mean(detA[a])), "detA_std": float(np.std(detA[a])),
                  "detB_mean": float(np.mean(detB[a])), "detB_std": float(np.std(detB[a]))} for a in ALPHAS_X}, n=K)
 
@@ -736,7 +737,7 @@ for k in [1, 2, 3, 5, 10, 20]:
     Xtr, Xte, ytr, yte, _, _ = gsplit(Xk, y_decep)
     pca_acc[k] = float(LogisticRegression(max_iter=2000).fit(Xtr, ytr).score(Xte, yte))
     print(f" top-{k:2d} PCs: {pca_acc[k]:.3f}")
-report(TAG, "phase1", "pca_dims", pca_acc)
+report(TAG, f"{SEC}/phase1", "pca_dims", pca_acc)
 
 # --------------------- Steering direction + helper (used by Fig 7 & Phase 2) -------------------
 

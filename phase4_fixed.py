@@ -50,6 +50,8 @@ def build_example(statement, forced_answer):
     return model.tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=True) + forced_answer
 
 items = json.load(open("data/mixed.json"))
+if os.environ.get("SMOKE"): items = items[:20]
+
 examples = []
 for d in items:
     honest = "Yes" if d["label"] else "No"
@@ -239,5 +241,5 @@ if len(set(y4b.tolist())) >= 2 and min(Counter(y4b.tolist()).values()) >= 5:
     for k, nm in [(Xp, "prompt"), (Xf, "first"), (Xl, "last"), (Xm, "mean")]:
         pos_aucs[nm] = float(roc_auc_score(y4b, probe.decision_function(k[keep])))
         print(f" AUC ({nm:6s}): {pos_aucs[nm]:.3f}")
-    report(TAG, SEC + "b", "auc_by_position", pos_aucs)
+    report(TAG, f"{SEC}_freeform", "auc_by_position", pos_aucs)
 print("\nCompare every number above to the POSITIVE CONTROL. Anything higher is a confound")

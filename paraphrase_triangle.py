@@ -34,7 +34,7 @@ PARA = sys.argv[2] if len(sys.argv) > 2 else "tf"
 
 SEC = f"paraphrase_{PARA}"
 
-loader = (HookedTransformer.from_pretrained_no_processing if TAG in ("7B", "14B", "gemma-9b", "llama-8b") else HookedTransformer.from_pretrained)
+loader = HookedTransformer.from_pretrained
 model = loader(MODELS[TAG], device=device, dtype=DTYPE)
 
 RESULTS = f"results/{TAG}"; os.makedirs(RESULTS, exist_ok=True)
@@ -73,6 +73,8 @@ def nested_layer(acts3d, y, groups, seed=0, val_seeds=range(10), tol=0.02):
 
 # ---- examples (identical order) ----
 items = json.load(open("data/mixed.json"))
+if os.environ.get("SMOKE"): items = items[:20]
+
 examples = []
 for d in items:
     stmt, is_true = d["statement"], d["label"]

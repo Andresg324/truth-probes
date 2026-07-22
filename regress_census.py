@@ -16,7 +16,7 @@ star = lambda p: "***" if p< 0.001 else "**" if p < 0.01 else "*" if p < 0.05 el
 
 for tag in TAGS:
     R = f"results/{tag}"
-    if not os.path.exists(f"{R}/p4_rows.json"):
+    if not (os.path.exists(f"{R}/p4_rows.json") and os.path.exists(f"{R}/split.npz")):
         print(f"{tag:9s} (no transfer data)"); continue
     acts = np.load(f"{R}/acts_deception_balanced.npy")
     z = np.load(f"{R}/split.npz")
@@ -44,6 +44,7 @@ for tag in TAGS:
         report(tag, "regress_census", "gate", {"ny": int(ny), "nn": int(nn), "cond": float(cond),
                                                "min_count": int(min(ny, nn)), "ratio": float(min(ny, nn) / max(ny+nn, 1))})
         continue
+    
     m = sm.OLS(s, Xc).fit()
     ci, pi = m.params[1], m.pvalues[1]
     cx, px = m.params[4], m.pvalues[4]

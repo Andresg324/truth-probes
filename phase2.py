@@ -32,7 +32,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.i
 DTYPE = torch.float16
 
 device = DEVICE
-SEC = "Phase2"
+SEC = "phase2"
 SIZE = sys.argv[1] if len(sys.argv) > 1 else "1.5B"
 TAG = SIZE
 model_name = MODELS[SIZE]
@@ -84,6 +84,7 @@ def det_clean(read_L, idxs):
 # ---- examples (identical order) ----
 with open("data/mixed.json") as f:
     items = json.load(f)
+    if os.environ.get("SMOKE"): items = items[:20]
 examples = []
 for d in items:
     stmt, is_true = d["statement"], d["label"]
