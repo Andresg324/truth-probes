@@ -11,3 +11,8 @@ results_gpu/
 results/
 *.npy
 *.npz
+
+pod_final/
+pod_final_BACKUP*/
+pod_results/
+*.tgz

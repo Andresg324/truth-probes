@@ -8,7 +8,7 @@ def report(tag, section, key, value, ci=None, n=None):
     db.setdefault(section, {})[key] = {"value": value, "ci": ci, "n":n}
     json.dump(db, open(path, "w"), indent = 2, default = float)
 
-def manifest(tag, **extra):
+def manifest(tag, fname="MANIFEST.json", **extra):
     os.makedirs(f"results/{tag}", exist_ok=True)
     m = {"date": str(datetime.datetime.now()), "argv": sys.argv, "pip": subprocess.run(["pip", "freeze"], capture_output=True, text=True).stdout.split("\n"), **extra}
-    json.dump(m, open(f"results/{tag}/MANIFEST.json", "w"), indent = 2)
+    json.dump(m, open(f"results/{tag}/{fname}", "w"), indent = 2)

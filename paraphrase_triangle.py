@@ -40,7 +40,7 @@ model = loader(MODELS[TAG], device=device, dtype=DTYPE)
 RESULTS = f"results/{TAG}"; os.makedirs(RESULTS, exist_ok=True)
 RESID_ONLY = lambda name: name.endswith("hook_resid_post")
 print(f"Model loaded: {TAG} | paraphrase: {PARA}")
-manifest(TAG, model=MODELS[TAG], device=device, dtype=str(DTYPE), seed=0, script="paraphrase_triangle", para = PARA)
+manifest(TAG, fname=f"MANIFEST_para_{PARA}.json", model=MODELS[TAG], device=device, dtype=str(DTYPE), seed=0, script="paraphrase_triangle", para = PARA)
 
 # ------ Paraphrase templates (user-content only, chat template applied after)
 PARAPHRASES = {
@@ -224,6 +224,17 @@ base_m, cm = bl_dep[0], nec_dep[0]
 if km is None: km = cm
 report(TAG, SEC, "control", {"layer": int(ctrl_L), "detection_recall": float(km)})
 
+Xa_ctrl = []
+for i in te_idx:
+    with torch.no_grad():
+        with model.hooks(fwd_hooks=[(f"blocks.{ctrl_L}.hook_mlp_out", zero_hook())]):
+            _, c = model.run_with_cache(model.to_tokens(examples[i]["prompt"]), names_filter=RESID_ONLY)
+    Xa_ctrl.append(c["resid_post", ctrl_L][0, -1, :].cpu().numpy())
+Xa_ctrl = np.array(Xa_ctrl)
+cac, caa, clo2, chi2 = auc_pair(layer_probes[ctrl_L], acts[te_idx, ctrl_L, :], Xa_ctrl, y_decep[te_idx])
+print(f" non-crit control L{ctrl_L} AUC: {cac:.2f} -> {caa:.2f} [{clo2:.2f}, {chi2:.2f}]")
+report(TAG, SEC, "control_auc", {"layer": int(ctrl_L), "clean": cac, "abl": caa, "ci": [clo2, chi2]})
+
 # --- Sufficiency
 def recovery_patch_clean(L):
     clean = {}
@@ -271,10 +282,9 @@ report(TAG, SEC, "necessity_deployed_auc", {"clean": dep_ac, "abl": dep_aa},
 print(f"\nSpecificity at LOCAL readout L{crit_L} - AUC (clean -> ablated):")
 spec_auc = {}
 for nmr in ["deception", "truth", "polarity"]:
-    c_mean, clo, chi = acc_ci(Ploc[nmr], acts[te_idx, crit_L, :], labs[nmr][te_idx])
-    a_mean, alo, ahi = acc_ci(Ploc[nmr], Xabl_loc, labs[nmr][te_idx])
-    spec_auc[nmr] = {"clean": c_mean, "abl": a_mean, "ci": [lo, hi]}
-    print(f" {nmr:9}: {c_mean:.2f} [{clo:.2f}, {chi:.2f}] -> {a_mean:.2f} [{alo:.2f}, {ahi:.2f}]")
+    ac, aa, lo, hi = auc_pair(Ploc[nmr], acts[te_idx, crit_L, :], Xabl_loc, labs[nmr][te_idx])
+    spec_auc[nmr] = {"clean": ac, "abl": aa, "ci": [lo, hi]}
+    print(f" {nmr:9}: AUC {ac:.2f} -> {aa:.2f} [{lo:.2f}, {hi:.2f}]")
 report(TAG, SEC, "specificity_local_auc", spec_auc)
 
 dc_m, dc_lo, dc_hi = acc_ci(layer_probes[best_layer], acts[te_idx, best_layer, :], labs["deception"][te_idx])
@@ -285,12 +295,14 @@ report(TAG, SEC, "necessity_deployed_acc", {"clean": dc_m, "abl": da_m},
        ci = {"clean": [dc_lo, dc_hi], "abl": [da_lo, da_hi]})
 
 print(f"\nSpecificity at LOCAL readout L{crit_L} (clean -> ablated), held-out:")
+spec_acc = {}
 for nmr in ["deception", "truth", "polarity"]:
     c_mean, clo, chi = acc_ci(Ploc[nmr], acts[te_idx, crit_L, :], labs[nmr][te_idx])
     a_mean, alo, ahi = acc_ci(Ploc[nmr], Xabl_loc, labs[nmr][te_idx])
+    spec_acc[nmr] = {"clean": c_mean, "abl": a_mean, "ci": [alo, ahi]}
     print(f" {nmr:9}: {c_mean:.2f} [{clo:.2f}, {chi:.2f}] -> {a_mean:.2f} [{alo:.2f}, {ahi:.2f}]")
-
-
+report(TAG, SEC, "specificity_local_acc", spec_acc)
+    
 
 print(f"""
 ================= TRIANGLE @ paraphrase='{PARA}', model={TAG} =================
