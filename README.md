@@ -1,6 +1,8 @@
 # What Deception Probes Read and How Evaluations of Them Fail
 
-Code, data, and regenerable results for the paper *What Deception Probes Read and How Evaluations of Them Fail* (Andres Garcia, 2026); [read the paper (PDF)](paper/deception-probes-paper.pdf). arXiv and DOI links will be added on release.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21632023.svg)](https://doi.org/10.5281/zenodo.21632023)
+
+Code, data, and regenerable results for the paper *What Deception Probes Read and How Evaluations of Them Fail* (Andres Garcia, 2026); [read the paper (PDF)](paper/deception-probes-paper.pdf). arXiv link will be added on release.
 
 Linear probes on LLM activations are the leading proposal for monitoring deceptive generation. This repository contains the full pipeline, data, and regenerable results for a study asking three questions: **what do such probes read, where is that signal computed, and are the standard experiments used to answer those questions sound?**
 
@@ -65,6 +67,8 @@ python make_results_md.py                # regenerate MEASURED.md
 Every number in the paper regenerates from `MEASURED.md`; if a number is not there, it was not measured. All published results come from a single clean-room run on one device and precision (A100, fp16); per-run manifests (seeds, package versions, model revisions) are in `results/*/MANIFEST*.json`. Expect decimal-level drift on other hardware; verdicts should not change. If one does, we would genuinely like to hear about it as the paper's evaluation section is about exactly this phenomenon.
 
 Total compute: the release run reproduces for approximately $20-30 in rented GPU time; total project compute, including development and reruns, was under $100.
+
+The complete results tree, including the large activation caches excluded from this repository, is archived at [doi:10.5281/zenodo.21632102](https://doi.org/10.5281/zenodo.21632102).
 
 ## A note on process
 
