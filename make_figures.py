@@ -22,7 +22,7 @@ def db(m):
         _DB[m] = json.load(open(f"results/{m}/RESULTS.json"))
     return _DB[m]
 
-def ent(m, sec, key):                      
+def ent(m, sec, key):
     return db(m)[sec][key]
 
 def val(e):                                # unwrap "value"
@@ -114,16 +114,18 @@ def fig_specificity_grid():
         ax.plot(Ls, A, "-o")
         for L, h in zip(Ls, hi):
             if h < 0: ax.axvspan(L-0.4, L+0.4, color="red", alpha=0.12)
-        ax.set_title(NICE[m]); ax.set_xlabel("ablated layer"); ax.set_ylabel("truth − deception AUC drop")
+        ax.set_title(NICE[m]); ax.set_xlabel("ablated layer")
+        ax.set_ylabel("asymmetry (truth drop − deception drop)")          # CHANGED: sign convention on the axis
     save(fig, "specificity_grid")
 
 def fig_sufficiency():
-    conds = ["clean", "steered", "steered_ablated", "patched"]
+    conds  = ["clean", "steered", "steered_ablated", "patched"]
+    labels = ["clean", "steered", "steered + crit ablated", "steered + clean patch"]   # CHANGED: readable labels
     fig, ax = plt.subplots(figsize=(8, 5))
     for m in CURVE:
         cm = val(ent(m,"phase2/sufficiency","cond_means"))
         ax.plot(range(4), [cm[c] for c in conds], "-o", label=NICE[m])
-    ax.set_xticks(range(4)); ax.set_xticklabels(conds, rotation=15)
+    ax.set_xticks(range(4)); ax.set_xticklabels(labels, rotation=15, ha="right")       # CHANGED
     ax.set_ylabel("probe decision score"); ax.legend()
     ax.set_title("Sufficiency: clean-patch restores the steered score toward clean")
     save(fig, "sufficiency")
@@ -142,8 +144,9 @@ def fig_transfer():
     for m in CURVE:
         tb = val(ent(m,"probe/transfer","ai_to_human_by_layer")); Ls = sorted(int(k) for k in tb)
         ax.plot(Ls, [tb[str(L)] for L in Ls], "-o", ms=3, label=NICE[m])
-    ax.axhline(0.5, ls=":", color="gray"); ax.set_xlabel("layer"); ax.set_ylabel("AI→human transfer acc")
-    ax.legend(); ax.set_title("Deception signal transfers from AI- to human-written statements")
+    ax.axhline(0.5, ls=":", color="gray"); ax.set_xlabel("layer")
+    ax.set_ylabel("cross-source transfer accuracy")                       # CHANGED: second-source language
+    ax.legend(); ax.set_title("Deception signal transfers across statement sources")   # CHANGED
     save(fig, "transfer_overlay")
 
 def fig_pca():
@@ -182,7 +185,8 @@ def fig_decoupling():
 def fig_relalpha():
     vals = [val(ent(m,"probe/steering","min_alpha_relative")) for m in CURVE]
     fig, ax = plt.subplots(figsize=(6, 4.5)); ax.bar([NICE[m] for m in CURVE], vals, color="#8172B3")
-    ax.set_ylabel("collapse-α / residual norm"); ax.set_title("Steering resistance falls with model strength")
+    ax.set_ylabel("collapse-α / residual norm")
+    ax.set_title("Steering resistance in residual-relative units")        # CHANGED: old title contradicted App. C3
     plt.setp(ax.get_xticklabels(), rotation=20, ha="right"); save(fig, "relative_alpha")
 
 def fig_nine_verdicts():
