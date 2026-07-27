@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "What Deception Probes Read and How Evaluations of Them Fail"
+authors:
+  - family-names: "Garcia"
+    given-names: "Andres"
+version: 1.0.0
+date-released: "2026-07-26"
+url: "https://github.com/Andresg324/truth-probes"
+repository-code: "https://github.com/Andresg324/truth-probes"
+# doi: 10.5281/zenodo.XXXXXXX - to add once minted
