@@ -1,0 +1,25 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model Qwen/Qwen2.5-1.5B-Instruct into HookedTransformer
+model loaded: 1.5B
+best_layer=17 (loaded from split.npz)
+
+POSITIVE CONTROL - frozen probe, held out teacher forced: AUC 0.948
+(any transfer AUC above this is a red flag: transfer cannot beat in-distribution)
+
+ phase4 0/400
+ phase4 100/400
+ phase4 200/400
+ phase4 300/400
+Phase 4
+ lie-prompt answer distribution: Counter({'no': 400})
+ lies drawn from TRUE statements : 200
+ lies drawn from FALSE statements: 0
+ If these are wildly unbalanced, the model can only lie in one direction
+ This is a behavioral finding, and the transfer AUC below is confounded.
+
+ AUC vs. deception.    : 0.499 (The Claim)
+ AUC vs Statement-truth: 0.794 (should be ~0.5)
+ AUC vs Polarity       : 0.757  (should be ~0.5)
+ AUC within TRUE stmts : 0.307

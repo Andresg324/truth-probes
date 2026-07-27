@@ -1,0 +1,1561 @@
+{
+  "probe/setup": {
+    "best_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "val_sweep": {
+      "value": {
+        "0": 0.48125,
+        "1": 0.40625,
+        "2": 0.375,
+        "3": 0.4,
+        "4": 0.41875,
+        "5": 0.43125,
+        "6": 0.43125,
+        "7": 0.45,
+        "8": 0.5375,
+        "9": 0.61875,
+        "10": 0.65625,
+        "11": 0.64375,
+        "12": 0.68125,
+        "13": 0.7625,
+        "14": 0.8,
+        "15": 0.81875,
+        "16": 0.8125,
+        "17": 0.8,
+        "18": 0.7875,
+        "19": 0.80625,
+        "20": 0.79375,
+        "21": 0.79375,
+        "22": 0.8125,
+        "23": 0.81875,
+        "24": 0.80625,
+        "25": 0.8
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "probe/leak_control": {
+    "single_split": {
+      "value": 0.42,
+      "ci": null,
+      "n": null
+    },
+    "ten_seed": {
+      "value": {
+        "mean": 0.45599999999999985,
+        "std": 0.02615339366124404
+      },
+      "ci": null,
+      "n": 10
+    }
+  },
+  "probe/probe": {
+    "heldout_test_acc": {
+      "value": 0.84375,
+      "ci": null,
+      "n": 160
+    },
+    "ten_seed_acc": {
+      "value": {
+        "mean": 0.8364999999999998,
+        "std": 0.030581857366746037
+      },
+      "ci": null,
+      "n": 10
+    }
+  },
+  "probe/steering": {
+    "min_alpha": {
+      "value": 4.0,
+      "ci": null,
+      "n": null
+    },
+    "resid_norm": {
+      "value": 240.625,
+      "ci": null,
+      "n": null
+    },
+    "min_alpha_relative": {
+      "value": 0.016623376623376623,
+      "ci": null,
+      "n": null
+    },
+    "detection_by_layer_at_best": {
+      "value": {
+        "0": 0.475,
+        "1": 0.3375,
+        "2": 0.3625,
+        "3": 0.425,
+        "4": 0.45,
+        "5": 0.4875,
+        "6": 0.475,
+        "7": 0.5125,
+        "8": 0.575,
+        "9": 0.6125,
+        "10": 0.6125,
+        "11": 0.6875,
+        "12": 0.7875,
+        "13": 0.8625,
+        "14": 0.825,
+        "15": 0.1625,
+        "16": 0.3375,
+        "17": 0.575,
+        "18": 0.6125,
+        "19": 0.6375,
+        "20": 0.65,
+        "21": 0.6625,
+        "22": 0.675,
+        "23": 0.6875,
+        "24": 0.75,
+        "25": 0.775
+      },
+      "ci": null,
+      "n": null
+    },
+    "collapse_curve": {
+      "value": {
+        "0": {
+          "mean": 0.8375,
+          "lo": 0.75,
+          "hi": 0.9125
+        },
+        "2": {
+          "mean": 0.325,
+          "lo": 0.225,
+          "hi": 0.4375
+        },
+        "4": {
+          "mean": 0.0875,
+          "lo": 0.025,
+          "hi": 0.15
+        },
+        "6": {
+          "mean": 0.0125,
+          "lo": 0.0,
+          "hi": 0.0375
+        },
+        "8": {
+          "mean": 0.0,
+          "lo": 0.0,
+          "hi": 0.0
+        },
+        "10": {
+          "mean": 0.0,
+          "lo": 0.0,
+          "hi": 0.0
+        }
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "probe/behavior": {
+    "alpha_sweep": {
+      "value": {
+        "0": {
+          "correct": 0.8666666666666667,
+          "wrong": 0.13333333333333333,
+          "answer_rate": 1.0
+        },
+        "2": {
+          "correct": 0.8666666666666667,
+          "wrong": 0.13333333333333333,
+          "answer_rate": 1.0
+        },
+        "4": {
+          "correct": 0.85,
+          "wrong": 0.15,
+          "answer_rate": 1.0
+        },
+        "6": {
+          "correct": 0.85,
+          "wrong": 0.15,
+          "answer_rate": 1.0
+        },
+        "10": {
+          "correct": 0.85,
+          "wrong": 0.15,
+          "answer_rate": 1.0
+        }
+      },
+      "ci": null,
+      "n": null
+    },
+    "flip_test": {
+      "value": {
+        "2": {
+          "still": 1.0,
+          "flipped": 0.0,
+          "incoh": 0.0
+        },
+        "4": {
+          "still": 0.9971098265895953,
+          "flipped": 0.002890173410404624,
+          "incoh": 0.0
+        },
+        "6": {
+          "still": 0.9971098265895953,
+          "flipped": 0.002890173410404624,
+          "incoh": 0.0
+        },
+        "10": {
+          "still": 0.9942196531791907,
+          "flipped": 0.005780346820809248,
+          "incoh": 0.0
+        }
+      },
+      "ci": null,
+      "n": 346
+    },
+    "answer_distribution": {
+      "value": {
+        "yes": 208,
+        "no": 192
+      },
+      "ci": null,
+      "n": null
+    },
+    "accuracy_by_truth": {
+      "value": {
+        "TRUE": 0.885,
+        "FALSE": 0.845
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "probe/transfer": {
+    "ai_to_human_at_best": {
+      "value": 0.955,
+      "ci": null,
+      "n": 200
+    },
+    "ai_to_human_by_layer": {
+      "value": {
+        "0": 0.525,
+        "1": 0.53,
+        "2": 0.515,
+        "3": 0.5,
+        "4": 0.56,
+        "5": 0.56,
+        "6": 0.575,
+        "7": 0.555,
+        "8": 0.71,
+        "9": 0.815,
+        "10": 0.8,
+        "11": 0.855,
+        "12": 0.89,
+        "13": 0.94,
+        "14": 0.945,
+        "15": 0.955,
+        "16": 0.96,
+        "17": 0.96,
+        "18": 0.955,
+        "19": 0.955,
+        "20": 0.945,
+        "21": 0.955,
+        "22": 0.955,
+        "23": 0.945,
+        "24": 0.94,
+        "25": 0.935
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "probe/fluency": {
+    "ppl_median_by_alpha": {
+      "value": {
+        "0.00": 18.7734375,
+        "0.50": 18.7578125,
+        "1.00": 18.7578125,
+        "1.50": 18.71875,
+        "2.00": 18.71875,
+        "2.50": 18.7578125,
+        "3.00": 18.7578125,
+        "3.50": 18.7421875,
+        "4.00": 18.7421875
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "probe/phase1": {
+    "cos_disjoint": {
+      "value": {
+        "mean": 0.09434093839475667,
+        "std": 0.04339910559498294
+      },
+      "ci": null,
+      "n": 50
+    },
+    "cos_noise_floor": {
+      "value": {
+        "mean": 0.4658584966071234,
+        "std": 0.04499042347323002
+      },
+      "ci": null,
+      "n": 50
+    },
+    "cross_train_detection": {
+      "value": {
+        "0": {
+          "detA_mean": 0.8337499999999999,
+          "detA_std": 0.033564303955243895,
+          "detB_mean": 0.82875,
+          "detB_std": 0.02683863819197985
+        },
+        "1": {
+          "detA_mean": 0.6825,
+          "detA_std": 0.0422788363132194,
+          "detB_mean": 0.81875,
+          "detB_std": 0.027528394431931558
+        },
+        "2": {
+          "detA_mean": 0.50125,
+          "detA_std": 0.030336652748778982,
+          "detB_mean": 0.8025,
+          "detB_std": 0.038649062084350774
+        },
+        "4": {
+          "detA_mean": 0.15875,
+          "detA_std": 0.043319308627908636,
+          "detB_mean": 0.77625,
+          "detB_std": 0.05227630916581622
+        },
+        "6": {
+          "detA_mean": 0.0325,
+          "detA_std": 0.021065374432940896,
+          "detB_mean": 0.7424999999999999,
+          "detB_std": 0.07185053931599958
+        }
+      },
+      "ci": null,
+      "n": 10
+    },
+    "pca_dims": {
+      "value": {
+        "1": 0.42,
+        "2": 0.865,
+        "3": 0.86,
+        "5": 0.845,
+        "10": 0.86,
+        "20": 0.86
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "phase2/setup": {
+    "best_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "min_alpha": {
+      "value": 4.0,
+      "ci": null,
+      "n": null
+    },
+    "E": {
+      "value": 7,
+      "ci": null,
+      "n": null
+    },
+    "n_test": {
+      "value": 160,
+      "ci": null,
+      "n": 80
+    },
+    "crit_L": {
+      "value": 9,
+      "ci": null,
+      "n": null
+    }
+  },
+  "phase2/distance_curve": {
+    "L9": {
+      "value": {
+        "acc_clean": 0.6375,
+        "acc_abl": 0.46875,
+        "auc_clean": 0.728125,
+        "auc_abl": 0.4590625
+      },
+      "ci": null,
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "acc_clean": 0.65,
+        "acc_abl": 0.4375,
+        "auc_clean": 0.7375,
+        "auc_abl": 0.48828125
+      },
+      "ci": null,
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "acc_clean": 0.7375,
+        "acc_abl": 0.45,
+        "auc_clean": 0.8217187499999999,
+        "auc_abl": 0.5442187500000001
+      },
+      "ci": null,
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "acc_clean": 0.81875,
+        "acc_abl": 0.59375,
+        "auc_clean": 0.8890625,
+        "auc_abl": 0.7709374999999999
+      },
+      "ci": null,
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "acc_clean": 0.85625,
+        "acc_abl": 0.56875,
+        "auc_clean": 0.9293750000000001,
+        "auc_abl": 0.8065625
+      },
+      "ci": null,
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "acc_clean": 0.85,
+        "acc_abl": 0.6375,
+        "auc_clean": 0.93625,
+        "auc_abl": 0.8540625
+      },
+      "ci": null,
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "acc_clean": 0.85625,
+        "acc_abl": 0.73125,
+        "auc_clean": 0.940625,
+        "auc_abl": 0.86359375
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "phase2/ablation_curve": {
+    "L8": {
+      "value": {
+        "local_clean": 0.6392187500000001,
+        "local_abl": 0.40156249999999993,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.885
+      },
+      "ci": {
+        "local": [
+          0.28622265625,
+          0.51516015625
+        ],
+        "deployed": [
+          0.8128906249999999,
+          0.9415781249999999
+        ]
+      },
+      "n": null
+    },
+    "L9": {
+      "value": {
+        "local_clean": 0.728125,
+        "local_abl": 0.4590625,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.86359375
+      },
+      "ci": {
+        "local": [
+          0.3412109375,
+          0.5801796875
+        ],
+        "deployed": [
+          0.78153515625,
+          0.9279765625000002
+        ]
+      },
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "local_clean": 0.7375,
+        "local_abl": 0.6628125,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.91953125
+      },
+      "ci": {
+        "local": [
+          0.5487070312500001,
+          0.7715742187499999
+        ],
+        "deployed": [
+          0.86030859375,
+          0.9665703125
+        ]
+      },
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "local_clean": 0.8217187499999999,
+        "local_abl": 0.52296875,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.880625
+      },
+      "ci": {
+        "local": [
+          0.39466406249999997,
+          0.6421953125000001
+        ],
+        "deployed": [
+          0.80436328125,
+          0.9395429687499999
+        ]
+      },
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "local_clean": 0.8890625,
+        "local_abl": 0.85546875,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.790625
+      },
+      "ci": {
+        "local": [
+          0.778125,
+          0.91672265625
+        ],
+        "deployed": [
+          0.69873046875,
+          0.872234375
+        ]
+      },
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "local_clean": 0.9293750000000001,
+        "local_abl": 0.74875,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.8284375
+      },
+      "ci": {
+        "local": [
+          0.6460898437499999,
+          0.840640625
+        ],
+        "deployed": [
+          0.7481210937499999,
+          0.9021874999999999
+        ]
+      },
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "local_clean": 0.93625,
+        "local_abl": 0.6342187499999999,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.9187500000000001
+      },
+      "ci": {
+        "local": [
+          0.5135859374999999,
+          0.7467304687499999
+        ],
+        "deployed": [
+          0.8648359375,
+          0.96281640625
+        ]
+      },
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "local_clean": 0.940625,
+        "local_abl": 0.88578125,
+        "deployed_clean": 0.940625,
+        "deployed_abl": 0.88578125
+      },
+      "ci": {
+        "local": [
+          0.8231171874999998,
+          0.9370390625
+        ],
+        "deployed": [
+          0.8231171874999998,
+          0.9370390625
+        ]
+      },
+      "n": null
+    }
+  },
+  "phase2/specificity_curve": {
+    "L8": {
+      "value": {
+        "dec": [
+          0.6392187500000001,
+          0.40156249999999993
+        ],
+        "tru": [
+          0.7114769820971867,
+          0.59846547314578
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.12464474104859347,
+        "ci": [
+          -0.2541498111263737,
+          0.012376583614864512
+        ]
+      },
+      "ci": [
+        -0.2541498111263737,
+        0.012376583614864512
+      ],
+      "n": null
+    },
+    "L9": {
+      "value": {
+        "dec": [
+          0.728125,
+          0.4590625
+        ],
+        "tru": [
+          0.7381713554987211,
+          0.6277173913043478
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.15860853580562667,
+        "ci": [
+          -0.2917448536706349,
+          -0.023502907104188325
+        ]
+      },
+      "ci": [
+        -0.2917448536706349,
+        -0.023502907104188325
+      ],
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "dec": [
+          0.7375,
+          0.6628125
+        ],
+        "tru": [
+          0.7364130434782609,
+          0.7221867007672634
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.06046115728900259,
+        "ci": [
+          -0.17899330902837002,
+          0.05279389880952365
+        ]
+      },
+      "ci": [
+        -0.17899330902837002,
+        0.05279389880952365
+      ],
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "dec": [
+          0.8217187499999999,
+          0.52296875
+        ],
+        "tru": [
+          0.7893222506393862,
+          0.7025255754475703
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.21195332480818407,
+        "ci": [
+          -0.3408493506493505,
+          -0.0939087942876813
+        ]
+      },
+      "ci": [
+        -0.3408493506493505,
+        -0.0939087942876813
+      ],
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "dec": [
+          0.8890625,
+          0.85546875
+        ],
+        "tru": [
+          0.8428708439897699,
+          0.7643861892583119
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": 0.04489090473145796,
+        "ci": [
+          0.008631366283614739,
+          0.08291348601569615
+        ]
+      },
+      "ci": [
+        0.008631366283614739,
+        0.08291348601569615
+      ],
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "dec": [
+          0.9293750000000001,
+          0.74875
+        ],
+        "tru": [
+          0.9211956521739131,
+          0.9256713554987213
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.1851007033248082,
+        "ci": [
+          -0.2710777943774776,
+          -0.10313060528635404
+        ]
+      },
+      "ci": [
+        -0.2710777943774776,
+        -0.10313060528635404
+      ],
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "dec": [
+          0.93625,
+          0.6342187499999999
+        ],
+        "tru": [
+          0.9203964194373402,
+          0.9319053708439897
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.3135402014066496,
+        "ci": [
+          -0.4347478600981698,
+          -0.19468478814223059
+        ]
+      },
+      "ci": [
+        -0.4347478600981698,
+        -0.19468478814223059
+      ],
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "dec": [
+          0.940625,
+          0.88578125
+        ],
+        "tru": [
+          0.9242327365728901,
+          0.9069693094629157
+        ],
+        "pol": [
+          1.0,
+          1.0
+        ],
+        "asym": -0.037580322890025664,
+        "ci": [
+          -0.07196023192734971,
+          -0.005436235607965243
+        ]
+      },
+      "ci": [
+        -0.07196023192734971,
+        -0.005436235607965243
+      ],
+      "n": null
+    }
+  },
+  "phase2/sufficiency": {
+    "ablation_effect_steered": {
+      "value": {
+        "mean_abs_delta": 3.5974552902308843,
+        "frac_above_eps": 0.8125,
+        "eps": 0.8904805800618811
+      },
+      "ci": null,
+      "n": null
+    },
+    "cond_means": {
+      "value": {
+        "clean": 3.414942928936475,
+        "steered": 1.83774652674751,
+        "steered_ablated": -1.7119262604514731,
+        "patched": 1.7405832792224232
+      },
+      "ci": null,
+      "n": null
+    },
+    "restoration_A_conduit": {
+      "value": 0.979702407861698,
+      "ci": [
+        0.9600634242460353,
+        0.9917041458141759
+      ],
+      "n": 65
+    },
+    "restoration_B_undo_steering": {
+      "value": -0.06258202238653882,
+      "ci": [
+        -0.08152503693475636,
+        -0.04255707753937584
+      ],
+      "n": 79
+    }
+  },
+  "phase2/necessity": {
+    "deployed_acc": {
+      "value": {
+        "clean": 0.85625,
+        "abl": 0.73125
+      },
+      "ci": {
+        "clean": [
+          0.7875,
+          0.9189062499999998
+        ],
+        "abl": [
+          0.66875,
+          0.79375
+        ]
+      },
+      "n": null
+    }
+  },
+  "phase2/specificity_crit_acc": {
+    "deception": {
+      "value": {
+        "clean": 0.6375,
+        "abl": 0.46875
+      },
+      "ci": {
+        "clean": [
+          0.55,
+          0.725
+        ],
+        "abl": [
+          0.38125,
+          0.5564062499999999
+        ]
+      },
+      "n": null
+    },
+    "truth": {
+      "value": {
+        "clean": 0.6875,
+        "abl": 0.5625
+      },
+      "ci": {
+        "clean": [
+          0.59359375,
+          0.78125
+        ],
+        "abl": [
+          0.49375,
+          0.63125
+        ]
+      },
+      "n": null
+    },
+    "polarity": {
+      "value": {
+        "clean": 1.0,
+        "abl": 1.0
+      },
+      "ci": {
+        "clean": [
+          1.0,
+          1.0
+        ],
+        "abl": [
+          1.0,
+          1.0
+        ]
+      },
+      "n": null
+    },
+    "paired_asym": {
+      "value": -0.04375,
+      "ci": [
+        -0.1375,
+        0.05
+      ],
+      "n": null
+    }
+  },
+  "phase2/specificity_crit_auc": {
+    "deception": {
+      "value": {
+        "clean": 0.728125,
+        "abl": 0.4590625
+      },
+      "ci": [
+        0.3412109375,
+        0.5801796875
+      ],
+      "n": null
+    },
+    "truth": {
+      "value": {
+        "clean": 0.7381713554987211,
+        "abl": 0.6277173913043478
+      },
+      "ci": [
+        0.5638608870967742,
+        0.6881174169582943
+      ],
+      "n": null
+    },
+    "polarity": {
+      "value": {
+        "clean": 1.0,
+        "abl": 1.0
+      },
+      "ci": [
+        0.9999999999999999,
+        1.0
+      ],
+      "n": null
+    }
+  },
+  "phase4": {
+    "positive_control_auc": {
+      "value": 0.9473437499999999,
+      "ci": null,
+      "n": 160
+    },
+    "best_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "lie_answer_distribution": {
+      "value": {
+        "no": 168,
+        "yes": 232
+      },
+      "ci": null,
+      "n": null
+    },
+    "lies_from_true": {
+      "value": 39,
+      "ci": null,
+      "n": null
+    },
+    "lies_from_false": {
+      "value": 71,
+      "ci": null,
+      "n": null
+    },
+    "n_kept": {
+      "value": 461,
+      "ci": null,
+      "n": 800
+    },
+    "transfer_aucs": {
+      "value": {
+        "deception": 1.0,
+        "statement_truth": 0.5604649401787066,
+        "polarity": 0.716761148904006
+      },
+      "ci": null,
+      "n": 461
+    },
+    "transfer_auc_within_cell": {
+      "value": {
+        "TRUE stmts": 1.0,
+        "FALSE stmts": 1.0
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "phase4_noproc": {
+    "positive_control_auc": {
+      "value": 0.9465625,
+      "ci": null,
+      "n": 160
+    },
+    "best_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "lie_answer_distribution": {
+      "value": {
+        "no": 169,
+        "yes": 231
+      },
+      "ci": null,
+      "n": null
+    },
+    "lies_from_true": {
+      "value": 39,
+      "ci": null,
+      "n": null
+    },
+    "lies_from_false": {
+      "value": 70,
+      "ci": null,
+      "n": null
+    },
+    "n_kept": {
+      "value": 460,
+      "ci": null,
+      "n": 800
+    },
+    "transfer_aucs": {
+      "value": {
+        "deception": 0.9999477247183669,
+        "statement_truth": 0.5622398357757884,
+        "polarity": 0.715979811778992
+      },
+      "ci": null,
+      "n": 460
+    },
+    "transfer_auc_within_cell": {
+      "value": {
+        "TRUE stmts": 0.9997052755673446,
+        "FALSE stmts": 1.0
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "paraphrase_tf": {
+    "best_layer": {
+      "value": 14,
+      "ci": null,
+      "n": null
+    },
+    "probe_acc": {
+      "value": 0.8375,
+      "ci": null,
+      "n": 160
+    },
+    "collapse_sweep": {
+      "value": {
+        "2": 0.75,
+        "4": 0.6875,
+        "6": 0.55,
+        "8": 0.4625,
+        "12": 0.25,
+        "16": 0.175,
+        "24": 0.1125
+      },
+      "ci": null,
+      "n": null
+    },
+    "min_alpha": {
+      "value": 24.0,
+      "ci": null,
+      "n": null
+    },
+    "crit_L": {
+      "value": 9,
+      "ci": null,
+      "n": null
+    },
+    "control": {
+      "value": {
+        "layer": 12,
+        "detection_recall": 1.0
+      },
+      "ci": null,
+      "n": null
+    },
+    "sufficiency": {
+      "value": {
+        "steered": 0.1125,
+        "patched": 0.025
+      },
+      "ci": null,
+      "n": null
+    },
+    "necessity_deployed_auc": {
+      "value": {
+        "clean": 0.92671875,
+        "abl": 0.82859375
+      },
+      "ci": [
+        0.7440507812499999,
+        0.9034375
+      ],
+      "n": null
+    },
+    "specificity_local_auc": {
+      "value": {
+        "deception": {
+          "clean": 0.7673437500000001,
+          "abl": 0.46984375,
+          "ci": [
+            0.35123828125,
+            0.5872148437499999
+          ]
+        },
+        "truth": {
+          "clean": 0.7338554987212277,
+          "abl": 0.6940537084398978,
+          "ci": [
+            0.6050786508704061,
+            0.7765146038172352
+          ]
+        },
+        "polarity": {
+          "clean": 1.0,
+          "abl": 1.0,
+          "ci": [
+            0.9999999999999999,
+            1.0
+          ]
+        }
+      },
+      "ci": null,
+      "n": null
+    },
+    "necessity_deployed_acc": {
+      "value": {
+        "clean": 0.84375,
+        "abl": 0.54375
+      },
+      "ci": {
+        "clean": [
+          0.775,
+          0.9125
+        ],
+        "abl": [
+          0.51875,
+          0.575
+        ]
+      },
+      "n": null
+    },
+    "control_auc": {
+      "value": {
+        "layer": 12,
+        "clean": 0.88578125,
+        "abl": 0.8571875,
+        "ci": [
+          0.7905507812500001,
+          0.9171874999999999
+        ]
+      },
+      "ci": null,
+      "n": null
+    },
+    "specificity_local_acc": {
+      "value": {
+        "deception": {
+          "clean": 0.725,
+          "abl": 0.475,
+          "ci": [
+            0.38125,
+            0.575
+          ]
+        },
+        "truth": {
+          "clean": 0.7,
+          "abl": 0.46875,
+          "ci": [
+            0.36859375000000005,
+            0.5751562499999998
+          ]
+        },
+        "polarity": {
+          "clean": 1.0,
+          "abl": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "paraphrase_claim": {
+    "best_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "probe_acc": {
+      "value": 0.85625,
+      "ci": null,
+      "n": 160
+    },
+    "collapse_sweep": {
+      "value": {
+        "2": 0.7875,
+        "4": 0.6875,
+        "6": 0.575,
+        "8": 0.5,
+        "12": 0.35,
+        "16": 0.225,
+        "24": 0.025
+      },
+      "ci": null,
+      "n": null
+    },
+    "min_alpha": {
+      "value": 24.0,
+      "ci": null,
+      "n": null
+    },
+    "crit_L": {
+      "value": 9,
+      "ci": null,
+      "n": null
+    },
+    "control": {
+      "value": {
+        "layer": 12,
+        "detection_recall": 1.0
+      },
+      "ci": null,
+      "n": null
+    },
+    "sufficiency": {
+      "value": {
+        "steered": 0.025,
+        "patched": 0.025
+      },
+      "ci": null,
+      "n": null
+    },
+    "necessity_deployed_auc": {
+      "value": {
+        "clean": 0.93484375,
+        "abl": 0.79625
+      },
+      "ci": [
+        0.7017890625000002,
+        0.8786484375
+      ],
+      "n": null
+    },
+    "specificity_local_auc": {
+      "value": {
+        "deception": {
+          "clean": 0.72765625,
+          "abl": 0.47218750000000004,
+          "ci": [
+            0.35296484375,
+            0.5895742187499999
+          ]
+        },
+        "truth": {
+          "clean": 0.7257033248081841,
+          "abl": 0.6627237851662404,
+          "ci": [
+            0.5810949707303344,
+            0.732769103477168
+          ]
+        },
+        "polarity": {
+          "clean": 1.0,
+          "abl": 1.0,
+          "ci": [
+            0.9999999999999999,
+            1.0
+          ]
+        }
+      },
+      "ci": null,
+      "n": null
+    },
+    "necessity_deployed_acc": {
+      "value": {
+        "clean": 0.84375,
+        "abl": 0.70625
+      },
+      "ci": {
+        "clean": [
+          0.76875,
+          0.9125
+        ],
+        "abl": [
+          0.61875,
+          0.7875
+        ]
+      },
+      "n": null
+    },
+    "control_auc": {
+      "value": {
+        "layer": 12,
+        "clean": 0.87390625,
+        "abl": 0.8232812500000001,
+        "ci": [
+          0.7421484375,
+          0.8898515625000001
+        ]
+      },
+      "ci": null,
+      "n": null
+    },
+    "specificity_local_acc": {
+      "value": {
+        "deception": {
+          "clean": 0.64375,
+          "abl": 0.50625,
+          "ci": [
+            0.48125,
+            0.5375
+          ]
+        },
+        "truth": {
+          "clean": 0.6875,
+          "abl": 0.60625,
+          "ci": [
+            0.54375,
+            0.675
+          ]
+        },
+        "polarity": {
+          "clean": 1.0,
+          "abl": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "leak_census": {
+    "row": {
+      "value": {
+        "positive_control": 0.9473437499999999,
+        "auc_deception": 1.0,
+        "auc_truth": 0.5604649401787066,
+        "auc_polarity": 0.716761148904006,
+        "deconfound": 0.9944788289615876,
+        "verdict": "LEAK (drop)"
+      },
+      "ci": null,
+      "n": 461
+    },
+    "leak_threshold": {
+      "value": 0.15,
+      "ci": null,
+      "n": null
+    }
+  },
+  "regress_transfer": {
+    "leak_model": {
+      "value": {
+        "instruction": 8.994345763831028,
+        "instruction_p": 1.4788900367527463e-238,
+        "actual_deception": 2.2689939123899237,
+        "actual_deception_p": 3.838829126072669e-21
+      },
+      "ci": null,
+      "n": 800
+    },
+    "deconfound_auc": {
+      "value": 0.9944788289615876,
+      "ci": null,
+      "n": 290
+    },
+    "positive_control_auc": {
+      "value": 0.9473437499999999,
+      "ci": null,
+      "n": 160
+    },
+    "polarity_controlled": {
+      "value": {
+        "truth": 9.527336188736822,
+        "polarity": 13.34448535033582,
+        "interaction": -20.848211420898405,
+        "truth_p": 5.368110372868962e-97,
+        "polarity_p": 1.032251701351814e-179,
+        "interaction_p": 8.17926308620605e-175
+      },
+      "ci": null,
+      "n": 461
+    },
+    "subgroup_aucs": {
+      "value": {
+        "deception": 1.0,
+        "truth": 0.5604649401787066,
+        "polarity": 0.716761148904006
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "regress_census": {
+    "verdict": {
+      "value": "IDENTIFIABLE",
+      "ci": null,
+      "n": null
+    },
+    "coefficients": {
+      "value": {
+        "instruction": 1.616769124317585,
+        "instruction_p": 1.2101276092694044e-298,
+        "deception": -0.8059890093214531,
+        "deception_p": 3.76805078623658e-30
+      },
+      "ci": null,
+      "n": 800
+    },
+    "gate": {
+      "value": {
+        "ny": 232,
+        "nn": 168,
+        "cond": 9.741786597766056
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "denial_bias": {
+    "rates": {
+      "value": {
+        "deny_true": 0.195,
+        "affirm_false": 0.355,
+        "asymmetry": -0.15999999999999998
+      },
+      "ci": null,
+      "n": {
+        "n_true": 200,
+        "n_false": 200
+      }
+    }
+  },
+  "standardize_diag": {
+    "from_pretrained_raw": {
+      "value": {
+        "best_layer": 15,
+        "n_nc": 290,
+        "deconfound": 0.9944788289615876
+      },
+      "ci": null,
+      "n": null
+    },
+    "from_pretrained_standardized": {
+      "value": {
+        "best_layer": 15,
+        "n_nc": 290,
+        "deconfound": 0.9868258178603007
+      },
+      "ci": null,
+      "n": null
+    },
+    "no_processing_raw": {
+      "value": {
+        "best_layer": 15,
+        "n_nc": 291,
+        "deconfound": 0.9897592543640653
+      },
+      "ci": null,
+      "n": null
+    },
+    "no_processing_standardized": {
+      "value": {
+        "best_layer": 15,
+        "n_nc": 291,
+        "deconfound": 0.9791758451552266
+      },
+      "ci": null,
+      "n": null
+    },
+    "center_from_pretrained_raw": {
+      "value": {
+        "best_layer": 15,
+        "deconfound": 0.9944788289615876
+      },
+      "ci": null,
+      "n": null
+    },
+    "center_from_pretrained_centered": {
+      "value": {
+        "best_layer": 15,
+        "deconfound": 0.9945672462913843
+      },
+      "ci": null,
+      "n": null
+    },
+    "center_no_processing_raw": {
+      "value": {
+        "best_layer": 15,
+        "deconfound": 0.9897592543640653
+      },
+      "ci": null,
+      "n": null
+    },
+    "center_no_processing_centered": {
+      "value": {
+        "best_layer": 15,
+        "deconfound": 0.9897298832006736
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "position_sensitivity": {
+    "deconfound_by_position": {
+      "value": {
+        "pre_answer": 0.7370763336280577,
+        "answer": 0.9944297082228116
+      },
+      "ci": null,
+      "n": {
+        "honest": 351,
+        "non_compliant_lie": 290
+      }
+    }
+  }
+}

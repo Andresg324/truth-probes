@@ -1,0 +1,42 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model Qwen/Qwen2.5-1.5B-Instruct into HookedTransformer
+Model loaded: 1.5B | paraphrase: claim
+extracted paraphrase acts (800, 28, 1536)
+[claim] best_layer = 17 probe acc0.869 n_decep_eval=80
+collapse sweep: {2: 0.75, 4: 0.65, 6: 0.55, 8: 0.45, 12: 0.26, 16: 0.11, 24: 0.0}
+min_alpha (paraphrase = 24.0
+
+[claim] crit MLP L16 (unified rule, chosen on train-fold items)
+ (Don't Cite) Local (read L16): 0.88 [0.80, 0.94] -> 0.00 [0.00, 0.00]
+ (Don't Cite) Deployed (read L17): 0.88 [0.80, 0.94] -> 0.40 [0.29, 0.51]
+ non-crit control L17 (local): 1.00 [1.00, 1.00]
+
+SUFFICIENCY steered, no patch: 0.00 [0.00,0.00]
+SUFFICIENCY + clean L16 patch: 0.00 [0.00, 0.00] (restoration)
+ Deployed AUC (read L17): 0.95 -> 0.89 [0.83, 0.95]
+
+Specificity at LOCAL readout L16 - AUC (clean -> ablated):
+ deception: 0.88 [0.81, 0.94] -> 0.50 [0.50, 0.50]
+ truth    : 0.84 [0.77, 0.92] -> 0.53 [0.42, 0.62]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+ Deployed (balanced acc, read L17):  0.88 [0.81, 0.94] -> 0.69 [0.63, 0.75]
+
+Specificity at LOCAL readout L16 (clean -> ablated), held-out:
+ deception: 0.88 [0.81, 0.94] -> 0.50 [0.50, 0.50]
+ truth    : 0.84 [0.77, 0.92] -> 0.53 [0.42, 0.62]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+
+================= TRIANGLE @ paraphrase='claim', model=1.5B =================
+  crit MLP under this paraphrase: L16 (compare to the phase 2 orig-format crit)
+  NECESSITY (acc): 0.88 -> 0.69
+  NECESSITY (AUC): 0.95 -> 0.89 (Cite this one)
+  CONTROL        : 0.88 -> 1.00 non-crit L17
+  SUFFICIENCY    : 0.00 -> 0.00 clean patch restores?
+
+  SPECIFICITY.  : polarity should survive (see above)
+  Reading: crit collapses + control holds + patch restores + polarity survives
+    => mechanism MOVED to L16 (triangle replicates) => thesis checks out
+    no layer collapses means the paraphrase breaks the mechanism
+      

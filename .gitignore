@@ -1,18 +1,21 @@
+# environments / OS
 venv/
 __pycache__/
 *.pyc
 .DS_Store
 .ipynb_checkpoints/
-results/**/acts_*.npy
-results/scaling/*.npy
-results/**/*.npz
-results_gpu/
-results_gpu/
-results/
-*.npy
-*.npz
 
+# superseded snapshots & pod archives (not part of the release)
+results_pre_release*/
+figures_pre_release*/
+results_gpu/
+results_census/
 pod_final/
 pod_final_BACKUP*/
 pod_results/
 *.tgz
+MEASURED_*_v1.md
+
+# large activation caches (distributed via Zenodo deposit; regenerable via run_all.sh)
+results/**/acts_*.npy
+results/scaling/*.npy

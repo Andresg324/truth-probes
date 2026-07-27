@@ -1,0 +1,16 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:03<00:25,  3.68s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:08<00:27,  4.58s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:14<00:24,  4.86s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:19<00:19,  4.91s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:24<00:14,  4.98s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:29<00:09,  4.99s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:34<00:05,  5.09s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:34<00:00,  3.62s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:34<00:00,  4.37s/it]
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model Qwen/Qwen2.5-14B-Instruct into HookedTransformer
+Model Loaded
+First: <|im_start|> | Last 3: ['assistant', '\n', 'Yes']
+Loaded 400 statements: Counter({1: 200, 0: 200})
+Built 800 examples
+Honest answers: Counter({'Yes': 200, 'No': 200})
+Deceptive answers: Counter({'No': 200, 'Yes': 200})
+Extracting (fast - no generation)...
+Cached
+Shape: (800, 48, 5120)
+Best layer (chosen on val fold): 28
+probe-on;y: acts + split.npz written, stopping analysis

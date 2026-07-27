@@ -1,0 +1,44 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model Qwen/Qwen2.5-1.5B-Instruct into HookedTransformer
+Model loaded: 1.5B | paraphrase: tf
+extracted paraphrase acts (800, 28, 1536)
+[tf] best_layer = 19 probe acc0.912 n_decep_eval=80
+collapse sweep: {2: 0.78, 4: 0.62, 6: 0.38, 8: 0.25, 12: 0.1, 16: 0.05, 24: 0.0}
+min_alpha (paraphrase = 16.0
+
+[tf] crit MLP L16 (unified rule, chosen on train-fold items)
+ (Don't Cite) Local (read L16): 0.86 [0.79, 0.94] -> 0.00 [0.00, 0.00]
+ (Don't Cite) Deployed (read L19): 0.93 [0.86, 0.97] -> 0.42 [0.31, 0.54]
+ non-crit control L17 (local): 1.00 [1.00, 1.00]
+ non-crit control L18 (local): 1.00 [1.00, 1.00]
+ non-crit control L19 (local): 0.94 [0.89, 0.99]
+
+SUFFICIENCY steered, no patch: 0.05 [0.01,0.10]
+SUFFICIENCY + clean L16 patch: 0.00 [0.00, 0.00] (restoration)
+ Deployed AUC (read L19): 0.96 -> 0.69 [0.57, 0.80]
+
+Specificity at LOCAL readout L16 - AUC (clean -> ablated):
+ deception: 0.85 [0.79, 0.91] -> 0.50 [0.50, 0.50]
+ truth    : 0.81 [0.72, 0.88] -> 0.51 [0.40, 0.61]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+ Deployed (balanced acc, read L19):  0.93 [0.88, 0.98] -> 0.62 [0.54, 0.70]
+
+Specificity at LOCAL readout L16 (clean -> ablated), held-out:
+ deception: 0.85 [0.79, 0.91] -> 0.50 [0.50, 0.50]
+ truth    : 0.81 [0.72, 0.88] -> 0.51 [0.40, 0.61]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+
+================= TRIANGLE @ paraphrase='tf', model=1.5B =================
+  crit MLP under this paraphrase: L16 (compare to the phase 2 orig-format crit)
+  NECESSITY (acc): 0.93 -> 0.62
+  NECESSITY (AUC): 0.96 -> 0.69 (Cite this one)
+  CONTROL        : 0.93 -> 1.00 non-crit L17
+  SUFFICIENCY    : 0.05 -> 0.00 clean patch restores?
+
+  SPECIFICITY.  : polarity should survive (see above)
+  Reading: crit collapses + control holds + patch restores + polarity survives
+    => mechanism MOVED to L16 (triangle replicates) => thesis checks out
+    no layer collapses means the paraphrase breaks the mechanism
+      

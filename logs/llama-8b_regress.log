@@ -1,0 +1,71 @@
+reading from: results/llama-8b
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.389
+Model:                            OLS   Adj. R-squared:                  0.388
+Method:                 Least Squares   F-statistic:                     254.1
+Date:                Thu, 23 Jul 2026   Prob (F-statistic):           4.23e-86
+Time:                        02:10:40   Log-Likelihood:                -1086.8
+No. Observations:                 800   AIC:                             2180.
+Df Residuals:                     797   BIC:                             2194.
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+=======================================================================================
+                          coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                  -2.3132      0.048    -48.272      0.000      -2.407      -2.219
+instruction (=leak)     1.6405      0.097     16.968      0.000       1.451       1.830
+actual_deception       -0.1988      0.097     -2.045      0.041      -0.390      -0.008
+==============================================================================
+Omnibus:                       43.128   Durbin-Watson:                   1.307
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               48.994
+Skew:                           0.604   Prob(JB):                     2.30e-11
+Kurtosis:                       3.110   Cond. No.                         4.85
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+LEAK = coefficient on 'instruction' holding actual deception fixed. ~0 = clean, large + significant = the probe reads the prompt
+
+DE-CONFOUND (non-compliant lies = told to lie, told truth anyway; n=77):
+ probe AUC(honest vs. told-to-lie-but-truthful) = 0.980
+ ~0.5 -> probe reads the ANSWER => (clean test)
+ high -> probe reads the INSTRUCTION => (it's a context leak, drop it from this model)
+POSITIVE CONTROL (held out teacher forced) AUC = 0.994
+ transfer AUC at/above this = confound, not a result
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.559
+Model:                            OLS   Adj. R-squared:                  0.557
+Method:                 Least Squares   F-statistic:                     288.5
+Date:                Thu, 23 Jul 2026   Prob (F-statistic):          5.45e-121
+Time:                        02:10:40   Log-Likelihood:                -767.08
+No. Observations:                 688   AIC:                             1542.
+Df Residuals:                     684   BIC:                             1560.
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+==============================================================================================
+                                 coef    std err          t      P>|t|      [0.025      0.975]
+----------------------------------------------------------------------------------------------
+const                         -2.7890      0.054    -51.813      0.000      -2.895      -2.683
+truth                          2.1561      0.075     28.651      0.000       2.008       2.304
+polarity                       1.0909      0.085     12.787      0.000       0.923       1.258
+truthxpolarity(=Deception)    -2.5788      0.115    -22.484      0.000      -2.804      -2.354
+==============================================================================
+Omnibus:                      107.292   Durbin-Watson:                   1.315
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              175.993
+Skew:                           0.986   Prob(JB):                     6.08e-39
+Kurtosis:                       4.500   Cond. No.                         6.87
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+per-cell deception AUC (fixing truth & polarity):
+
+AUC vs deception : 0.878 (chance = probe doesn't read it)
+AUC vs truth       : 0.766
+AUC vs polarity    : 0.413
+
+n = 688 lies from TRUE stmts: 198, from FALSE: 125

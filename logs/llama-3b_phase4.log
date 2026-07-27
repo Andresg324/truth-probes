@@ -1,0 +1,27 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:16<00:16, 16.41s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:21<00:00,  9.95s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:21<00:00, 10.92s/it]
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model meta-llama/Llama-3.2-3B-Instruct into HookedTransformer
+model loaded: llama-3b
+best_layer=13 (loaded from split.npz)
+
+POSITIVE CONTROL - frozen probe, held out teacher forced: AUC 0.968
+(any transfer AUC above this is a red flag: transfer cannot beat in-distribution)
+
+ phase4 0/400
+ phase4 100/400
+ phase4 200/400
+ phase4 300/400
+Phase 4
+ lie-prompt answer distribution: Counter({'no': 388, 'yes': 12})
+ lies drawn from TRUE statements : 195
+ lies drawn from FALSE statements: 7
+ If these are wildly unbalanced, the model can only lie in one direction
+ This is a behavioral finding, and the transfer AUC below is confounded.
+
+ AUC vs. deception.    : 0.920 (The Claim)
+ AUC vs Statement-truth: 0.799 (should be ~0.5)
+ AUC vs Polarity       : 0.382  (should be ~0.5)
+ AUC within TRUE stmts : 0.933
+ AUC within FALSE stmts: 0.873

@@ -1,0 +1,16 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:15<00:15, 15.74s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:21<00:00,  9.73s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:21<00:00, 10.63s/it]
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model meta-llama/Llama-3.2-3B-Instruct into HookedTransformer
+Model Loaded
+First: <|begin_of_text|> | Last 3: ['<|end_header_id|>', '\n\n', 'Yes']
+Loaded 400 statements: Counter({1: 200, 0: 200})
+Built 800 examples
+Honest answers: Counter({'Yes': 200, 'No': 200})
+Deceptive answers: Counter({'No': 200, 'Yes': 200})
+Extracting (fast - no generation)...
+Cached
+Shape: (800, 28, 3072)
+Best layer (chosen on val fold): 13
+probe-on;y: acts + split.npz written, stopping analysis

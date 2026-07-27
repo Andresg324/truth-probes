@@ -1,0 +1,103 @@
+{
+  "phase4": {
+    "positive_control_auc": {
+      "value": 0.999375,
+      "ci": null,
+      "n": 160
+    },
+    "best_layer": {
+      "value": 28,
+      "ci": null,
+      "n": null
+    },
+    "lie_answer_distribution": {
+      "value": {
+        "no": 400
+      },
+      "ci": null,
+      "n": null
+    },
+    "lies_from_true": {
+      "value": 200,
+      "ci": null,
+      "n": null
+    },
+    "lies_from_false": {
+      "value": 0,
+      "ci": null,
+      "n": null
+    },
+    "n_kept": {
+      "value": 588,
+      "ci": null,
+      "n": 800
+    },
+    "transfer_aucs": {
+      "value": {
+        "deception": 1.0,
+        "statement_truth": 0.8673141673141673,
+        "polarity": 0.36199418143348316
+      },
+      "ci": null,
+      "n": 588
+    },
+    "transfer_auc_within_cell": {
+      "value": {
+        "TRUE stmts": 1.0
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "leak_census": {
+    "row": {
+      "value": {
+        "positive_control": 0.999375,
+        "auc_deception": 1.0,
+        "auc_truth": 0.8673141673141673,
+        "auc_polarity": 0.36199418143348316,
+        "deconfound": 0.7155283505154639,
+        "verdict": "LEAK (drop)"
+      },
+      "ci": null,
+      "n": 588
+    },
+    "leak_threshold": {
+      "value": 0.15,
+      "ci": null,
+      "n": null
+    }
+  },
+  "regress_census": {
+    "verdict": {
+      "value": "DEGENERATE",
+      "ci": null,
+      "n": null
+    },
+    "gate": {
+      "value": {
+        "ny": 0,
+        "nn": 400,
+        "cond": 37.412731135028494,
+        "min_count": 0,
+        "ratio": 0.0
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "denial_bias": {
+    "rates": {
+      "value": {
+        "deny_true": 1.0,
+        "affirm_false": 0.0,
+        "asymmetry": 1.0
+      },
+      "ci": null,
+      "n": {
+        "n_true": 200,
+        "n_false": 200
+      }
+    }
+  }
+}

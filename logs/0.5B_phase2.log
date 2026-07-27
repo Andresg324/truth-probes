@@ -1,0 +1,48 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model Qwen/Qwen2.5-0.5B-Instruct into HookedTransformer
+Model Loaded
+Loaded cached activations (800, 24, 896)
+best_layer=15  min_alpha=2  E=7
+
+Necessity vs readout distance (ablate L15) - ACC and AUC:
+ read L15 (crit + 0): acc 0.78 -> 0.51 | AUC 0.85 -> 0.62
+
+Per-Layer MLP ablation curve - AUC (clean -> ablated), local and deployed readout:
+ ablate L 8: local 0.55 -> 0.55 [0.43, 0.67] | deployed 0.85 -> 0.84 [0.75, 0.91] 
+ ablate L 9: local 0.59 -> 0.41 [0.30, 0.53] | deployed 0.85 -> 0.80 [0.70, 0.88] 
+ ablate L10: local 0.59 -> 0.43 [0.31, 0.56] | deployed 0.85 -> 0.82 [0.73, 0.90] 
+ ablate L11: local 0.63 -> 0.46 [0.34, 0.58] | deployed 0.85 -> 0.77 [0.67, 0.86] 
+ ablate L12: local 0.70 -> 0.63 [0.52, 0.75] | deployed 0.85 -> 0.79 [0.70, 0.88] 
+ ablate L13: local 0.74 -> 0.63 [0.52, 0.74] | deployed 0.85 -> 0.82 [0.74, 0.90] 
+ ablate L14: local 0.79 -> 0.69 [0.61, 0.77] | deployed 0.85 -> 0.81 [0.73, 0.90] 
+ ablate L15: local 0.85 -> 0.62 [0.52, 0.71] | deployed 0.85 -> 0.62 [0.52, 0.71]  <- crit (selected)
+
+Specificity curve - every layer in R, local readout (AUC clean -> ablated):
+ ablate L 8: dec 0.55 -> 0.55 |  tru 0.47 -> 0.46 |  pol 1.00 -> 1.00 |  asym +0.008 [-0.025, +0.047] 
+ ablate L 9: dec 0.59 -> 0.41 |  tru 0.53 -> 0.49 |  pol 1.00 -> 1.00 |  asym -0.149 [-0.351, +0.050] 
+ ablate L10: dec 0.59 -> 0.43 |  tru 0.53 -> 0.51 |  pol 1.00 -> 1.00 |  asym -0.135 [-0.335, +0.076] 
+ ablate L11: dec 0.63 -> 0.46 |  tru 0.58 -> 0.54 |  pol 1.00 -> 1.00 |  asym -0.130 [-0.322, +0.063] 
+ ablate L12: dec 0.70 -> 0.63 |  tru 0.75 -> 0.68 |  pol 1.00 -> 1.00 |  asym +0.005 [-0.080, +0.071] 
+ ablate L13: dec 0.74 -> 0.63 |  tru 0.78 -> 0.68 |  pol 1.00 -> 1.00 |  asym -0.020 [-0.128, +0.082] 
+ ablate L14: dec 0.79 -> 0.69 |  tru 0.78 -> 0.72 |  pol 1.00 -> 1.00 |  asym -0.037 [-0.084, +0.016] 
+ ablate L15: dec 0.85 -> 0.62 |  tru 0.87 -> 0.86 |  pol 1.00 -> 1.00 |  asym -0.217 [-0.340, -0.097]  <- crit
+crit MLP L15 (no_steer necessity, chosen on train-fold items)
+recovery, clean 15 MLP patched into steered run: 0.56 [0.45, 0.66]
+ablation effect on steered run: mean |delta| 0.981 | frac items |delta| > 0.18: 0.96
+Restoration A (conduit): +0.67 [+0.54, +1.21] n=77/80
+Restoration B (undo steering): +1.23 [+0.45, +1.30] n=80/80
+
+DEPLOYED necessity as ACC (read L15) 0.78 [0.69, 0.86] -> 0.51 [0.43, 0.58]
+
+Specificity at LOCAL readout L15 (clean -> ablated), held-out:
+ deception: 0.78 [0.69, 0.86] -> 0.51 [0.43, 0.58]
+ truth    : 0.76 [0.67, 0.85] -> 0.47 [0.36, 0.58]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+ paired (truth drop - deception drop) at L15: +0.025 [-0.150, +0.200] (asymmetry is real only if CI excludes 0)
+
+Specificity at LOCAL readout L15 - AUC (clean -> ablated):
+ deception: AUC 0.85 -> 0.62 [0.52, 0.71]
+ truth    : AUC 0.87 -> 0.86 [0.77, 0.93]
+ polarity : AUC 1.00 -> 1.00 [1.00, 1.00]

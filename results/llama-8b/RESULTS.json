@@ -1,0 +1,169 @@
+{
+  "phase4": {
+    "positive_control_auc": {
+      "value": 0.99359375,
+      "ci": null,
+      "n": 160
+    },
+    "best_layer": {
+      "value": 14,
+      "ci": null,
+      "n": null
+    },
+    "lie_answer_distribution": {
+      "value": {
+        "no": 273,
+        "yes": 127
+      },
+      "ci": null,
+      "n": null
+    },
+    "lies_from_true": {
+      "value": 198,
+      "ci": null,
+      "n": null
+    },
+    "lies_from_false": {
+      "value": 125,
+      "ci": null,
+      "n": null
+    },
+    "n_kept": {
+      "value": 688,
+      "ci": null,
+      "n": 800
+    },
+    "transfer_aucs": {
+      "value": {
+        "deception": 0.8777556300097545,
+        "statement_truth": 0.7660768418542866,
+        "polarity": 0.4128701056770283
+      },
+      "ci": null,
+      "n": 688
+    },
+    "transfer_auc_within_cell": {
+      "value": {
+        "TRUE stmts": 0.9291207529843895,
+        "FALSE stmts": 0.8463915343915344
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "leak_census": {
+    "row": {
+      "value": {
+        "positive_control": 0.99359375,
+        "auc_deception": 0.8777556300097545,
+        "auc_truth": 0.7660768418542866,
+        "auc_polarity": 0.4128701056770283,
+        "deconfound": 0.9801814623732432,
+        "verdict": "LEAK (drop)"
+      },
+      "ci": null,
+      "n": 688
+    },
+    "leak_threshold": {
+      "value": 0.15,
+      "ci": null,
+      "n": null
+    }
+  },
+  "regress_transfer": {
+    "leak_model": {
+      "value": {
+        "instruction": 1.6404909223250415,
+        "instruction_p": 2.322176048439224e-55,
+        "actual_deception": -0.19881901635173738,
+        "actual_deception_p": 0.041180603477814694
+      },
+      "ci": null,
+      "n": 800
+    },
+    "deconfound_auc": {
+      "value": 0.9801814623732432,
+      "ci": null,
+      "n": 77
+    },
+    "positive_control_auc": {
+      "value": 0.99359375,
+      "ci": null,
+      "n": 160
+    },
+    "polarity_controlled": {
+      "value": {
+        "truth": 2.1561086215190084,
+        "polarity": 1.0909165151282356,
+        "interaction": -2.57884131533644,
+        "truth_p": 3.1673920280279776e-119,
+        "polarity_p": 1.0069968377814874e-33,
+        "interaction_p": 3.038571998116331e-84
+      },
+      "ci": null,
+      "n": 688
+    },
+    "subgroup_aucs": {
+      "value": {
+        "deception": 0.8777556300097545,
+        "truth": 0.7660768418542866,
+        "polarity": 0.4128701056770283
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "regress_census": {
+    "verdict": {
+      "value": "IDENTIFIABLE",
+      "ci": null,
+      "n": null
+    },
+    "coefficients": {
+      "value": {
+        "instruction": 1.4679968628646003,
+        "instruction_p": 2.4058487808430753e-66,
+        "deception": 0.7502688849152587,
+        "deception_p": 2.3845158425266163e-06
+      },
+      "ci": null,
+      "n": 800
+    },
+    "gate": {
+      "value": {
+        "ny": 127,
+        "nn": 273,
+        "cond": 10.351661230089443
+      },
+      "ci": null,
+      "n": null
+    }
+  },
+  "denial_bias": {
+    "rates": {
+      "value": {
+        "deny_true": 0.99,
+        "affirm_false": 0.625,
+        "asymmetry": 0.365
+      },
+      "ci": null,
+      "n": {
+        "n_true": 200,
+        "n_false": 200
+      }
+    }
+  },
+  "position_sensitivity": {
+    "deconfound_by_position": {
+      "value": {
+        "pre_answer": 0.9884718021704323,
+        "answer": 0.9801814623732432
+      },
+      "ci": null,
+      "n": {
+        "honest": 365,
+        "non_compliant_lie": 77
+      }
+    }
+  }
+}

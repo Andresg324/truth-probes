@@ -1,0 +1,46 @@
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:14<00:14, 14.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:14<00:00,  6.25s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:14<00:00,  7.44s/it]
+WARNING:root:With reduced precision, it is advised to use `from_pretrained_no_processing` instead of `from_pretrained`.
+WARNING:root:You are not using LayerNorm, so the writing weights can't be centered! Skipping
+Loaded pretrained model google/gemma-2-2b-it into HookedTransformer
+Model loaded: gemma-2b | paraphrase: claim
+extracted paraphrase acts (800, 26, 2304)
+[claim] best_layer = 15 probe acc0.856 n_decep_eval=80
+collapse sweep: {2: 0.79, 4: 0.69, 6: 0.57, 8: 0.5, 12: 0.35, 16: 0.22, 24: 0.02}
+min_alpha (paraphrase = 24.0
+
+[claim] crit MLP L9 (unified rule, chosen on train-fold items)
+ (Don't Cite) Local (read L9): 0.62 [0.53, 0.72] -> 0.04 [0.00, 0.09]
+ (Don't Cite) Deployed (read L15): 0.84 [0.75, 0.91] -> 0.79 [0.70, 0.88]
+ non-crit control L12 (local): 1.00 [1.00, 1.00]
+ non-crit control L15 (local): 1.00 [1.00, 1.00]
+ non-crit control L13 (local): 1.00 [1.00, 1.00]
+
+SUFFICIENCY steered, no patch: 0.03 [0.00,0.06]
+SUFFICIENCY + clean L9 patch: 0.03 [0.00, 0.06] (restoration)
+ Deployed AUC (read L15): 0.93 -> 0.80 [0.70, 0.88]
+
+Specificity at LOCAL readout L9 - AUC (clean -> ablated):
+ deception: 0.64 [0.55, 0.73] -> 0.51 [0.48, 0.54]
+ truth    : 0.69 [0.59, 0.78] -> 0.61 [0.54, 0.68]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+ Deployed (balanced acc, read L15):  0.84 [0.77, 0.91] -> 0.71 [0.62, 0.79]
+
+Specificity at LOCAL readout L9 (clean -> ablated), held-out:
+ deception: 0.64 [0.55, 0.73] -> 0.51 [0.48, 0.54]
+ truth    : 0.69 [0.59, 0.78] -> 0.61 [0.54, 0.68]
+ polarity : 1.00 [1.00, 1.00] -> 1.00 [1.00, 1.00]
+
+================= TRIANGLE @ paraphrase='claim', model=gemma-2b =================
+  crit MLP under this paraphrase: L9 (compare to the phase 2 orig-format crit)
+  NECESSITY (acc): 0.84 -> 0.71
+  NECESSITY (AUC): 0.93 -> 0.80 (Cite this one)
+  CONTROL        : 0.84 -> 1.00 non-crit L12
+  SUFFICIENCY    : 0.03 -> 0.03 clean patch restores?
+
+  SPECIFICITY.  : polarity should survive (see above)
+  Reading: crit collapses + control holds + patch restores + polarity survives
+    => mechanism MOVED to L9 (triangle replicates) => thesis checks out
+    no layer collapses means the paraphrase breaks the mechanism
+      

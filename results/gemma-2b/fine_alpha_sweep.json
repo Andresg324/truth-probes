@@ -1,0 +1,65 @@
+{
+  "0.00": {
+    "detection": 0.8375,
+    "lo": 0.75,
+    "hi": 0.9125,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "0.50": {
+    "detection": 0.7375,
+    "lo": 0.6375,
+    "hi": 0.8375,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "1.00": {
+    "detection": 0.575,
+    "lo": 0.4625,
+    "hi": 0.6875,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "1.50": {
+    "detection": 0.475,
+    "lo": 0.3625,
+    "hi": 0.5875,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "2.00": {
+    "detection": 0.325,
+    "lo": 0.225,
+    "hi": 0.4375,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "2.50": {
+    "detection": 0.225,
+    "lo": 0.1375,
+    "hi": 0.325,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "3.00": {
+    "detection": 0.1625,
+    "lo": 0.0875,
+    "hi": 0.25,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "3.50": {
+    "detection": 0.125,
+    "lo": 0.0625,
+    "hi": 0.2,
+    "coherence": 1.0,
+    "correctness": 0.8666666666666667
+  },
+  "4.00": {
+    "detection": 0.0875,
+    "lo": 0.025,
+    "hi": 0.15,
+    "coherence": 1.0,
+    "correctness": 0.85
+  }
+}

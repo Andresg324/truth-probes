@@ -1,0 +1,12 @@
+basis            scaling       best_layer n_nc de-confound
+------------------------------------------------------------
+from_pretrained  raw                  28  200 0.913
+from_pretrained  standardized         28  200 0.894
+no_processing    raw                  28  200 0.915
+no_processing    standardized         28  200 0.892
+basis            centering  best_layer de-confound
+----------------------------------------------------
+from_pretrained  raw               28 0.913
+from_pretrained  centered          28 0.916
+no_processing    raw               28 0.915
+no_processing    centered          28 0.917

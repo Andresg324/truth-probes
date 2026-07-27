@@ -1,0 +1,11 @@
+model       instr(leak)    decep(XOR)     n lie-dist
+----------------------------------------------------
+0.5B      -                       -   800 0y/400n DEGENERATE (cond=7)
+1.5B      -                       -   800 0y/400n DEGENERATE (cond=9)
+3B        -                       -   800 0y/400n DEGENERATE (cond=26)
+7B        -                       -   800 0y/400n DEGENERATE (cond=19)
+14B       -                       -   800 0y/400n DEGENERATE (cond=37)
+gemma-2b       1.62***      -0.81***    800 232y/168n cond=10
+gemma-9b  -                       -   800 338y/62n DEGENERATE (cond=13)
+llama-3b  -                       -   800 12y/388n DEGENERATE (cond=13)
+llama-8b       1.47***       0.75***    800 127y/273n cond=10
