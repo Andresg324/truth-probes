@@ -1,12 +1,27 @@
-"""
+"""PROTOCOL section 7: is the de-calibration a residual-norm rescaling artifact?
 
-Testing all four curve models: for every layer in the recovery band, measure the per-item norm
-ratio c = ||x_ablated|| / ||x_clean|| at the readout, and ask how much of the observed score
-change the rescaling model predicts. Qwen-3B carries the registered verdict; the other three
-are the contrast case, since at their critical layers accuracy and AUC fall together and the
-rescaling account predicts a materially poorer fit there.
+Rushing and Nanda attribute roughly 30% of measured self-repair to normalization rescaling.
+The analogue here: if ablating an MLP shrinks the residual stream at the readout by a factor
+c, a linear probe with intercept b reports c*(w.x) + b instead of (w.x) + b. Scores compress
+toward the intercept, so a fixed decision threshold is effectively moved while rank order is
+preserved exactly. That is the accuracy-falls-AUC-holds signature.
 
-Usage:  python scripts/norm_ratio.py [MODEL ...]      default: all four curve models
+Two readouts:
+
+  DEPLOYED (default)  reads at the model's readout layer with the deployed probe. This is the
+                      registered section 7 procedure. Qwen-3B carries the registered verdict;
+                      the other three are the contrast case.
+
+  LOCAL_READOUT=1     reads at the critical layer with a probe fit at that layer on the train
+                      fold, matching phase2's local specificity probe. This is the cell the
+                      paper's Table 1 exhibit actually reports. EXPLORATORY: added after the
+                      registered run, because section 7's procedure reads at the deployed
+                      readout while its motivation refers to a local-readout quantity. Same
+                      thresholds applied, but not a registered outcome.
+
+Usage:
+  python scripts/norm_ratio.py [MODEL ...]                  registered, default all four
+  LOCAL_READOUT=1 python scripts/norm_ratio.py              exploratory
 """
 
 import json, os, sys
@@ -24,8 +39,10 @@ MODELS = {"0.5B": "Qwen/Qwen2.5-0.5B-Instruct", "1.5B": "Qwen/Qwen2.5-1.5B-Instr
           "3B": "Qwen/Qwen2.5-3B-Instruct", "gemma-2b": "google/gemma-2-2b-it"}
 CURVE = ["0.5B", "1.5B", "3B", "gemma-2b"]     # 0.5B first: smallest, fastest smoke test
 REGISTERED = "3B"                               # the model the section 7 verdict rules apply to
+LOCAL = os.environ.get("LOCAL_READOUT") == "1"
+SEC = "norm_ratio_local" if LOCAL else "norm_ratio"
+OUTFILE = "NORM_RATIO_LOCAL.json" if LOCAL else "NORM_RATIO.json"
 DEVICE, DTYPE = ("cuda" if torch.cuda.is_available() else "cpu"), torch.float16
-SEC = "norm_ratio"
 RESID_ONLY = lambda n: n.endswith("hook_resid_post")
 
 
@@ -33,13 +50,16 @@ def run(TAG):
     R = f"results/{TAG}"
     z = np.load(f"{R}/split.npz")
     bl, te, yd = int(z["best_layer"]), z["te_idx"], z["y_decep"]
+    tr = z["tr_idx"]
     trva = np.concatenate([z["tr_idx"], z["va_idx"]])
     acts = np.load(f"{R}/acts_deception_balanced.npy")
     items = json.load(open("data/mixed.json"))
+    crit = int(np.load(f"{R}/ablation_curve.npz")["crit"])
+    band = sorted(int(k[1:]) for k in
+                  json.load(open(f"{R}/RESULTS.json"))["phase2/ablation_curve"])
 
     model = HookedTransformer.from_pretrained(MODELS[TAG], device=DEVICE, dtype=DTYPE)
-    manifest(TAG, model=MODELS[TAG], device=DEVICE, dtype=str(DTYPE), seed=0,
-             script="norm_ratio")
+    manifest(TAG, model=MODELS[TAG], device=DEVICE, dtype=str(DTYPE), seed=0, script=SEC)
 
     def build(stmt, ans):
         m = [{"role": "user",
@@ -53,13 +73,16 @@ def run(TAG):
         examples.append(build(d["statement"], "No" if d["label"] else "Yes"))
     assert len(examples) == acts.shape[0], "examples do not match cached activations"
 
-    probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, bl, :], yd[trva])
+    # which readout, and which probe reads it
+    if LOCAL:
+        read_L = crit
+        probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[tr, crit, :], yd[tr])
+    else:
+        read_L = bl
+        probe = LogisticRegression(max_iter=2000, C=0.1).fit(acts[trva, bl, :], yd[trva])
     w, b = probe.coef_[0], float(probe.intercept_[0])
-    crit = int(np.load(f"{R}/ablation_curve.npz")["crit"])
-    band = sorted(int(k[1:]) for k in
-                  json.load(open(f"{R}/RESULTS.json"))["phase2/ablation_curve"])
 
-    Xc = acts[te, bl, :]
+    Xc = acts[te, read_L, :]
     n_clean = np.linalg.norm(Xc, axis=1)
     s_clean = Xc @ w + b
     y = yd[te]
@@ -71,13 +94,17 @@ def run(TAG):
     for i in te[:40]:
         with torch.no_grad():
             _, c = model.run_with_cache(model.to_tokens(examples[i]), names_filter=RESID_ONLY)
-        chk.append(c["resid_post", bl][0, -1, :].float().cpu().numpy())
+        chk.append(c["resid_post", read_L][0, -1, :].float().cpu().numpy())
     rel = float(np.abs(np.linalg.norm(np.array(chk), axis=1) - n_clean[:40]).max()
                 / n_clean[:40].mean())
     assert rel < 1e-2, f"fresh pass does not reproduce cached acts (rel {rel:.4f})"
 
-    print(f"\n=== {TAG} === readout L{bl}, crit L{crit}, clean acc {acc_clean:.3f} "
+    mode = f"LOCAL readout L{read_L}" if LOCAL else f"DEPLOYED readout L{read_L}"
+    print(f"\n=== {TAG} === {mode}, crit L{crit}, clean acc {acc_clean:.3f} "
           f"AUC {auc_clean:.3f}, intercept {b:+.3f}")
+    if LOCAL:
+        print(f"  (compare phase2/specificity_crit_* for this model: clean acc and AUC "
+              f"should match the paper's Table 1 cell)")
     print(f"  cache check ok (max rel norm diff {rel:.5f})")
 
     def zero_hook(v, hook):
@@ -92,7 +119,7 @@ def run(TAG):
                 with model.hooks(fwd_hooks=[(f"blocks.{L}.hook_mlp_out", zero_hook)]):
                     _, c = model.run_with_cache(model.to_tokens(examples[i]),
                                                 names_filter=RESID_ONLY)
-            Xa.append(c["resid_post", bl][0, -1, :].float().cpu().numpy())
+            Xa.append(c["resid_post", read_L][0, -1, :].float().cpu().numpy())
         Xa = np.array(Xa)
 
         n_abl = np.linalg.norm(Xa, axis=1)
@@ -122,14 +149,21 @@ def run(TAG):
     corr = lambda a, v: (float(np.corrcoef(a, v)[0, 1])
                          if len(a) > 2 and a.std() > 0 and v.std() > 0 else float("nan"))
     r2c = out.get(f"L{crit}", {}).get("rescale_r2")
-    summary = {"corr_1minusc_accdrop": round(corr(one_minus_c, accs), 4),
+    summary = {"readout_mode": "local" if LOCAL else "deployed",
+               "readout_layer": read_L, "crit_layer": crit,
+               "corr_1minusc_accdrop": round(corr(one_minus_c, accs), 4),
                "corr_1minusc_aucdrop": round(corr(one_minus_c, aucs), 4),
                "rescale_r2_at_crit": r2c,
-               "intercept": round(b, 4), "readout_layer": bl, "crit_layer": crit,
+               "intercept": round(b, 4),
                "clean_acc": round(float(acc_clean), 4), "clean_auc": round(float(auc_clean), 4),
-               "registered": TAG == REGISTERED}
+               "registered": (TAG == REGISTERED) and not LOCAL}
 
-    tail = "" if TAG == REGISTERED else "  [CONTRAST, not registered]"
+    if LOCAL:
+        tail = "  [EXPLORATORY, local readout]"
+    elif TAG == REGISTERED:
+        tail = ""
+    else:
+        tail = "  [CONTRAST, not registered]"
     if r2c is None:
         summary["verdict"] = "CRIT LAYER NOT IN BAND" + tail
     elif r2c >= 0.90:
@@ -147,8 +181,7 @@ def run(TAG):
         report(TAG, SEC, k, v)
     for k, v in summary.items():
         report(TAG, SEC, k, v)
-    json.dump({"per_layer": out, "summary": summary},
-              open(f"{R}/NORM_RATIO.json", "w"), indent=2)
+    json.dump({"per_layer": out, "summary": summary}, open(f"{R}/{OUTFILE}", "w"), indent=2)
     del model
     torch.cuda.empty_cache()
     return summary
@@ -162,8 +195,9 @@ if __name__ == "__main__":
             res[t] = run(t)
         except Exception as e:
             print(f"  FAILED {t}: {type(e).__name__}: {e}")
-    print("\n" + "=" * 78)
+    print("\n" + "=" * 82)
     for t, s in res.items():
-        print(f"{t:10s} R2@crit {str(s['rescale_r2_at_crit']):>7s} | "
+        print(f"{t:10s} [{s['readout_mode']:8s} L{s['readout_layer']:>2d}] "
+              f"R2@crit {str(s['rescale_r2_at_crit']):>7s} | "
               f"corr(1-c,acc) {s['corr_1minusc_accdrop']:+.3f} | "
               f"corr(1-c,auc) {s['corr_1minusc_aucdrop']:+.3f} | {s['verdict']}")
