@@ -4,7 +4,7 @@
 before the canonical release run and are evidenced by run artifacts, environment manifests
 (`results/*/MANIFEST*.json`; one per model, see the scope note in §2), and the dated Zenodo
 deposit. They were not lodged in a timestamped public registry before the fact. This is a process
-limitation of this project and is stated as such here rather than glossed. Sections 5 and 6 are
+limitation of this project and is stated as such here rather than glossed. Sections 5, 6 and 7 are
 *prospective*: each is committed to the repository before any data for that analysis is collected,
 and its git commit date is the timestamp.
 
@@ -36,10 +36,10 @@ throughout, never pooled.
 |---|---|
 | Splits | Statement-grouped; both members of a statement pair on one side of every split |
 | Layer selection | Nested: accuracy averaged over 10 validation splits; earliest layer within 0.02 of peak (knee rule); test fold never used for selection |
-| Critical MLP | Layer whose ablation most reduces the probe's **continuous score** on training-fold deceptive items |
+| Critical MLP | Layer whose ablation most reduces the probe's **continuous score, read at the ablated layer**, on training-fold deceptive items |
 | Causal metric | AUC (threshold-free) is the citable metric; balanced accuracy reported alongside in appendix |
 | Intervals | Grouped bootstrap over statements, 1000 draws |
-| Probe | L2 logistic regression, C = 0.1, max_iter = 2000 |
+| Probe | L2 logistic regression, C = 0.1, max_iter = 2000. One probe per model, fit on the combined train and validation folds at the selected layer, then frozen and reused unchanged in every downstream analysis |
 | Readout | Answer token (`resid_post`, final position); behavioral pipeline matches this position |
 | Environment | Single device and precision for all published numbers (A100, fp16); loader fixed per experiment. Environment provenance recorded in `results/<model>/MANIFEST*.json`; see the manifest scope note below |
 | Source of truth | `MEASURED.md`, generated from `results/*/RESULTS.json`. If a number is not there, it was not measured |
@@ -65,7 +65,7 @@ manifests are left unchanged as the record of what was actually written.
 | Readout-position sensitivity | Δ > 0.15 (same threshold, reused) | Position materially changes the verdict |
 | Identifiability gate | Minority answer cell < 20 obs, or < 0.20 of the set, or condition number > 30 | Transfer regression is unidentifiable; exclude, do not average |
 | Positive-control ceiling | Any transfer AUC at or above the in-format ceiling | Confound, not a result |
-| Scale-trend falsification | Max deployed damage at 0.5B: > 0.33 supports the trend; 0.16–0.33 partial; < 0.16 retires it | Fixed before the 0.5B run; observed 0.235 → trend retired |
+| Scale-trend falsification | Max deployed damage at 0.5B: > 0.33 supports the trend; 0.16–0.33 partial; < 0.16 retires it | Fixed before the 0.5B run; observed 0.235 |
 | Quasi-separation guard | \|coefficient\| > 5 on standardized probe scores | Transfer regression fit is unstable; report as quasi-separation, do not cite. Never fired |
 
 ## 4. Amendment log
@@ -83,9 +83,18 @@ Dated changes to the above, each made before the measurement it affected.
 | 7 | 2026-07-23 | Canonical clean-room run: all published numbers regenerated on one device and precision |
 | 8 | 2026-07-23 | Position-sensitivity measurement added; reused the existing 0.15 leak threshold rather than choosing a new one |
 | 9 | 2026-08-24 | `reporting.py` manifest filename derived from the calling script (`MANIFEST_<script>.json`) and GPU model recorded; applies to runs after this date, release-run manifests unchanged. Made before the §6 addendum was run |
+| 10 | 2026-08-24 | §7 scope widened from Qwen-3B to all four curve models, before any data was collected, so the rescaling test can contrast models where de-calibration occurs against models where the ablation destroys signal. Registered verdict rules unchanged and still stated for Qwen-3B |
 
 Six documented conclusion reversals arising from these amendments are catalogued in the paper's
 Appendix F.
+
+### Deviations from a registered rule
+
+Recorded separately from amendments, because these were made *after* the relevant measurement.
+
+| # | Date | Deviation |
+|---|---|---|
+| D1 | 2026-07-23 | **Scale-trend falsification (§3).** The observed value at Qwen-0.5B was 0.235, which falls in the registered 0.16–0.33 band whose registered outcome is "the trend holds for a subset and must be reported as such." We instead retire the trend, on the grounds that the 0.235 arises entirely from ablating the readout layer itself and the value excluding that self-ablation is 0.081, below the registered floor. The exclusion is defensible but was not registered, so retirement is a deviation and is labelled as one in the paper (App. G) rather than presented as the registered outcome |
 
 ---
 
@@ -130,21 +139,21 @@ corpus. Results enter §3 and the appendix of the paper; no claim in §4–§6 d
 
 ### Compute
 Activation extraction on Qwen2.5-0.5B/1.5B/3B and Gemma-2-2b, all four in a single session on
-one rented A100 (80 GB, RunPod), fp16, TransformerLens from_pretrained (LN-folded basis), the
+one rented A100 (80 GB, RunPod), fp16, TransformerLens `from_pretrained` (LN-folded basis), the
 same loader and precision as the canonical release run of 2026-07-23. Probe training, splits,
 and all analysis run offline on CPU from cached activations. Estimated ~2–3 GPU-hours total.
-A MANIFEST_azaria.json is written per model recording date, invocation, package versions,
+A `MANIFEST_azaria.json` is written per model recording date, invocation, package versions,
 model revision, device, dtype, and seed, as for every other run in this project.
 Deviation from these settings, whether a different loader, precision, or device, is itself a
 deviation from protocol and must be recorded as an amendment, since the paper's own
 Appendix E documents preprocessing choices changing a verdict.
 
 ### Status
-Not yet run as of 2026-08-25.
+Not yet run as of 2026-08-24.
 
 ---
 
-## 6. PRE-REGISTERED ADDENDUM (2026-08-25): retrained monitor under upstream steering
+## 6. PRE-REGISTERED ADDENDUM (2026-08-24): retrained monitor under upstream steering
 
 **Committed before any data is collected. The commit date is the timestamp.**
 Primary corpus, the four curve models; independent of the §5 replication.
@@ -187,11 +196,11 @@ any result; anything added later is labelled exploratory.
 
 ### Compute
 Forward passes only, four models, one session, one device and precision (A100 SXM4 80 GB, fp16,
-TransformerLens from_pretrained), matching the canonical run. `MANIFEST_retrain_under_steering.json`
+TransformerLens `from_pretrained`), matching the canonical run. `MANIFEST_retrain_under_steering.json`
 per model. Under 1 GPU-hour. Deviation from these settings is a protocol deviation and must be
 recorded as an amendment.
 
-### Outcome (recorded 2026-08-25, after the run)
+### Outcome (recorded 2026-08-24, after the run)
 Run as specified on all four models. Results are in `results/*/RETRAIN_UNDER_STEERING.json`, the
 `retrain_steering` section of `MEASURED.md`, and Table C8 of the paper.
 
@@ -210,10 +219,9 @@ project will name the estimator.
 
 ---
 
-## 7. PRE-REGISTERED ADDENDUM (2026-08-25): is the de-calibration a residual-norm artifact
+## 7. PRE-REGISTERED ADDENDUM (2026-08-24): is the de-calibration a residual-norm artifact?
 
 **Committed before any data is collected. The commit date is the timestamp.**
-Qwen-3B, the model carrying the paper's Table 1 exhibit.
 
 ### Motivation
 The paper's headline exhibit is that ablating Qwen-3B's critical MLP moves balanced accuracy
@@ -227,8 +235,11 @@ accuracy-falls-AUC-holds signature. A paper arguing that controls should be run 
 are published should not leave its own centerpiece control unrun.
 
 ### Procedure (fixed)
-For every layer L in Qwen-3B's recovery band:
+For every layer L in each model's recovery band:
 
+0. Sanity check: an unablated forward pass must reproduce the cached activations at the readout
+   to within 1% in norm, or the rescaling factor measures loader drift rather than ablation. The
+   run aborts otherwise.
 1. Zero-ablate `blocks.L.hook_mlp_out` and record `resid_post` at the frozen readout layer for
    every held-out test item, matching the canonical causal pipeline exactly.
 2. Compute the per-item rescaling factor c = ‖x_ablated‖ / ‖x_clean‖.
@@ -237,7 +248,7 @@ For every layer L in Qwen-3B's recovery band:
 4. Report the per-layer accuracy drop, AUC drop, and mean c.
 
 ### Interpretation rules (fixed in advance)
-Let R² be the rescaling-model fit at the critical layer (L24).
+Let R² be the rescaling-model fit at Qwen-3B's critical layer (L24).
 
 - **Rescaling dominates:** R² ≥ 0.90. The de-calibration of Table 1 has a mechanical
   explanation, the metric argument is strengthened rather than weakened (AUC is invariant to
@@ -248,27 +259,41 @@ Let R² be the rescaling-model fit at the critical layer (L24).
 - Independently, across the band: if corr(1 − c, accuracy drop) is positive and materially
   larger than corr(1 − c, AUC drop), that is corroborating evidence; if the two correlations
   are comparable, it is not.
+- The registered verdict is Qwen-3B's R². The other three models are reported as a contrast and
+  carry no registered rule; their verdict labels in the results file are marked as such.
 
 Null and negative outcomes reported at equal prominence. Nothing added or removed after seeing
 any result; anything added later is labelled exploratory.
 
 ### Scope
-Qwen-3B only, since that is the model the exhibit rests on. Extension to the other three curve
-models is a camera-ready item and is not registered here.
+All four curve models. Qwen-3B carries the Table 1 exhibit and is the model the verdict rules
+above are stated for; its R² is the registered outcome. The other three are a contrast case: at
+their critical layers accuracy and AUC fall together, so the rescaling account predicts a
+materially poorer fit there. A high R² at Qwen-3B alone would show the mechanism can explain
+de-calibration; a high R² at Qwen-3B together with a poor fit elsewhere would show it explains
+de-calibration specifically and not ablation damage generally. The latter is the stronger result
+and is what this widening is for (amendment 10).
 
 ### Compute
-Forward passes only, one model, one session, one device and precision (A100 SXM4 80 GB, fp16,
+Forward passes only, four models, one session, one device and precision (A100 SXM4 80 GB, fp16,
 TransformerLens `from_pretrained`), matching the canonical run. `MANIFEST_norm_ratio.json`
-written per model. Roughly 2,000 forward passes, well under 1 GPU-hour. Deviation from these
-settings is a protocol deviation and must be recorded as an amendment.
+written per model. Roughly 6,000 ablated passes plus 160 unablated sanity passes across 39
+per-layer cells, under 1.5 GPU-hours. Deviation from these settings is a protocol deviation and
+must be recorded as an amendment.
 
 ---
 
 ## Analyses reported but not registered
 
-The composition-matched de-confound (`scripts/deconfound_matched.py`) is a robustness check on
-the §3 de-confound statistic, added after the pre-specified analysis in response to review. It
-recomputes the statistic with statement truth and answer polarity held fixed by construction,
-because under denial bias the two groups the statistic compares differ in composition. It is
-**exploratory**: it carries no pre-specified decision rule, does not replace the registered
-statistic, and is reported as a robustness check alongside it.
+**Composition-matched de-confound** (`scripts/deconfound_matched.py`). A robustness check on the
+§3 de-confound statistic, added after the pre-specified analysis in response to review. Under
+denial bias the two groups the statistic compares differ in composition: a model that lies only by
+denying truths is truthful under the lie instruction only on false statements, while its honest
+truthful responses span both truth values, so a probe reading polarity could separate them without
+reading the instruction. The check recomputes the statistic with statement truth and answer
+polarity held fixed by stratification. Covariate adjustment is unavailable here by construction:
+among truthful responses a model answers "yes" exactly when the statement is true, so polarity and
+truth are the same variable and the design is rank deficient in every model.
+
+This analysis is **exploratory**. It carries no pre-specified decision rule, does not replace the
+registered statistic, and is reported alongside it rather than in place of it.
