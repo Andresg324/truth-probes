@@ -1,6 +1,6 @@
 # MEASURED.md - generated source of truth (DO NOT MANUALLY EDIT)
 
-*Generated 2026-07-23 05:16 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
+*Generated 2026-08-24 10:15 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
 
 ## Provenance
 
