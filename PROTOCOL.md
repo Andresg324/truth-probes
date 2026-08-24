@@ -4,8 +4,8 @@
 before the canonical release run and are evidenced by run artifacts, environment manifests
 (`results/*/MANIFEST*.json`; one per model, see the scope note in §2), and the dated Zenodo
 deposit. They were not lodged in a timestamped public registry before the fact. This is a process
-limitation of this project and is stated as such here rather than glossed. Section 5 is
-*prospective*: it is committed to the repository before any data for that analysis is collected,
+limitation of this project and is stated as such here rather than glossed. Sections 5 and 6 are
+*prospective*: each is committed to the repository before any data for that analysis is collected,
 and its git commit date is the timestamp.
 
 Nothing in Sections 1–4 should be read as a pre-registration in the strict sense. They are a
@@ -51,10 +51,10 @@ directory, so each of those files records only the last script to run against th
 survives from `deception_probe.py` or `phase2.py`. Because every release script ran in one session
 on one device with one environment, the recorded device, precision, package versions, and model
 revisions are valid for all analyses on that model; what the manifests do not recover is which
-script and seed produced which individual number. `reporting.py` now derives the manifest filename from the calling script, so runs after
-2026-08-24 write `MANIFEST_<script>.json` and carry per-analysis provenance; it also records the
-GPU model rather than only `cuda`. The release-run manifests are left unchanged as the record of
-what was actually written.
+script and seed produced which individual number. `reporting.py` now derives the manifest filename
+from the calling script, so runs after 2026-08-24 write `MANIFEST_<script>.json` and carry
+per-analysis provenance; it also records the GPU model rather than only `cuda`. The release-run
+manifests are left unchanged as the record of what was actually written.
 
 ## 3. Pre-specified decision rules
 
@@ -135,31 +135,37 @@ same loader and precision as the canonical release run of 2026-07-23. Probe trai
 and all analysis run offline on CPU from cached activations. Estimated ~2–3 GPU-hours total.
 A MANIFEST_azaria.json is written per model recording date, invocation, package versions,
 model revision, device, dtype, and seed, as for every other run in this project.
-Deviation from these settings — different loader, precision, or device — is itself a
+Deviation from these settings, whether a different loader, precision, or device, is itself a
 deviation from protocol and must be recorded as an amendment, since the paper's own
 Appendix E documents preprocessing choices changing a verdict.
 
-## 6. Pre-registered addendum (2026-08-25): retrained monitor under upstream steering
+### Status
+Not yet run as of 2026-08-25.
+
+---
+
+## 6. PRE-REGISTERED ADDENDUM (2026-08-25): retrained monitor under upstream steering
 
 **Committed before any data is collected. The commit date is the timestamp.**
-Primary corpus, the four curve models; independent of the section 5 replication.
+Primary corpus, the four curve models; independent of the §5 replication.
 
 ### Motivation
 The steering result in the paper injects at the readout layer, where the intervention is a
 translation and its effect on a linear probe is analytic: every decision score shifts by
--alpha*||w||, rank order is preserved, AUC is unchanged. That result therefore establishes
+−alpha·‖w‖, rank order is preserved, AUC is unchanged. That result therefore establishes
 de-calibration, not destruction. This addendum asks the empirical question the analytic one
 cannot: does an attack injected upstream, where the perturbation propagates through
 nonlinearities, remove the signal itself?
 
 ### Procedure (fixed)
 Injection at E = best_layer // 2, the same early point used by the sufficiency test.
-0. Recalibrate alpha at E: sweep [0,2,4,6,8,10,15,20,30,40], take the first value driving
+
+0. Recalibrate alpha at E: sweep [0, 2, 4, 6, 8, 10, 15, 20, 30, 40], take the first value driving
    frozen-probe detection on held-out deceptive items below 0.10. This reuses the existing
    min_alpha rule rather than introducing a new threshold. The published alpha was calibrated
    at the readout layer and does not transfer.
-1. Extract activations at the frozen readout layer under that alpha, applied to EVERY item
-   regardless of label.
+1. Extract activations at the frozen readout layer under that alpha, applied to **every item
+   regardless of label**.
 2. Report frozen-probe detection rate and AUC on the steered activations.
 3. Refit a probe (L2, C = 0.1, max_iter = 2000) on steered activations under the canonical
    split, and over ten GroupShuffleSplit seeds.
@@ -180,7 +186,89 @@ Null and negative outcomes reported at equal prominence. Nothing added or remove
 any result; anything added later is labelled exploratory.
 
 ### Compute
-Forward passes only, four models, one session, one device and precision (A100, fp16,
-TransformerLens from_pretrained), matching the canonical run. MANIFEST_retrain_under_steering.json
+Forward passes only, four models, one session, one device and precision (A100 SXM4 80 GB, fp16,
+TransformerLens from_pretrained), matching the canonical run. `MANIFEST_retrain_under_steering.json`
 per model. Under 1 GPU-hour. Deviation from these settings is a protocol deviation and must be
 recorded as an amendment.
+
+### Outcome (recorded 2026-08-25, after the run)
+Run as specified on all four models. Results are in `results/*/RETRAIN_UNDER_STEERING.json`, the
+`retrain_steering` section of `MEASURED.md`, and Table C8 of the paper.
+
+**Registered verdict: MIXED.** The signal is not intact at every model (0.5B fails) and not removed
+at every model (only 0.5B does). Reported per model without aggregation, as registered.
+
+The readout-layer identity was measured at an AUC change of 0.000000 in all four models,
+confirming analytically and empirically that the published in-format attack is a threshold shift.
+
+**One ambiguity in this registration is disclosed rather than resolved.** The rule reads "retrained
+AUC within 0.05 of clean AUC" without specifying which retrained estimate. At Qwen-1.5B the
+canonical split gives 0.891 (Δ = 0.057, outside the band) and the ten-seed mean gives 0.908 ± 0.020
+(Δ = 0.040, inside it), so the per-model label flips on a choice this document did not fix. Both are
+reported in the paper. The aggregate verdict is unchanged either way. Future registrations in this
+project will name the estimator.
+
+---
+
+## 7. PRE-REGISTERED ADDENDUM (2026-08-25): is the de-calibration a residual-norm artifact
+
+**Committed before any data is collected. The commit date is the timestamp.**
+Qwen-3B, the model carrying the paper's Table 1 exhibit.
+
+### Motivation
+The paper's headline exhibit is that ablating Qwen-3B's critical MLP moves balanced accuracy
+0.950 → 0.719 while AUC moves 0.992 → 0.979. The paper already names a candidate mechanism
+without testing it: roughly 30% of measured self-repair traces to normalization rescaling
+(Rushing and Nanda 2024). The analogue for a linear probe is direct. If ablation shrinks the
+residual stream at the readout by a per-item factor c, a probe with weights w and intercept b
+reports c·(w·x) + b in place of (w·x) + b. Scores compress toward the intercept, so a fixed
+decision threshold is effectively moved while rank order is preserved exactly. That is the
+accuracy-falls-AUC-holds signature. A paper arguing that controls should be run before numbers
+are published should not leave its own centerpiece control unrun.
+
+### Procedure (fixed)
+For every layer L in Qwen-3B's recovery band:
+
+1. Zero-ablate `blocks.L.hook_mlp_out` and record `resid_post` at the frozen readout layer for
+   every held-out test item, matching the canonical causal pipeline exactly.
+2. Compute the per-item rescaling factor c = ‖x_ablated‖ / ‖x_clean‖.
+3. Fit nothing. Compare the observed ablated score against the rescaling prediction
+   c·(s_clean − b) + b, and report the R² of that prediction.
+4. Report the per-layer accuracy drop, AUC drop, and mean c.
+
+### Interpretation rules (fixed in advance)
+Let R² be the rescaling-model fit at the critical layer (L24).
+
+- **Rescaling dominates:** R² ≥ 0.90. The de-calibration of Table 1 has a mechanical
+  explanation, the metric argument is strengthened rather than weakened (AUC is invariant to
+  the rescaling that accuracy misreads as destruction), and the paper says so.
+- **Not rescaling:** R² ≤ 0.50. The de-calibration is not a norm artifact and the candidate
+  mechanism named in the Discussion is retired.
+- **Partial:** anything between, reported as such with the R² value.
+- Independently, across the band: if corr(1 − c, accuracy drop) is positive and materially
+  larger than corr(1 − c, AUC drop), that is corroborating evidence; if the two correlations
+  are comparable, it is not.
+
+Null and negative outcomes reported at equal prominence. Nothing added or removed after seeing
+any result; anything added later is labelled exploratory.
+
+### Scope
+Qwen-3B only, since that is the model the exhibit rests on. Extension to the other three curve
+models is a camera-ready item and is not registered here.
+
+### Compute
+Forward passes only, one model, one session, one device and precision (A100 SXM4 80 GB, fp16,
+TransformerLens `from_pretrained`), matching the canonical run. `MANIFEST_norm_ratio.json`
+written per model. Roughly 2,000 forward passes, well under 1 GPU-hour. Deviation from these
+settings is a protocol deviation and must be recorded as an amendment.
+
+---
+
+## Analyses reported but not registered
+
+The composition-matched de-confound (`scripts/deconfound_matched.py`) is a robustness check on
+the §3 de-confound statistic, added after the pre-specified analysis in response to review. It
+recomputes the statistic with statement truth and answer polarity held fixed by construction,
+because under denial bias the two groups the statistic compares differ in composition. It is
+**exploratory**: it carries no pre-specified decision rule, does not replace the registered
+statistic, and is reported as a robustness check alongside it.

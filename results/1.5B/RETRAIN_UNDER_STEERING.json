@@ -1,0 +1,25 @@
+{
+  "best_layer": 17,
+  "steer_layer": 8,
+  "clean_auc": 0.9477,
+  "readout_identity_auc_delta": 0.0,
+  "alpha_sweep_at_E": {
+    "0": 0.8875,
+    "2": 0.8,
+    "4": 0.7375,
+    "6": 0.575,
+    "8": 0.55,
+    "10": 0.425,
+    "15": 0.0875
+  },
+  "alpha_E": 15.0,
+  "steered_detection": 0.0875,
+  "steered_auc": 0.8777,
+  "retrained_auc": 0.8912,
+  "retrained_auc_10seed": {
+    "mean": 0.9084,
+    "std": 0.0199
+  },
+  "verdict": "MIXED (model-dependent)",
+  "decalibration_flag": false
+}

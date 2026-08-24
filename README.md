@@ -10,7 +10,8 @@ Short answers, from a pre-specified pipeline on Qwen2.5-0.5B/1.5B/3B and Gemma-2
 
 - **Probes read truth-consistency**, and the computation behind it has **no canonical shape**: deception-specific ablation damage is band-localized at 1.5B (L15-L17), multi-site at Gemma-2b (L9/L11/L13/L14), present locally but absorbed by the deployed readout at 3B (significant local damage at L18 and L20, yet AUC >= 0.93 at the monitor under every single-MLP ablation), and absent at 0.5B.
 - **Point interventions misidentify the mechanism in every model.** The strongest disruptor at 1.5B has zero deception-specificity, and 0.5B's "critical" layer is the readout itself. Only per-layer curves with a deception/truth/polarity decomposition adjudicate.
-- **Instructed-transfer evaluation collapses without controls**: naive transfer AUCs span 0.030-1.000 across nine models (three meet or exceed their own positive-control ceiling); denial bias (all five Qwen models lie only by denying truths) leaves 7/9 models unidentifiable; in the two identifiable models the instruction coefficient dominates a small, sign-inconsistent deception coefficient.
+- **The standard steering attack is a threshold shift, not a capability.** Subtracting the probe direction at the readout layer is a translation: every decision score moves by the same constant, so detection collapses while AUC is provably unchanged. We measure that change at 0.000000 in all four models. Injected upstream instead, the attack needs 2.5-7.5x more strength, and a probe refit on the steered activations recovers 0.94-0.99 of clean AUC in three of four models.
+- **Instructed-transfer evaluation collapses without controls**: naive transfer AUCs span 0.030-1.000 across nine models (three meet or exceed their own positive-control ceiling); denial bias (all five Qwen models lie only by denying truths) leaves 7/9 models unidentifiable; in the two identifiable models the instruction coefficient is roughly four times the deception effect, whose sign is inconsistent between them.
 - Answer polarity survives all 43 ablation conditions (AUC 1.00 throughout), and clean-patching restores 95-98% of what ablation removes in the three models with an identifiable critical layer.
 
 <p align="center">
@@ -46,6 +47,7 @@ scripts/retrain_under_steering.py  PROTOCOL section 6: refit under upstream stee
 scripts/leak_control.py            Instruction-leak census
 scripts/denial_bias.py             Denial-bias table
 scripts/standardize_diag.py        Preprocessing and position interaction
+scripts/check_data_splits.py       Near-duplicate split-integrity audit
 scripts/reporting.py               Structured results logging + run manifests
 scripts/make_results_md.py         Regenerates MEASURED.md from RESULTS.json
 scripts/make_figures.py            Regenerates the combined paper figures
@@ -64,10 +66,11 @@ PROTOCOL.md                        Frozen pipeline, decision rules, pre-registra
 pip install -r requirements.txt          # exact versions from the release run's manifest
 export HF_TOKEN=...                      # Gemma and Llama models are gated on Hugging Face
 bash run_all.sh                          # full pipeline (A100-class GPU; ~15-25 GPU-hours)
-python make_results_md.py                # regenerate MEASURED.md
 ```
 
-Every number in the paper regenerates from `MEASURED.md`; if a number is not there, it was not measured. All published results come from a single clean-room run on one device and precision (A100, fp16). Environment manifests (package versions, model revisions, device) are in `results/*/MANIFEST*.json`; one is written per model rather than per analysis, and the scope of what that does and does not establish is stated in [PROTOCOL.md](PROTOCOL.md). Expect decimal-level drift on other hardware; verdicts should not change. If one does, we would genuinely like to hear about it, as the paper's evaluation section is about exactly this phenomenon.
+`run_all.sh` regenerates every number and every paper figure, ending with `make_results_md.py` and `make_figures.py`. It includes the PROTOCOL section 6 addendum, which adds roughly one GPU-hour and can be commented out to reproduce only the numbers in the paper as submitted.
+
+Every number in the paper regenerates from `MEASURED.md`; if a number is not there, it was not measured. All published results come from a single clean-room run on one device and precision (A100, fp16). Environment manifests (package versions, model revisions, device) are in `results/*/MANIFEST*.json`; the release run wrote one per model rather than one per analysis, and the scope of what that does and does not establish is stated in [PROTOCOL.md](PROTOCOL.md). Expect decimal-level drift on other hardware; verdicts should not change. If one does, we would genuinely like to hear about it, as the paper's evaluation section is about exactly this phenomenon.
 
 Total compute: the release run reproduces for approximately $20-30 in rented GPU time; total project compute, including development and reruns, was under $100.
 
@@ -76,6 +79,8 @@ The complete results tree, including the large activation caches excluded from t
 ## A note on process
 
 This project's findings were revised six times by its own controls before publication: a recall-based metric inverted the strongest necessity effect, an accuracy-based metric manufactured a critical layer at 3B, a restoration formula with a missing condition reversed the sufficiency verdict, a degenerate control looked like a discovery, a clean-room rerun flipped a regression coefficient's sign, and a control selected under one metric failed under another. Appendix F of the paper documents all six. The released pipeline is the version that survives them.
+
+Section 6 of [PROTOCOL.md](PROTOCOL.md) is a pre-registered addendum committed before its data was collected, and its recorded outcome includes an ambiguity in the registration itself, disclosed rather than resolved after the fact.
 
 ## Citation
 

@@ -101,5 +101,63 @@
         "n_false": 200
       }
     }
+  },
+  "deconfound_matched": {
+    "deconfound_all": {
+      "value": 0.0018,
+      "ci": null,
+      "n": null
+    },
+    "deconfound_false_only": {
+      "value": NaN,
+      "ci": null,
+      "n": null
+    },
+    "deconfound_true_only": {
+      "value": 0.0,
+      "ci": null,
+      "n": null
+    },
+    "n_honest_all": {
+      "value": 385,
+      "ci": null,
+      "n": null
+    },
+    "n_noncompliant_all": {
+      "value": 138,
+      "ci": null,
+      "n": null
+    },
+    "n_false_cell": {
+      "value": [
+        190,
+        0
+      ],
+      "ci": null,
+      "n": null
+    },
+    "n_true_cell": {
+      "value": [
+        195,
+        138
+      ],
+      "ci": null,
+      "n": null
+    },
+    "instruction_coef_polarity_controlled": {
+      "value": null,
+      "ci": null,
+      "n": null
+    },
+    "instruction_p": {
+      "value": null,
+      "ci": null,
+      "n": null
+    },
+    "design_cond": {
+      "value": 435699191370310.1,
+      "ci": null,
+      "n": null
+    }
   }
 }
