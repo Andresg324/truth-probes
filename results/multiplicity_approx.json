@@ -1,0 +1,63 @@
+{
+  "0.5B": {
+    "n_cells": 8,
+    "widening": 1.3951,
+    "sig_uncorrected": [
+      15
+    ],
+    "sig_corrected": [
+      15
+    ],
+    "crit_survives": true
+  },
+  "1.5B": {
+    "n_cells": 9,
+    "widening": 1.4148,
+    "sig_uncorrected": [
+      14,
+      15,
+      16,
+      17
+    ],
+    "sig_corrected": [
+      15,
+      16,
+      17
+    ],
+    "crit_survives": true
+  },
+  "3B": {
+    "n_cells": 14,
+    "widening": 1.4866,
+    "sig_uncorrected": [
+      18,
+      20,
+      21,
+      23,
+      28
+    ],
+    "sig_corrected": [
+      20,
+      23
+    ],
+    "crit_survives": false
+  },
+  "gemma-2b": {
+    "n_cells": 8,
+    "widening": 1.3951,
+    "sig_uncorrected": [
+      9,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "sig_corrected": [
+      11,
+      13,
+      14
+    ],
+    "crit_survives": false
+  }
+}

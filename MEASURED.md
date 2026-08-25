@@ -1,6 +1,6 @@
 # MEASURED.md - generated source of truth (DO NOT MANUALLY EDIT)
 
-*Generated 2026-08-24 17:05 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
+*Generated 2026-08-24 18:57 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
 
 ## Provenance
 
@@ -15,6 +15,20 @@
 | gemma-9b | phase4_fixed | 2026-07-23 00:45 | False |
 | llama-3b | phase4_fixed | 2026-07-22 22:41 | False |
 | llama-8b | regress_transfer | 2026-07-23 02:10 | - |
+
+## deconfound_matched
+
+| model | deconfound_all | deconfound_false_only | deconfound_true_only | n_honest_all | n_noncompliant_all | n_false_cell | n_true_cell | instruction_coef_polarity_controlled | instruction_p | design_cond |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 0.5B | 0.019 | 0.054 | nan | 274 | 200 | [98, 200] | [176, 0] | None | None | 474368196313512.125 |
+| 1.5B | 0.176 | 0.365 | nan | 348 | 200 | [151, 200] | [197, 0] | None | None | 4710000672502183.000 |
+| 3B | 0.913 | 0.902 | nan | 363 | 200 | [196, 200] | [167, 0] | None | None | 704426127462718.125 |
+| 7B | 0.942 | 0.968 | nan | 383 | 200 | [192, 200] | [191, 0] | None | None | 1663767504745992.250 |
+| 14B | 0.716 | 0.804 | nan | 388 | 200 | [198, 200] | [190, 0] | None | None | 414603341539019.500 |
+| gemma-2b | 0.995 | 0.991 | 1.000 | 351 | 290 | [177, 129] | [174, 161] | None | None | 3120819333624707.500 |
+| gemma-9b | 0.002 | nan | 0.000 | 385 | 138 | [190, 0] | [195, 138] | None | None | 435699191370310.125 |
+| llama-3b | 0.982 | 0.977 | 0.962 | 343 | 198 | [190, 193] | [153, 5] | None | None | 536892612983701.812 |
+| llama-8b | 0.980 | 0.985 | nan | 365 | 77 | [189, 75] | [176, 2] | None | None | 6247330782767390.000 |
 
 ## denial_bias
 
@@ -43,6 +57,24 @@
 | gemma-9b | positive_control=0.996, auc_deception=0.030, auc_truth=0.743, auc_polarity=0.592, deconfound=0.002, verdict = LEAK (drop) (n=647) | 0.150 |
 | llama-3b | positive_control=0.968, auc_deception=0.920, auc_truth=0.799, auc_polarity=0.382, deconfound=0.982, verdict = LEAK (drop) (n=545) | 0.150 |
 | llama-8b | positive_control=0.994, auc_deception=0.878, auc_truth=0.766, auc_polarity=0.413, deconfound=0.980, verdict = LEAK (drop) (n=688) | 0.150 |
+
+## norm_ratio
+
+| model | L8 | L9 | L10 | L11 | L12 | L13 | L14 | L15 | corr_1minusc_accdrop | corr_1minusc_aucdrop | rescale_r2_at_crit | intercept | readout_layer | crit_layer | clean_acc | clean_auc | registered | verdict | L16 | L17 | L18 | L19 | L20 | L21 | L22 | L23 | L24 | L25 | L26 | L27 | L28 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0.5B | c_mean=0.977, c_std=0.016, acc_drop=0.031, auc_drop=0.014, rescale_r2=-0.571 | c_mean=0.931, c_std=0.011, acc_drop=0.156, auc_drop=0.054, rescale_r2=-0.685 | c_mean=0.920, c_std=0.016, acc_drop=0.194, auc_drop=0.051, rescale_r2=-7.627 | c_mean=0.920, c_std=0.041, acc_drop=0.200, auc_drop=0.051, rescale_r2=-7.539 | c_mean=0.882, c_std=0.008, acc_drop=0.181, auc_drop=0.117, rescale_r2=-4.736 | c_mean=0.966, c_std=0.010, acc_drop=0.138, auc_drop=0.004, rescale_r2=-0.878 | c_mean=0.929, c_std=0.009, acc_drop=0.106, auc_drop=0.032, rescale_r2=-2.295 | c_mean=0.980, c_std=0.007, acc_drop=0.125, auc_drop=0.201, rescale_r2=-4.336 | 0.689 | -0.003 | -4.336 | 3.448 | 15 | 15 | 0.700 | 0.826 | False | NOT RESCALING  [CONTRAST, not registered] | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 1.5B | - | c_mean=0.988, c_std=0.005, acc_drop=0.369, auc_drop=0.259, rescale_r2=0.457 | c_mean=1.006, c_std=0.006, acc_drop=0.106, auc_drop=0.054, rescale_r2=0.571 | c_mean=0.967, c_std=0.006, acc_drop=0.019, auc_drop=0.030, rescale_r2=0.728 | c_mean=0.954, c_std=0.006, acc_drop=0.131, auc_drop=0.025, rescale_r2=0.786 | c_mean=0.988, c_std=0.010, acc_drop=0.450, auc_drop=0.321, rescale_r2=0.243 | c_mean=0.995, c_std=0.010, acc_drop=0.106, auc_drop=0.070, rescale_r2=0.610 | c_mean=0.985, c_std=0.007, acc_drop=0.231, auc_drop=0.206, rescale_r2=0.748 | 0.082 | -0.119 | -0.251 | 0.001 | 17 | 16 | 0.887 | 0.948 | False | NOT RESCALING  [CONTRAST, not registered] | c_mean=0.900, c_std=0.005, acc_drop=0.269, auc_drop=0.058, rescale_r2=-0.251 | c_mean=0.937, c_std=0.007, acc_drop=0.269, auc_drop=0.308, rescale_r2=-1.587 | - | - | - | - | - | - | - | - | - | - | - |
+| 3B | - | - | - | - | - | - | - | c_mean=1.024, c_std=0.013, acc_drop=0.181, auc_drop=0.059, rescale_r2=0.709 | 0.335 | 0.203 | 0.822 | 0.003 | 28 | 24 | 0.981 | 0.998 | True | PARTIAL | c_mean=1.023, c_std=0.021, acc_drop=0.406, auc_drop=0.030, rescale_r2=-0.564 | c_mean=0.998, c_std=0.016, acc_drop=0.094, auc_drop=0.017, rescale_r2=0.698 | c_mean=0.939, c_std=0.021, acc_drop=0.169, auc_drop=0.058, rescale_r2=0.336 | c_mean=0.991, c_std=0.016, acc_drop=0.300, auc_drop=0.103, rescale_r2=0.242 | c_mean=1.010, c_std=0.015, acc_drop=0.125, auc_drop=0.000, rescale_r2=0.347 | c_mean=1.048, c_std=0.014, acc_drop=0.056, auc_drop=0.012, rescale_r2=0.358 | c_mean=1.017, c_std=0.019, acc_drop=0.056, auc_drop=0.007, rescale_r2=0.541 | c_mean=0.976, c_std=0.016, acc_drop=0.188, auc_drop=0.002, rescale_r2=0.072 | c_mean=1.013, c_std=0.019, acc_drop=0.062, auc_drop=0.025, rescale_r2=0.822 | c_mean=0.957, c_std=0.012, acc_drop=0.275, auc_drop=0.011, rescale_r2=-0.647 | c_mean=1.011, c_std=0.020, acc_drop=0.081, auc_drop=0.003, rescale_r2=0.653 | c_mean=0.950, c_std=0.019, acc_drop=0.125, auc_drop=0.014, rescale_r2=0.675 | c_mean=0.926, c_std=0.019, acc_drop=0.300, auc_drop=0.047, rescale_r2=-0.954 |
+| gemma-2b | c_mean=0.952, c_std=0.011, acc_drop=0.081, auc_drop=0.127, rescale_r2=0.522 | c_mean=0.985, c_std=0.008, acc_drop=0.044, auc_drop=0.086, rescale_r2=0.344 | c_mean=0.969, c_std=0.010, acc_drop=0.263, auc_drop=0.031, rescale_r2=-1.131 | c_mean=0.988, c_std=0.008, acc_drop=0.106, auc_drop=0.033, rescale_r2=0.009 | c_mean=0.956, c_std=0.010, acc_drop=0.125, auc_drop=0.081, rescale_r2=0.406 | c_mean=0.980, c_std=0.021, acc_drop=0.062, auc_drop=0.054, rescale_r2=0.172 | c_mean=0.976, c_std=0.007, acc_drop=0.219, auc_drop=0.048, rescale_r2=-0.682 | c_mean=0.980, c_std=0.006, acc_drop=0.312, auc_drop=0.117, rescale_r2=-6.128 | -0.011 | 0.438 | 0.344 | -0.003 | 15 | 9 | 0.844 | 0.947 | False | NOT RESCALING  [CONTRAST, not registered] | - | - | - | - | - | - | - | - | - | - | - | - | - |
+
+## norm_ratio_local
+
+| model | L8 | L9 | L10 | L11 | L12 | L13 | L14 | L15 | readout_mode | readout_layer | crit_layer | corr_1minusc_accdrop | corr_1minusc_aucdrop | rescale_r2_at_crit | intercept | clean_acc | clean_auc | registered | verdict | L16 | L17 | L18 | L19 | L20 | L21 | L22 | L23 | L24 | L25 | L26 | L27 | L28 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0.5B | c_mean=0.977, c_std=0.016, acc_drop=0.150, auc_drop=0.014, rescale_r2=-1.120 | c_mean=0.931, c_std=0.011, acc_drop=0.244, auc_drop=0.054, rescale_r2=-0.999 | c_mean=0.920, c_std=0.016, acc_drop=0.275, auc_drop=0.029, rescale_r2=-7.835 | c_mean=0.920, c_std=0.041, acc_drop=0.275, auc_drop=0.081, rescale_r2=-6.392 | c_mean=0.882, c_std=0.008, acc_drop=0.275, auc_drop=0.057, rescale_r2=-6.430 | c_mean=0.966, c_std=0.010, acc_drop=0.200, auc_drop=0.026, rescale_r2=-0.923 | c_mean=0.929, c_std=0.009, acc_drop=0.144, auc_drop=0.037, rescale_r2=-2.031 | c_mean=0.980, c_std=0.007, acc_drop=0.269, auc_drop=0.235, rescale_r2=-3.546 | local | 15 | 15 | 0.426 | -0.314 | -3.546 | 3.421 | 0.775 | 0.851 | False | NOT RESCALING  [EXPLORATORY, local readout] | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 1.5B | - | c_mean=1.002, c_std=0.008, acc_drop=0.200, auc_drop=0.138, rescale_r2=0.502 | c_mean=1.006, c_std=0.009, acc_drop=0.094, auc_drop=0.062, rescale_r2=0.551 | c_mean=0.950, c_std=0.010, acc_drop=0.106, auc_drop=0.023, rescale_r2=0.579 | c_mean=0.947, c_std=0.005, acc_drop=0.125, auc_drop=0.064, rescale_r2=0.654 | c_mean=1.016, c_std=0.020, acc_drop=0.269, auc_drop=0.210, rescale_r2=-0.725 | c_mean=1.011, c_std=0.009, acc_drop=0.087, auc_drop=0.046, rescale_r2=0.465 | c_mean=0.993, c_std=0.011, acc_drop=0.369, auc_drop=0.322, rescale_r2=0.342 | local | 16 | 16 | 0.278 | 0.050 | -10.236 | -0.001 | 0.887 | 0.924 | False | NOT RESCALING  [EXPLORATORY, local readout] | c_mean=0.926, c_std=0.012, acc_drop=0.388, auc_drop=0.234, rescale_r2=-10.236 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | - | - | - | - | - | - | - | - | - | - | - |
+| 3B | - | - | - | - | - | - | - | c_mean=1.012, c_std=0.016, acc_drop=0.106, auc_drop=0.080, rescale_r2=0.614 | local | 24 | 24 | 0.464 | 0.230 | -0.807 | -0.002 | 0.950 | 0.992 | False | NOT RESCALING  [EXPLORATORY, local readout] | c_mean=0.949, c_std=0.013, acc_drop=0.075, auc_drop=0.019, rescale_r2=0.530 | c_mean=0.972, c_std=0.012, acc_drop=0.138, auc_drop=0.040, rescale_r2=0.386 | c_mean=0.906, c_std=0.025, acc_drop=0.044, auc_drop=0.052, rescale_r2=0.009 | c_mean=0.981, c_std=0.014, acc_drop=0.175, auc_drop=0.048, rescale_r2=0.518 | c_mean=0.991, c_std=0.021, acc_drop=0.131, auc_drop=0.011, rescale_r2=0.423 | c_mean=0.978, c_std=0.010, acc_drop=0.025, auc_drop=0.004, rescale_r2=0.707 | c_mean=1.037, c_std=0.012, acc_drop=0.006, auc_drop=0.005, rescale_r2=0.754 | c_mean=0.994, c_std=0.013, acc_drop=0.050, auc_drop=0.025, rescale_r2=0.278 | c_mean=0.919, c_std=0.013, acc_drop=0.231, auc_drop=0.013, rescale_r2=-0.807 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 |
+| gemma-2b | c_mean=0.867, c_std=0.010, acc_drop=0.138, auc_drop=0.100, rescale_r2=-7.834 | c_mean=0.976, c_std=0.009, acc_drop=0.169, auc_drop=0.269, rescale_r2=-1.018 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | c_mean=1.000, c_std=0.000, acc_drop=0.000, auc_drop=0.000, rescale_r2=1.000 | local | 9 | 9 | 0.699 | 0.393 | -1.018 | -0.007 | 0.637 | 0.728 | False | NOT RESCALING  [EXPLORATORY, local readout] | - | - | - | - | - | - | - | - | - | - | - | - | - |
 
 ## paraphrase_claim
 

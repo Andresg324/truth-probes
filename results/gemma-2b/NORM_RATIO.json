@@ -1,0 +1,72 @@
+{
+  "per_layer": {
+    "L8": {
+      "c_mean": 0.9518,
+      "c_std": 0.0107,
+      "acc_drop": 0.0813,
+      "auc_drop": 0.1273,
+      "rescale_r2": 0.5223
+    },
+    "L9": {
+      "c_mean": 0.9848,
+      "c_std": 0.0081,
+      "acc_drop": 0.0437,
+      "auc_drop": 0.0856,
+      "rescale_r2": 0.3445
+    },
+    "L10": {
+      "c_mean": 0.9687,
+      "c_std": 0.0099,
+      "acc_drop": 0.2625,
+      "auc_drop": 0.0312,
+      "rescale_r2": -1.1312
+    },
+    "L11": {
+      "c_mean": 0.9883,
+      "c_std": 0.0082,
+      "acc_drop": 0.1062,
+      "auc_drop": 0.0327,
+      "rescale_r2": 0.0094
+    },
+    "L12": {
+      "c_mean": 0.9555,
+      "c_std": 0.0104,
+      "acc_drop": 0.125,
+      "auc_drop": 0.0814,
+      "rescale_r2": 0.4061
+    },
+    "L13": {
+      "c_mean": 0.9801,
+      "c_std": 0.0213,
+      "acc_drop": 0.0625,
+      "auc_drop": 0.0536,
+      "rescale_r2": 0.1725
+    },
+    "L14": {
+      "c_mean": 0.9757,
+      "c_std": 0.0067,
+      "acc_drop": 0.2188,
+      "auc_drop": 0.0475,
+      "rescale_r2": -0.6818
+    },
+    "L15": {
+      "c_mean": 0.9795,
+      "c_std": 0.0058,
+      "acc_drop": 0.3125,
+      "auc_drop": 0.1169,
+      "rescale_r2": -6.1285
+    }
+  },
+  "summary": {
+    "corr_1minusc_accdrop": -0.0113,
+    "corr_1minusc_aucdrop": 0.4379,
+    "rescale_r2_at_crit": 0.3445,
+    "intercept": -0.0025,
+    "readout_layer": 15,
+    "crit_layer": 9,
+    "clean_acc": 0.8438,
+    "clean_auc": 0.9473,
+    "registered": false,
+    "verdict": "NOT RESCALING  [CONTRAST, not registered]"
+  }
+}

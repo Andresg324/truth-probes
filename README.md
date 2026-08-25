@@ -44,6 +44,9 @@ scripts/position_sensitivity.py    Readout-position de-confound
 scripts/regress_transfer.py        Polarity-controlled regression, single model
 scripts/regress_census.py          Regression and identifiability gate, all nine models
 scripts/retrain_under_steering.py  PROTOCOL section 6: refit under upstream steering
+scripts/norm_ratio.py              PROTOCOL section 7: residual-norm rescaling test
+scripts/corr_upstream.py           Upstream-only correlations for the section 7 test
+scripts/deconfound_matched.py      Composition-matched de-confound (exploratory)
 scripts/leak_control.py            Instruction-leak census
 scripts/denial_bias.py             Denial-bias table
 scripts/standardize_diag.py        Preprocessing and position interaction
@@ -80,7 +83,7 @@ The complete results tree, including the large activation caches excluded from t
 
 This project's findings were revised six times by its own controls before publication: a recall-based metric inverted the strongest necessity effect, an accuracy-based metric manufactured a critical layer at 3B, a restoration formula with a missing condition reversed the sufficiency verdict, a degenerate control looked like a discovery, a clean-room rerun flipped a regression coefficient's sign, and a control selected under one metric failed under another. Appendix F of the paper documents all six. The released pipeline is the version that survives them.
 
-Section 6 of [PROTOCOL.md](PROTOCOL.md) is a pre-registered addendum committed before its data was collected, and its recorded outcome includes an ambiguity in the registration itself, disclosed rather than resolved after the fact.
+Sections 6 and 7 of [PROTOCOL.md](PROTOCOL.md) are pre-registered addenda committed before their data was collected, and their recorded outcomes include imperfections in the registrations themselves (an unspecified estimator, an imprecise readout scope), disclosed rather than resolved after the fact. Section 7 tested and retired a mechanism this project had itself proposed: the accuracy-versus-AUC de-calibration under ablation is not a residual-norm rescaling artifact at the cell where it was observed.
 
 ## Citation
 

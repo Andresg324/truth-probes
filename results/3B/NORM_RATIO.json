@@ -1,0 +1,114 @@
+{
+  "per_layer": {
+    "L15": {
+      "c_mean": 1.024,
+      "c_std": 0.013,
+      "acc_drop": 0.1812,
+      "auc_drop": 0.0589,
+      "rescale_r2": 0.7093
+    },
+    "L16": {
+      "c_mean": 1.0233,
+      "c_std": 0.0211,
+      "acc_drop": 0.4062,
+      "auc_drop": 0.0302,
+      "rescale_r2": -0.5642
+    },
+    "L17": {
+      "c_mean": 0.9979,
+      "c_std": 0.0162,
+      "acc_drop": 0.0938,
+      "auc_drop": 0.0167,
+      "rescale_r2": 0.6984
+    },
+    "L18": {
+      "c_mean": 0.9393,
+      "c_std": 0.0212,
+      "acc_drop": 0.1687,
+      "auc_drop": 0.058,
+      "rescale_r2": 0.3364
+    },
+    "L19": {
+      "c_mean": 0.9905,
+      "c_std": 0.0164,
+      "acc_drop": 0.3,
+      "auc_drop": 0.1033,
+      "rescale_r2": 0.2423
+    },
+    "L20": {
+      "c_mean": 1.0095,
+      "c_std": 0.0146,
+      "acc_drop": 0.125,
+      "auc_drop": 0.0003,
+      "rescale_r2": 0.3471
+    },
+    "L21": {
+      "c_mean": 1.0479,
+      "c_std": 0.0139,
+      "acc_drop": 0.0562,
+      "auc_drop": 0.0119,
+      "rescale_r2": 0.3579
+    },
+    "L22": {
+      "c_mean": 1.0172,
+      "c_std": 0.0192,
+      "acc_drop": 0.0562,
+      "auc_drop": 0.0067,
+      "rescale_r2": 0.5408
+    },
+    "L23": {
+      "c_mean": 0.9755,
+      "c_std": 0.0159,
+      "acc_drop": 0.1875,
+      "auc_drop": 0.0022,
+      "rescale_r2": 0.0721
+    },
+    "L24": {
+      "c_mean": 1.0127,
+      "c_std": 0.0187,
+      "acc_drop": 0.0625,
+      "auc_drop": 0.0252,
+      "rescale_r2": 0.822
+    },
+    "L25": {
+      "c_mean": 0.9574,
+      "c_std": 0.0121,
+      "acc_drop": 0.275,
+      "auc_drop": 0.0111,
+      "rescale_r2": -0.6471
+    },
+    "L26": {
+      "c_mean": 1.0114,
+      "c_std": 0.0204,
+      "acc_drop": 0.0812,
+      "auc_drop": 0.0028,
+      "rescale_r2": 0.6534
+    },
+    "L27": {
+      "c_mean": 0.9499,
+      "c_std": 0.0193,
+      "acc_drop": 0.125,
+      "auc_drop": 0.0139,
+      "rescale_r2": 0.6752
+    },
+    "L28": {
+      "c_mean": 0.9259,
+      "c_std": 0.0189,
+      "acc_drop": 0.3,
+      "auc_drop": 0.0472,
+      "rescale_r2": -0.954
+    }
+  },
+  "summary": {
+    "corr_1minusc_accdrop": 0.3347,
+    "corr_1minusc_aucdrop": 0.203,
+    "rescale_r2_at_crit": 0.822,
+    "intercept": 0.0033,
+    "readout_layer": 28,
+    "crit_layer": 24,
+    "clean_acc": 0.9812,
+    "clean_auc": 0.9978,
+    "registered": true,
+    "verdict": "PARTIAL"
+  }
+}

@@ -1501,5 +1501,312 @@
       "ci": null,
       "n": null
     }
+  },
+  "norm_ratio": {
+    "L9": {
+      "value": {
+        "c_mean": 0.9879,
+        "c_std": 0.0053,
+        "acc_drop": 0.3687,
+        "auc_drop": 0.2594,
+        "rescale_r2": 0.4571
+      },
+      "ci": null,
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "c_mean": 1.0057,
+        "c_std": 0.0064,
+        "acc_drop": 0.1062,
+        "auc_drop": 0.0542,
+        "rescale_r2": 0.5712
+      },
+      "ci": null,
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "c_mean": 0.9673,
+        "c_std": 0.0059,
+        "acc_drop": 0.0187,
+        "auc_drop": 0.0297,
+        "rescale_r2": 0.7281
+      },
+      "ci": null,
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "c_mean": 0.9543,
+        "c_std": 0.0056,
+        "acc_drop": 0.1312,
+        "auc_drop": 0.0245,
+        "rescale_r2": 0.7857
+      },
+      "ci": null,
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "c_mean": 0.9879,
+        "c_std": 0.0098,
+        "acc_drop": 0.45,
+        "auc_drop": 0.3211,
+        "rescale_r2": 0.2432
+      },
+      "ci": null,
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "c_mean": 0.9949,
+        "c_std": 0.0097,
+        "acc_drop": 0.1062,
+        "auc_drop": 0.07,
+        "rescale_r2": 0.6097
+      },
+      "ci": null,
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "c_mean": 0.985,
+        "c_std": 0.007,
+        "acc_drop": 0.2312,
+        "auc_drop": 0.2056,
+        "rescale_r2": 0.748
+      },
+      "ci": null,
+      "n": null
+    },
+    "L16": {
+      "value": {
+        "c_mean": 0.9,
+        "c_std": 0.0053,
+        "acc_drop": 0.2687,
+        "auc_drop": 0.0577,
+        "rescale_r2": -0.2511
+      },
+      "ci": null,
+      "n": null
+    },
+    "L17": {
+      "value": {
+        "c_mean": 0.9369,
+        "c_std": 0.007,
+        "acc_drop": 0.2687,
+        "auc_drop": 0.3078,
+        "rescale_r2": -1.5873
+      },
+      "ci": null,
+      "n": null
+    },
+    "corr_1minusc_accdrop": {
+      "value": 0.0824,
+      "ci": null,
+      "n": null
+    },
+    "corr_1minusc_aucdrop": {
+      "value": -0.1186,
+      "ci": null,
+      "n": null
+    },
+    "rescale_r2_at_crit": {
+      "value": -0.2511,
+      "ci": null,
+      "n": null
+    },
+    "intercept": {
+      "value": 0.0013,
+      "ci": null,
+      "n": null
+    },
+    "readout_layer": {
+      "value": 17,
+      "ci": null,
+      "n": null
+    },
+    "crit_layer": {
+      "value": 16,
+      "ci": null,
+      "n": null
+    },
+    "clean_acc": {
+      "value": 0.8875,
+      "ci": null,
+      "n": null
+    },
+    "clean_auc": {
+      "value": 0.9477,
+      "ci": null,
+      "n": null
+    },
+    "registered": {
+      "value": false,
+      "ci": null,
+      "n": null
+    },
+    "verdict": {
+      "value": "NOT RESCALING  [CONTRAST, not registered]",
+      "ci": null,
+      "n": null
+    }
+  },
+  "norm_ratio_local": {
+    "L9": {
+      "value": {
+        "c_mean": 1.0016,
+        "c_std": 0.008,
+        "acc_drop": 0.2,
+        "auc_drop": 0.1377,
+        "rescale_r2": 0.5022
+      },
+      "ci": null,
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "c_mean": 1.006,
+        "c_std": 0.0086,
+        "acc_drop": 0.0938,
+        "auc_drop": 0.0617,
+        "rescale_r2": 0.5512
+      },
+      "ci": null,
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "c_mean": 0.9497,
+        "c_std": 0.0104,
+        "acc_drop": 0.1062,
+        "auc_drop": 0.0227,
+        "rescale_r2": 0.5786
+      },
+      "ci": null,
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "c_mean": 0.947,
+        "c_std": 0.0049,
+        "acc_drop": 0.125,
+        "auc_drop": 0.0639,
+        "rescale_r2": 0.6542
+      },
+      "ci": null,
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "c_mean": 1.016,
+        "c_std": 0.0198,
+        "acc_drop": 0.2687,
+        "auc_drop": 0.2097,
+        "rescale_r2": -0.7253
+      },
+      "ci": null,
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "c_mean": 1.0109,
+        "c_std": 0.0088,
+        "acc_drop": 0.0875,
+        "auc_drop": 0.0456,
+        "rescale_r2": 0.4648
+      },
+      "ci": null,
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "c_mean": 0.9926,
+        "c_std": 0.0114,
+        "acc_drop": 0.3687,
+        "auc_drop": 0.3216,
+        "rescale_r2": 0.3415
+      },
+      "ci": null,
+      "n": null
+    },
+    "L16": {
+      "value": {
+        "c_mean": 0.9263,
+        "c_std": 0.0119,
+        "acc_drop": 0.3875,
+        "auc_drop": 0.2344,
+        "rescale_r2": -10.2364
+      },
+      "ci": null,
+      "n": null
+    },
+    "L17": {
+      "value": {
+        "c_mean": 1.0,
+        "c_std": 0.0002,
+        "acc_drop": 0.0,
+        "auc_drop": 0.0,
+        "rescale_r2": 1.0
+      },
+      "ci": null,
+      "n": null
+    },
+    "readout_mode": {
+      "value": "local",
+      "ci": null,
+      "n": null
+    },
+    "readout_layer": {
+      "value": 16,
+      "ci": null,
+      "n": null
+    },
+    "crit_layer": {
+      "value": 16,
+      "ci": null,
+      "n": null
+    },
+    "corr_1minusc_accdrop": {
+      "value": 0.2778,
+      "ci": null,
+      "n": null
+    },
+    "corr_1minusc_aucdrop": {
+      "value": 0.05,
+      "ci": null,
+      "n": null
+    },
+    "rescale_r2_at_crit": {
+      "value": -10.2364,
+      "ci": null,
+      "n": null
+    },
+    "intercept": {
+      "value": -0.001,
+      "ci": null,
+      "n": null
+    },
+    "clean_acc": {
+      "value": 0.8875,
+      "ci": null,
+      "n": null
+    },
+    "clean_auc": {
+      "value": 0.9236,
+      "ci": null,
+      "n": null
+    },
+    "registered": {
+      "value": false,
+      "ci": null,
+      "n": null
+    },
+    "verdict": {
+      "value": "NOT RESCALING  [EXPLORATORY, local readout]",
+      "ci": null,
+      "n": null
+    }
   }
 }

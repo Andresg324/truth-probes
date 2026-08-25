@@ -281,6 +281,82 @@ written per model. Roughly 6,000 ablated passes plus 160 unablated sanity passes
 per-layer cells, under 1.5 GPU-hours. Deviation from these settings is a protocol deviation and
 must be recorded as an amendment.
 
+### Outcome (recorded 2026-08-24, after the run)
+Run as specified on all four models; cache checks passed at every model (max relative norm
+difference below 0.001). Results in `results/*/NORM_RATIO.json`, the `norm_ratio` section of
+`MEASURED.md`, and Table C9 of the paper.
+
+**Registered verdict (Qwen-3B, deployed readout): PARTIAL.** R² = 0.822 at the critical layer,
+between the dominance (0.90) and rejection (0.50) thresholds. Contrast models, not registered:
+0.5B −4.34 (critical layer is the readout, so this cell is self-ablation), 1.5B −0.25,
+Gemma-2b +0.34. The corroborating correlation check (corr(1−c, acc drop) materially above
+corr(1−c, AUC drop)) is supported only at 0.5B (+0.69 vs −0.00), comparable at 3B (+0.34 vs
++0.20), and reversed at Gemma-2b (−0.01 vs +0.44). Not corroborated overall.
+
+**A scope imprecision in this registration is disclosed rather than repaired.** The Procedure
+reads at the frozen deployed readout, while the Motivation refers to the paper's Table 1
+exhibit, which is a local-readout quantity (probe fit and read at the critical layer). Both were
+run: the deployed form above is the registered outcome; the local form, labelled exploratory
+(`norm_ratio_local` in `MEASURED.md`, `LOCAL_READOUT=1` in the script), reproduces the Table 1
+cell exactly (clean 0.950/0.992, drops 0.231/0.013) and rejects the strict rescaling model in
+all four models (R² at crit: −3.55, −10.24, −0.81, −1.02). The candidate mechanism named in the
+paper's Discussion is therefore retired at the exhibit cell and partial at one deployed readout;
+the ablation rotates the representation rather than merely shrinking it. Future registrations
+will name the readout.
+
+---
+
+## 8. PRE-REGISTERED ADDENDUM (2026-08-24): exact multiplicity correction
+
+**Committed before any data is collected. The commit date is the timestamp.**
+All four curve models.
+
+### Motivation
+Specificity significance in §2's pipeline is judged per cell by whether a grouped-bootstrap
+interval excludes zero, across 8–14 cells per model and 39 in total, with no correction for
+multiple comparisons. Under a pure null roughly two of the 39 would appear significant by chance.
+The released artifacts store interval endpoints rather than draws, so no exact procedure can be
+run from them; the paper currently reports a normal-approximation Bonferroni proxy
+(`scripts/multiplicity_check.py`). This addendum recomputes the statistic with draws retained
+and applies an exact procedure. It supersedes the approximation, which is kept for provenance.
+
+### Procedure (fixed)
+Reproduces `phase2.py`'s `spec_at()` exactly: three probes (deception, truth, polarity) fit on
+the train fold at the ablated layer, evaluated on the held-out fold; paired asymmetry =
+(truth AUC drop) − (deception AUC drop); grouped bootstrap over statements, 1000 draws, seed 0.
+
+1. For every layer in each model's recovery band, zero-ablate the MLP and read `resid_post` at
+   that same layer, matching the local readout of the published specificity curve.
+2. Retain the bootstrap draws. Derive a two-sided bootstrap p-value per cell as
+   2·min(P(d>0), P(d<0)), floored at 1/n since zero draws beyond the point is not p = 0.
+3. Apply Benjamini–Hochberg at q = 0.05 within each model's family of cells. Report Bonferroni
+   at the same level alongside, and the uncorrected verdict, so all three are visible.
+4. Save the draws so any later procedure can be run without a further GPU pass.
+
+### Interpretation rules (fixed in advance)
+The claim at stake is the cross-model topology contrast, not any individual layer.
+
+- **Contrast survives:** after BH, Qwen-1.5B retains a contiguous band of at least two layers,
+  Gemma-2b retains at least two non-contiguous sites, and Qwen-3B retains at least one local
+  site while its deployed readout remains unmoved. The topology descriptions in the abstract and
+  §4 stand as written.
+- **Contrast does not survive:** any model whose surviving cells no longer support its stated
+  description has that description narrowed to match, in the abstract, §4, and the conclusion.
+  Specifically, if Gemma-2b retains fewer than two sites it is no longer described as
+  multi-site; if Qwen-1.5B retains fewer than two contiguous layers it is no longer described
+  as banded.
+- Whether each model's pre-registered critical layer survives correction is reported per model,
+  whatever the answer, since two of the four are already known to be marginal or non-significant
+  under the uncorrected statistic.
+- Null and negative outcomes reported at equal prominence. Nothing added or removed after seeing
+  any result; anything added later is labelled exploratory.
+
+### Compute
+Forward passes only, four models, one session, one device and precision (A100 SXM4 80 GB, fp16,
+TransformerLens `from_pretrained`), matching the canonical run. `MANIFEST_fdr_specificity.json`
+per model. Roughly 6,000 ablated passes across 39 cells, under 1.5 GPU-hours. Deviation from
+these settings is a protocol deviation and must be recorded as an amendment.
+
 ---
 
 ## Analyses reported but not registered
@@ -296,4 +372,15 @@ among truthful responses a model answers "yes" exactly when the statement is tru
 truth are the same variable and the design is rank deficient in every model.
 
 This analysis is **exploratory**. It carries no pre-specified decision rule, does not replace the
-registered statistic, and is reported alongside it rather than in place of it.
+registered statistic, and is reported alongside it rather than in place of it. Outcome, recorded
+2026-08-24: eight of nine models still exceed the 0.15 flag with composition held fixed; matching
+moves the statistic away from 0.5 at four models; the two identifiable models are essentially
+unchanged (0.991, 0.984); Qwen-1.5B (0.176 → 0.365) is the only verdict changed, falling
+marginally inside the clean band, and no downstream claim depended on it. The true-statement
+stratum is empty for all five Qwen models, which is denial bias stated as an arithmetic fact.
+Results in the `deconfound_matched` section of `MEASURED.md` and Table D2 of the paper.
+
+**Local-readout rescaling variant** (`LOCAL_READOUT=1` in `scripts/norm_ratio.py`) and
+**upstream-only correlations** (`scripts/corr_upstream.py`, which excludes cells downstream of
+the readout, where the ablation trivially cannot propagate) are likewise exploratory companions
+to §7, reported in `norm_ratio_local` and cited in the paper's Table C9.

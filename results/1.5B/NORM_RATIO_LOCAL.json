@@ -1,0 +1,80 @@
+{
+  "per_layer": {
+    "L9": {
+      "c_mean": 1.0016,
+      "c_std": 0.008,
+      "acc_drop": 0.2,
+      "auc_drop": 0.1377,
+      "rescale_r2": 0.5022
+    },
+    "L10": {
+      "c_mean": 1.006,
+      "c_std": 0.0086,
+      "acc_drop": 0.0938,
+      "auc_drop": 0.0617,
+      "rescale_r2": 0.5512
+    },
+    "L11": {
+      "c_mean": 0.9497,
+      "c_std": 0.0104,
+      "acc_drop": 0.1062,
+      "auc_drop": 0.0227,
+      "rescale_r2": 0.5786
+    },
+    "L12": {
+      "c_mean": 0.947,
+      "c_std": 0.0049,
+      "acc_drop": 0.125,
+      "auc_drop": 0.0639,
+      "rescale_r2": 0.6542
+    },
+    "L13": {
+      "c_mean": 1.016,
+      "c_std": 0.0198,
+      "acc_drop": 0.2687,
+      "auc_drop": 0.2097,
+      "rescale_r2": -0.7253
+    },
+    "L14": {
+      "c_mean": 1.0109,
+      "c_std": 0.0088,
+      "acc_drop": 0.0875,
+      "auc_drop": 0.0456,
+      "rescale_r2": 0.4648
+    },
+    "L15": {
+      "c_mean": 0.9926,
+      "c_std": 0.0114,
+      "acc_drop": 0.3687,
+      "auc_drop": 0.3216,
+      "rescale_r2": 0.3415
+    },
+    "L16": {
+      "c_mean": 0.9263,
+      "c_std": 0.0119,
+      "acc_drop": 0.3875,
+      "auc_drop": 0.2344,
+      "rescale_r2": -10.2364
+    },
+    "L17": {
+      "c_mean": 1.0,
+      "c_std": 0.0002,
+      "acc_drop": 0.0,
+      "auc_drop": 0.0,
+      "rescale_r2": 1.0
+    }
+  },
+  "summary": {
+    "readout_mode": "local",
+    "readout_layer": 16,
+    "crit_layer": 16,
+    "corr_1minusc_accdrop": 0.2778,
+    "corr_1minusc_aucdrop": 0.05,
+    "rescale_r2_at_crit": -10.2364,
+    "intercept": -0.001,
+    "clean_acc": 0.8875,
+    "clean_auc": 0.9236,
+    "registered": false,
+    "verdict": "NOT RESCALING  [EXPLORATORY, local readout]"
+  }
+}
