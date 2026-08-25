@@ -20,3 +20,7 @@ MEASURED_*_v1.md
 results/**/acts_*.npy
 results/scaling/*.npy__pycache__/
 *.pyc
+__pycache__/
+*.pyc
+*.tgz
+venv/

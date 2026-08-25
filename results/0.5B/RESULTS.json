@@ -1414,5 +1414,157 @@
       "ci": null,
       "n": null
     }
+  },
+  "fdr_specificity": {
+    "L8": {
+      "value": {
+        "asym": 0.0081,
+        "p": 0.642,
+        "ci": [
+          -0.0248,
+          0.0468
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L9": {
+      "value": {
+        "asym": -0.1491,
+        "p": 0.138,
+        "ci": [
+          -0.3511,
+          0.0503
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "asym": -0.135,
+        "p": 0.19,
+        "ci": [
+          -0.3352,
+          0.0763
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "asym": -0.13,
+        "p": 0.202,
+        "ci": [
+          -0.3217,
+          0.0632
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "asym": 0.0055,
+        "p": 0.914,
+        "ci": [
+          -0.0797,
+          0.0714
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "asym": -0.0204,
+        "p": 0.74,
+        "ci": [
+          -0.1277,
+          0.0816
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "asym": -0.0353,
+        "p": 0.184,
+        "ci": [
+          -0.0812,
+          0.0175
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "asym": -0.2163,
+        "p": 0.001,
+        "ci": [
+          -0.3383,
+          -0.0949
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "n_cells": {
+      "value": 8,
+      "ci": null,
+      "n": null
+    },
+    "q": {
+      "value": 0.05,
+      "ci": null,
+      "n": null
+    },
+    "sig_uncorrected": {
+      "value": [
+        15
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bh": {
+      "value": [
+        15
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bonferroni": {
+      "value": [
+        15
+      ],
+      "ci": null,
+      "n": null
+    },
+    "crit_layer": {
+      "value": 15,
+      "ci": null,
+      "n": null
+    },
+    "crit_significant_uncorrected": {
+      "value": true,
+      "ci": null,
+      "n": null
+    },
+    "crit_survives_bh": {
+      "value": true,
+      "ci": null,
+      "n": null
+    }
   }
 }

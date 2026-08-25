@@ -74,12 +74,17 @@ done
 $PY scripts/check_data_splits.py                   2>&1 | tee logs/check_splits.log
 
 # ---------------------------------------------------------------- addendum ------
-# PROTOCOL section 6: retrained monitor under upstream steering. Pre-registered
-# separately from the canonical battery; adds roughly 1 GPU-hour. Comment out this
-# block to reproduce only the numbers in the paper as submitted.
+# PROTOCOL sections 6, 7 and 8: pre-registered addenda. Together roughly 3 GPU-hours.
+# Comment out this block to reproduce only the main causal and transfer results.
 for M in $CURVE; do
-    $PY scripts/retrain_under_steering.py $M       2>&1 | tee logs/${M}_retrain_steer.log
+    $PY scripts/retrain_under_steering.py $M   2>&1 | tee logs/${M}_retrain_steer.log
 done
+$PY scripts/norm_ratio.py                      2>&1 | tee logs/norm_ratio.log
+LOCAL_READOUT=1 $PY scripts/norm_ratio.py      2>&1 | tee logs/norm_ratio_local.log
+$PY scripts/fdr_specificity.py                 2>&1 | tee logs/fdr_specificity.log
+$PY scripts/corr_upstream.py                   2>&1 | tee logs/corr_upstream.log
+$PY scripts/multiplicity_check.py              2>&1 | tee logs/multiplicity_check.log
+$PY scripts/deconfound_matched.py              2>&1 | tee logs/deconfound_matched.log
 
 # ---------------------------------------------------------------- outputs -------
 $PY scripts/make_results_md.py                     2>&1 | tee logs/results_md.log

@@ -1,6 +1,6 @@
 # MEASURED.md - generated source of truth (DO NOT MANUALLY EDIT)
 
-*Generated 2026-08-24 18:57 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
+*Generated 2026-08-24 21:11 from results/*/RESULTS.json If a number is not here, it was not measured. Regenerate - do not edit.*
 
 ## Provenance
 
@@ -43,6 +43,15 @@
 | gemma-9b | deny_true=0.310, affirm_false=1.000, asymmetry=-0.690 (n={'n_true': 200, 'n_false': 200}) |
 | llama-3b | deny_true=0.975, affirm_false=0.035, asymmetry=0.940 (n={'n_true': 200, 'n_false': 200}) |
 | llama-8b | deny_true=0.990, affirm_false=0.625, asymmetry=0.365 (n={'n_true': 200, 'n_false': 200}) |
+
+## fdr_specificity
+
+| model | L8 | L9 | L10 | L11 | L12 | L13 | L14 | L15 | n_cells | q | sig_uncorrected | sig_bh | sig_bonferroni | crit_layer | crit_significant_uncorrected | crit_survives_bh | L16 | L17 | L18 | L19 | L20 | L21 | L22 | L23 | L24 | L25 | L26 | L27 | L28 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0.5B | asym=0.008, p=0.642, ci = [-0.0248, 0.0468], n_draws = 1000 | asym=-0.149, p=0.138, ci = [-0.3511, 0.0503], n_draws = 1000 | asym=-0.135, p=0.190, ci = [-0.3352, 0.0763], n_draws = 1000 | asym=-0.130, p=0.202, ci = [-0.3217, 0.0632], n_draws = 1000 | asym=0.005, p=0.914, ci = [-0.0797, 0.0714], n_draws = 1000 | asym=-0.020, p=0.740, ci = [-0.1277, 0.0816], n_draws = 1000 | asym=-0.035, p=0.184, ci = [-0.0812, 0.0175], n_draws = 1000 | asym=-0.216, p=0.001, ci = [-0.3383, -0.0949], n_draws = 1000 | 8 | 0.050 | [15] | [15] | [15] | 15 | True | True | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 1.5B | - | asym=-0.102, p=0.218, ci = [-0.2702, 0.0553], n_draws = 1000 | asym=-0.150, p=0.070, ci = [-0.2998, 0.0141], n_draws = 1000 | asym=-0.048, p=0.286, ci = [-0.1375, 0.0323], n_draws = 1000 | asym=-0.007, p=0.836, ci = [-0.0881, 0.0708], n_draws = 1000 | asym=-0.019, p=0.672, ci = [-0.1272, 0.0799], n_draws = 1000 | asym=0.077, p=0.054, ci = [-0.0007, 0.1421], n_draws = 1000 | asym=-0.261, p=0.001, ci = [-0.3915, -0.1384], n_draws = 1000 | 9 | 0.050 | [15, 16, 17] | [15, 16, 17] | [15, 16, 17] | 16 | True | True | asym=-0.195, p=0.001, ci = [-0.3069, -0.0919], n_draws = 1000 | asym=-0.239, p=0.001, ci = [-0.3534, -0.1313], n_draws = 1000 | - | - | - | - | - | - | - | - | - | - | - |
+| 3B | - | - | - | - | - | - | - | asym=0.036, p=0.450, ci = [-0.0492, 0.1267], n_draws = 1000 | 14 | 0.050 | [18, 20, 21, 23, 28] | [18, 20, 23, 28] | [20, 23, 28] | 24 | False | False | asym=-0.126, p=0.186, ci = [-0.2913, 0.0446], n_draws = 1000 | asym=0.046, p=0.284, ci = [-0.0455, 0.1296], n_draws = 1000 | asym=-0.179, p=0.012, ci = [-0.3327, -0.0396], n_draws = 1000 | asym=-0.064, p=0.346, ci = [-0.205, 0.062], n_draws = 1000 | asym=-0.228, p=0.002, ci = [-0.3694, -0.0975], n_draws = 1000 | asym=0.012, p=0.020, ci = [0.0011, 0.0279], n_draws = 1000 | asym=0.006, p=0.614, ci = [-0.0109, 0.0327], n_draws = 1000 | asym=0.049, p=0.001, ci = [0.0258, 0.0725], n_draws = 1000 | asym=0.004, p=0.726, ci = [-0.0136, 0.0259], n_draws = 1000 | asym=-0.008, p=0.248, ci = [-0.0239, 0.0037], n_draws = 1000 | asym=0.001, p=0.622, ci = [-0.0065, 0.0084], n_draws = 1000 | asym=0.002, p=0.316, ci = [-0.0015, 0.0056], n_draws = 1000 | asym=-0.037, p=0.001, ci = [-0.0711, -0.0099], n_draws = 1000 |
+| gemma-2b | asym=-0.124, p=0.080, ci = [-0.2545, 0.0133], n_draws = 1000 | asym=-0.158, p=0.018, ci = [-0.2921, -0.0235], n_draws = 1000 | asym=-0.060, p=0.312, ci = [-0.179, 0.0544], n_draws = 1000 | asym=-0.212, p=0.001, ci = [-0.341, -0.0939], n_draws = 1000 | asym=0.045, p=0.010, ci = [0.0097, 0.0833], n_draws = 1000 | asym=-0.185, p=0.001, ci = [-0.2716, -0.1036], n_draws = 1000 | asym=-0.314, p=0.001, ci = [-0.4349, -0.1947], n_draws = 1000 | asym=-0.038, p=0.016, ci = [-0.0725, -0.0052], n_draws = 1000 | 8 | 0.050 | [9, 11, 12, 13, 14, 15] | [9, 11, 12, 13, 14, 15] | [11, 13, 14] | 9 | True | True | - | - | - | - | - | - | - | - | - | - | - | - | - |
 
 ## leak_census
 

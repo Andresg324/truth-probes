@@ -2014,5 +2014,244 @@
       "ci": null,
       "n": null
     }
+  },
+  "fdr_specificity": {
+    "L15": {
+      "value": {
+        "asym": 0.0362,
+        "p": 0.45,
+        "ci": [
+          -0.0492,
+          0.1267
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L16": {
+      "value": {
+        "asym": -0.1256,
+        "p": 0.186,
+        "ci": [
+          -0.2913,
+          0.0446
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L17": {
+      "value": {
+        "asym": 0.0463,
+        "p": 0.284,
+        "ci": [
+          -0.0455,
+          0.1296
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L18": {
+      "value": {
+        "asym": -0.1791,
+        "p": 0.012,
+        "ci": [
+          -0.3327,
+          -0.0396
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L19": {
+      "value": {
+        "asym": -0.0635,
+        "p": 0.346,
+        "ci": [
+          -0.205,
+          0.062
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L20": {
+      "value": {
+        "asym": -0.2278,
+        "p": 0.002,
+        "ci": [
+          -0.3694,
+          -0.0975
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L21": {
+      "value": {
+        "asym": 0.0124,
+        "p": 0.02,
+        "ci": [
+          0.0011,
+          0.0279
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L22": {
+      "value": {
+        "asym": 0.0065,
+        "p": 0.614,
+        "ci": [
+          -0.0109,
+          0.0327
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L23": {
+      "value": {
+        "asym": 0.0486,
+        "p": 0.001,
+        "ci": [
+          0.0258,
+          0.0725
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L24": {
+      "value": {
+        "asym": 0.0041,
+        "p": 0.726,
+        "ci": [
+          -0.0136,
+          0.0259
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L25": {
+      "value": {
+        "asym": -0.0076,
+        "p": 0.248,
+        "ci": [
+          -0.0239,
+          0.0037
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L26": {
+      "value": {
+        "asym": 0.0012,
+        "p": 0.622,
+        "ci": [
+          -0.0065,
+          0.0084
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L27": {
+      "value": {
+        "asym": 0.0016,
+        "p": 0.316,
+        "ci": [
+          -0.0015,
+          0.0056
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L28": {
+      "value": {
+        "asym": -0.037,
+        "p": 0.001,
+        "ci": [
+          -0.0711,
+          -0.0099
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "n_cells": {
+      "value": 14,
+      "ci": null,
+      "n": null
+    },
+    "q": {
+      "value": 0.05,
+      "ci": null,
+      "n": null
+    },
+    "sig_uncorrected": {
+      "value": [
+        18,
+        20,
+        21,
+        23,
+        28
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bh": {
+      "value": [
+        18,
+        20,
+        23,
+        28
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bonferroni": {
+      "value": [
+        20,
+        23,
+        28
+      ],
+      "ci": null,
+      "n": null
+    },
+    "crit_layer": {
+      "value": 24,
+      "ci": null,
+      "n": null
+    },
+    "crit_significant_uncorrected": {
+      "value": false,
+      "ci": null,
+      "n": null
+    },
+    "crit_survives_bh": {
+      "value": false,
+      "ci": null,
+      "n": null
+    }
   }
 }

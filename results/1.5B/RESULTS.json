@@ -1808,5 +1808,176 @@
       "ci": null,
       "n": null
     }
+  },
+  "fdr_specificity": {
+    "L9": {
+      "value": {
+        "asym": -0.1016,
+        "p": 0.218,
+        "ci": [
+          -0.2702,
+          0.0553
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L10": {
+      "value": {
+        "asym": -0.1497,
+        "p": 0.07,
+        "ci": [
+          -0.2998,
+          0.0141
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L11": {
+      "value": {
+        "asym": -0.0476,
+        "p": 0.286,
+        "ci": [
+          -0.1375,
+          0.0323
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L12": {
+      "value": {
+        "asym": -0.0071,
+        "p": 0.836,
+        "ci": [
+          -0.0881,
+          0.0708
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L13": {
+      "value": {
+        "asym": -0.0188,
+        "p": 0.672,
+        "ci": [
+          -0.1272,
+          0.0799
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L14": {
+      "value": {
+        "asym": 0.0766,
+        "p": 0.054,
+        "ci": [
+          -0.0007,
+          0.1421
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L15": {
+      "value": {
+        "asym": -0.2605,
+        "p": 0.001,
+        "ci": [
+          -0.3915,
+          -0.1384
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L16": {
+      "value": {
+        "asym": -0.1947,
+        "p": 0.001,
+        "ci": [
+          -0.3069,
+          -0.0919
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "L17": {
+      "value": {
+        "asym": -0.2395,
+        "p": 0.001,
+        "ci": [
+          -0.3534,
+          -0.1313
+        ],
+        "n_draws": 1000
+      },
+      "ci": null,
+      "n": null
+    },
+    "n_cells": {
+      "value": 9,
+      "ci": null,
+      "n": null
+    },
+    "q": {
+      "value": 0.05,
+      "ci": null,
+      "n": null
+    },
+    "sig_uncorrected": {
+      "value": [
+        15,
+        16,
+        17
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bh": {
+      "value": [
+        15,
+        16,
+        17
+      ],
+      "ci": null,
+      "n": null
+    },
+    "sig_bonferroni": {
+      "value": [
+        15,
+        16,
+        17
+      ],
+      "ci": null,
+      "n": null
+    },
+    "crit_layer": {
+      "value": 16,
+      "ci": null,
+      "n": null
+    },
+    "crit_significant_uncorrected": {
+      "value": true,
+      "ci": null,
+      "n": null
+    },
+    "crit_survives_bh": {
+      "value": true,
+      "ci": null,
+      "n": null
+    }
   }
 }
