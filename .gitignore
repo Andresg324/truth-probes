@@ -18,7 +18,7 @@ MEASURED_*_v1.md
 
 # large activation caches (distributed via Zenodo deposit; regenerable via run_all.sh)
 results/**/acts_*.npy
-results/scaling/*.npy__pycache__/
+results/scaling/*.npy
 *.pyc
 __pycache__/
 *.pyc

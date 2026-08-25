@@ -4,9 +4,14 @@
 before the canonical release run and are evidenced by run artifacts, environment manifests
 (`results/*/MANIFEST*.json`; one per model, see the scope note in §2), and the dated Zenodo
 deposit. They were not lodged in a timestamped public registry before the fact. This is a process
-limitation of this project and is stated as such here rather than glossed. Sections 5, 6 and 7 are
+limitation of this project and is stated as such here rather than glossed. Sections 5 through 9 are
 *prospective*: each is committed to the repository before any data for that analysis is collected,
 and its git commit date is the timestamp.
+
+Terminology used consistently here and in the paper: **pre-specified** denotes a rule fixed before
+measurement and published with the code but not publicly timestamped in advance (§§1–4);
+**pre-registered** is reserved for §§5–9, whose registrations were committed before their data
+existed.
 
 Nothing in Sections 1–4 should be read as a pre-registration in the strict sense. They are a
 faithful record of decision rules that were fixed in advance of measurement, published so that the
@@ -88,13 +93,13 @@ Dated changes to the above, each made before the measurement it affected.
 Six documented conclusion reversals arising from these amendments are catalogued in the paper's
 Appendix F.
 
-### Deviations from a registered rule
+### Deviations from a pre-specified rule
 
 Recorded separately from amendments, because these were made *after* the relevant measurement.
 
 | # | Date | Deviation |
 |---|---|---|
-| D1 | 2026-07-23 | **Scale-trend falsification (§3).** The observed value at Qwen-0.5B was 0.235, which falls in the registered 0.16–0.33 band whose registered outcome is "the trend holds for a subset and must be reported as such." We instead retire the trend, on the grounds that the 0.235 arises entirely from ablating the readout layer itself and the value excluding that self-ablation is 0.081, below the registered floor. The exclusion is defensible but was not registered, so retirement is a deviation and is labelled as one in the paper (App. G) rather than presented as the registered outcome |
+| D1 | 2026-07-23 | **Scale-trend falsification (§3).** The observed value at Qwen-0.5B was 0.235, which falls in the pre-specified 0.16–0.33 band whose pre-specified outcome is "the trend holds for a subset and must be reported as such." We instead retire the trend, on the grounds that the 0.235 arises entirely from ablating the readout layer itself and the value excluding that self-ablation is 0.081, below the pre-specified floor. The exclusion is defensible but was not specified in advance, so retirement is a deviation and is labelled as one in the paper (App. G) rather than presented as the registered outcome |
 
 ---
 
