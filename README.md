@@ -1,6 +1,6 @@
 # What Deception Probes Read and How Evaluations of Them Fail
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21632023.svg)](https://doi.org/10.5281/zenodo.21632023)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21632022.svg)](https://doi.org/10.5281/zenodo.21632023)
 
 Code, data, and regenerable results for the paper *What Deception Probes Read and How Evaluations of Them Fail* (Andres Garcia, 2026); [read the paper (PDF)](paper/deception-probes-paper.pdf).
 
