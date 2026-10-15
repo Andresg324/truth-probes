@@ -4,8 +4,8 @@ title: "What Deception Probes Read and How Evaluations of Them Fail"
 authors:
   - family-names: "Garcia"
     given-names: "Andres"
-version: 1.0.0
-date-released: "2026-07-26"
+version: 1.1.0
+date-released: "2026-10-15"
 url: "https://github.com/Andresg324/truth-probes"
 repository-code: "https://github.com/Andresg324/truth-probes"
 doi: 10.5281/zenodo.21632023

@@ -1,0 +1,4 @@
+0.5B      duplicate pairs split across train/test: 2 of 8  [(105, 294), (160, 354)]
+1.5B      duplicate pairs split across train/test: 2 of 8  [(105, 294), (160, 354)]
+3B        duplicate pairs split across train/test: 2 of 8  [(105, 294), (160, 354)]
+gemma-2b  duplicate pairs split across train/test: 2 of 8  [(105, 294), (160, 354)]

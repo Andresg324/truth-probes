@@ -175,7 +175,7 @@ def fig_sufficiency():
         ax.plot(range(4), [cm[c] for c in conds], "-o", label=NICE[m])
     ax.set_xticks(range(4)); ax.set_xticklabels(labels, rotation=15, ha="right")
     ax.set_ylabel("probe decision score"); ax.legend()
-    ax.set_title("Sufficiency: clean-patch restores the steered score toward clean")
+    ax.set_title("Patch-back test: deployed probe score in four conditions")
     save(fig, "sufficiency")
 
 def fig_layer_sweep():
@@ -184,7 +184,7 @@ def fig_layer_sweep():
         vs = val(ent(m,"probe/setup","val_sweep")); Ls = sorted(int(k) for k in vs)
         ax.plot(Ls, [vs[str(L)] for L in Ls], "-o", ms=3, label=NICE[m])
     ax.axhline(0.5, ls=":", color="gray"); ax.set_xlabel("layer"); ax.set_ylabel("probe accuracy (val)")
-    ax.legend(); ax.set_title("Deception is linearly decodable, rising to a mid-late plateau")
+    ax.legend(); ax.set_title("Deception-probe validation accuracy by layer")
     save(fig, "layer_sweep_overlay")
 
 def fig_transfer():
@@ -194,7 +194,7 @@ def fig_transfer():
         ax.plot(Ls, [tb[str(L)] for L in Ls], "-o", ms=3, label=NICE[m])
     ax.axhline(0.5, ls=":", color="gray"); ax.set_xlabel("layer")
     ax.set_ylabel("cross-source transfer accuracy")
-    ax.legend(); ax.set_title("Deception signal transfers across statement sources")
+    ax.legend(); ax.set_title("Secondary-set accuracy by layer")
     save(fig, "transfer_overlay")
 
 def fig_pca():
@@ -203,7 +203,7 @@ def fig_pca():
         pc = val(ent(m,"probe/phase1","pca_dims")); ks = sorted(int(k) for k in pc)
         ax.plot(ks, [pc[str(k)] for k in ks], "-o", label=NICE[m])
     ax.axhline(0.5, ls=":", color="gray"); ax.set_xlabel("# PCA components"); ax.set_ylabel("cross-train acc")
-    ax.legend(); ax.set_title("Components required for the signal fall with model scale")
+    ax.legend(); ax.set_title("Probe accuracy against number of principal components")
     save(fig, "pca_dims")
 
 def fig_collapse():
@@ -214,7 +214,7 @@ def fig_collapse():
         line, = ax.plot(A, mean, "-o", ms=3, label=NICE[m]); ax.fill_between(A, lo, hi, alpha=0.15, color=line.get_color())
     ax.axhline(0.5, ls="--", color="gray"); ax.set_xlabel("steering strength (alpha)")
     ax.set_ylabel("monitor detection rate under attack"); ax.legend()
-    ax.set_title("Minimal steering collapses probe detection"); save(fig, "collapse_overlay")
+    ax.set_title("Thresholded detection under steering at the readout layer"); save(fig, "collapse_overlay")
 
 def fig_decoupling():
     fig, axes = plt.subplots(2, 2, figsize=(11, 8))
@@ -243,13 +243,13 @@ def fig_nine_verdicts():
     dcf  = [val(ent(m,"leak_census","row"))["deconfound"]     for m in CENSUS]
     pctl = [val(ent(m,"phase4","positive_control_auc"))       for m in CENSUS]
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.scatter(x, tdec, s=60, color="#C44E52", label="naive transfer AUC (deception)")
-    ax.scatter(x, dcf,  s=60, marker="D", color="#4C72B0", label="naive de-confound")
+    ax.scatter(x, tdec, s=60, color="#C44E52", label="naive transfer AUC")
+    ax.scatter(x, dcf,  s=60, marker="D", color="#4C72B0", label="instruction-leak statistic")
     ax.scatter(x, pctl, s=40, marker="_", color="black", label="positive-control ceiling")
     ax.axhline(0.5, ls=":", color="gray"); ax.set_xticks(x)
     ax.set_xticklabels([NICE[m] for m in CENSUS], rotation=30, ha="right")
     ax.set_ylabel("AUC"); ax.set_ylim(-0.02, 1.05); ax.legend(fontsize=8)
-    ax.set_title("Nine models, nine uninterpretable verdicts"); save(fig, "nine_verdicts")
+    ax.set_title("Nine model transfer census"); save(fig, "nine_verdicts")
 
 def fig_denial_bias():
     x = np.arange(len(CENSUS))
@@ -259,19 +259,19 @@ def fig_denial_bias():
     ax.bar(x-0.2, dt, 0.4, label="deny a true statement", color="#C44E52")
     ax.bar(x+0.2, af, 0.4, label="affirm a false statement", color="#55A868")
     ax.set_xticks(x); ax.set_xticklabels([NICE[m] for m in CENSUS], rotation=30, ha="right")
-    ax.set_ylabel("rate"); ax.legend(); ax.set_title("Denial bias: how each model lies")
+    ax.set_ylabel("rate"); ax.legend(); ax.set_title("How each model lies under the lie instruction")
     save(fig, "denial_bias")
 
 def fig_regression():
     x = np.arange(len(IDENT))
     inst = [val(ent(m,"regress_census","coefficients"))["instruction"] for m in IDENT]
-    dec  = [val(ent(m,"regress_census","coefficients"))["deception"]   for m in IDENT]
+    dec  = [-0.5*val(ent(m,"regress_census","coefficients"))["deception"]   for m in IDENT]
     fig, ax = plt.subplots(figsize=(6, 4.5))
     ax.bar(x-0.2, inst, 0.4, label="instruction", color="#4C72B0")
-    ax.bar(x+0.2, dec,  0.4, label="deception",   color="#C44E52")
+    ax.bar(x+0.2, dec,  0.4, label="false-answer effect",   color="#C44E52")
     ax.axhline(0, color="black", lw=1); ax.set_xticks(x); ax.set_xticklabels([NICE[m] for m in IDENT])
-    ax.set_ylabel("standardized coefficient"); ax.legend()
-    ax.set_title("Probe transfers as an instruction detector"); save(fig, "regression_coeffs")
+    ax.set_ylabel("effect on standardized probe score"); ax.legend()
+    ax.set_title("Regression effects, two identifiable models"); save(fig, "regression_coeffs")
 
 def fig_paraphrase():
     rows = [(m, p) for m in PARA for p in ["tf", "claim"]]; x = np.arange(len(rows)); w = 0.2
@@ -288,7 +288,7 @@ def fig_paraphrase():
     ax.axhline(0.5, ls=":", color="gray"); ax.set_xticks(x)
     ax.set_xticklabels([f"{NICE[m]}\n{p}" for m, p in rows]); ax.set_ylim(0.4, 1.02)
     ax.set_ylabel("AUC"); ax.legend(fontsize=7)
-    ax.set_title("Specificity fingerprint is format-stable: deception drops, truth holds"); save(fig, "paraphrase_fingerprint")
+    ax.set_title("Rephrased prompts: AUC at the critical layer, clean and ablated"); save(fig, "paraphrase_fingerprint")
 
 # ------- NEW: metric divergence ------------------------------
 def fig_metric_divergence():
@@ -312,7 +312,7 @@ def fig_metric_divergence():
     axA.axhline(0, color="black", lw=1)
     axA.set_xticks(x); axA.set_xticklabels([NICE[m] for m in CURVE], rotation=15, ha="right")
     axA.set_ylabel("paired asymmetry (truth drop − deception drop)")
-    axA.set_title("A. Critical layer: the metric decides whether a mechanism exists")
+    axA.set_title("A. Critical layer: paired asymmetry under each metric")
     axA.legend(fontsize=8)
     if "3B" in CURVE:
         i3 = CURVE.index("3B")
@@ -346,7 +346,7 @@ def fig_metric_divergence():
     axB.set_xlim(-0.01, lim); axB.set_ylim(-0.01, lim)
     axB.set_xlabel("AUC drop under ablation")
     axB.set_ylabel("balanced-accuracy drop under ablation")
-    axB.set_title(f"B. De-calibration across {n_cells} per-layer cells")
+    axB.set_title(f"B. Accuracy drop against AUC drop, {n_cells} ablations")
     axB.legend(fontsize=8, loc="upper left")
     save(fig, "metric_divergence")
 
@@ -370,7 +370,7 @@ def fig_local_vs_deployed(models=("1.5B", "3B")):
         ax.plot(Ls, loc_d, "-s", color="#4C72B0", label="local (at ablated layer)")
         ax.plot(Ls, dep_d, "-o", color="#C44E52", label="deployed (at the monitor)")
         ax.axvline(crit_layer(m), ls=":", lw=1, color="gray")
-        ax.set_title(f"{NICE[m]}  (shaded = significant deception-specificity)", fontsize=10)
+        ax.set_title(f"{NICE[m]}  (shaded = false-answer-specific)", fontsize=10)
         ax.set_xlabel("ablated layer"); ax.set_ylabel("AUC drop under ablation")
         ax.legend(fontsize=8)
     ymax = max(a.get_ylim()[1] for a in axes.flat); ymin = min(a.get_ylim()[0] for a in axes.flat)
