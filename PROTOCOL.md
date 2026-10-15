@@ -17,6 +17,67 @@ Nothing in Sections 1–4 should be read as a pre-registration in the strict sen
 faithful record of decision rules that were fixed in advance of measurement, published so that the
 rules can be checked against the code and the results file.
 
+**Revision made on 2026-10-15.** It corrects
+descriptions and paper references below that no longer match the paper or the code. The text below
+is left as it was written: §§1–4 stand as recorded, including their dated amendments, the
+registrations and outcomes in §§5–9 stand as committed, and the git history is the record of both.
+
+1. *Construct (§1).* The training label compares the appended answer with the dataset's ground-truth
+   label, not with the model's own representation. The paper calls this truth-consistency, keeps
+   "deception probe" as the probe's name, and calls layers whose ablation hurts it more than a truth
+   probe false-answer-specific.
+2. *Critical MLP (§2).* The code (`phase2.py`, and the same rule in `paraphrase_triangle.py`) first
+   keeps only recovery-band layers where the clean probe flags more than 70% of the first 120
+   deceptive training-fold items, falling back to the layer that flags the most if none does. Among
+   those it picks the layer whose ablation most lowers the probe's mean score on the same items, read
+   at the ablated layer. The §2 row omits the first step.
+3. *Probe (§2).* The frozen probe fit on the combined train and validation folds is used by the
+   transfer battery, the leak, position and preprocessing checks, the secondary-set transfer, the
+   readout-layer collapse curve and steering direction in `deception_probe.py`, §6, and the
+   registered deployed-readout run of §7. Scoring in `phase2.py` (ablation curves, specificity,
+   patch-back), in the ablation analyses of `paraphrase_triangle.py`, in `fdr_specificity.py`, in the
+   per-layer detection readings of `deception_probe.py`, and in the exploratory local-readout run of
+   §7 uses probes fit on the training fold alone, so clean AUCs there differ slightly from the frozen
+   probe's. The steering direction in `phase2.py` and `paraphrase_triangle.py` still comes from a
+   train-and-validation probe.
+4. *Source of truth (§2).* "If a number is not there, it was not measured" is superseded. Beyond
+   values derived by arithmetic from stored ones, some numbers in the paper are computed from released
+   files rather than stored in `MEASURED.md`: the corpus word counts, from `data/`; the
+   false-answer effects, which are −1/2 times the interaction coefficient listed as `deception` under
+   `regress_census`; the near-duplicate count, printed by `check_data_splits.py` and saved in
+   `logs/check_splits.log`; counts of how responses begin, read from `results/<model>/p4_rows.json`;
+   and the 212 similar statement pairs, a `difflib` ratio above 0.80 that no released script computes.
+   The stratified leak values in `deconfound_matched` were recomputed on CPU from released activations.
+5. *Reversals (§4).* The paper now lists five reversed conclusions, in Appendix D. The earlier count
+   of six listed the readout-layer control problem twice.
+6. *Composition-matched check (unregistered section).* The paper now describes the recorded outcome
+   differently: stratifying changes the statistic by less than 0.04 in seven of nine models, moves
+   Qwen-14B further from 0.5 (0.716 to 0.804) and moves Qwen-1.5B toward it (0.176 to 0.365). One
+   value is corrected. The Llama-3.1-8B false-stratum value is stored as 0.9845 and reported as
+   0.985, not 0.984.
+7. *Terminology.* "De-confound" here is the paper's instruction-leak statistic, "de-calibration"
+   is a thresholded metric falling while AUC holds, under ablation or steering, and "topology" is
+   the pattern of false-answer-specific layers in a model.
+8. *Paper references.* Section and table numbers below refer to the paper version current when each
+   passage was written. In v13 they correspond as follows.
+
+   | Reference below | Where | v13 location |
+   |---|---|---|
+   | Appendix F (conclusion reversals, metric confound) | §4, §6 | Appendix D |
+   | App. G (scale-trend deviation) | D1 | Appendix E |
+   | Appendix E (preprocessing) | §5 | Appendix C and §4(e) |
+   | Table 1 (Qwen-3B accuracy and AUC exhibit) | §7, §8 | Table 3, §5 |
+   | Table C8 | §6 | Table 12 |
+   | Table C9 | §7, unregistered section | Table 13 |
+   | Table D2 | unregistered section | Table 16 |
+   | Table H1 | §8 | Table 21 |
+   | "the Discussion" (rescaling as candidate mechanism) | §7 | §5 and Appendix A |
+   | "the abstract and §4" (layer patterns across models) | §8 | the abstract and §5 |
+   | §5, §5(b), §4's causal results | §9 | §4, §4(c), §5 |
+   | paper §4.1 (rephrased prompts) | §9 | §5, "Rephrased prompts" |
+
+9. *Status.* §5 and §9 have not been run as of 2026-10-15.
+
 ---
 
 ## 1. Question and scope
